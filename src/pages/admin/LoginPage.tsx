@@ -2,31 +2,30 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Lock, Mail, ArrowRight, Loader2 } from "lucide-react";
-import logo from "@/assets/horizon-bee-tech-logo.png";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  
+
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const from = location.state?.from?.pathname || "/admin/dashboard";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
-    
+
     try {
-      const success = await login(email, password);
-      if (success) {
+      const result = await login(email, password);
+      if (result.success) {
         navigate(from, { replace: true });
       } else {
-        setError("Invalid email or password. Please try again.");
+        setError(result.message || "Invalid email or password. Please try again.");
       }
     } catch (err) {
       setError("An error occurred. Please try again later.");
@@ -37,20 +36,21 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col justify-center items-center p-6 relative overflow-hidden">
-      {/* Background elements to match landing page */}
+      {/* Background elements */}
       <div className="absolute inset-0 mesh-bg opacity-20" />
-      <div 
+      <div
         className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-[120px] pointer-events-none opacity-20"
         style={{ background: "hsl(43 96% 56% / 0.3)" }}
       />
-      
+
       <div className="relative w-full max-w-md reveal visible">
         <div className="text-center mb-10">
-          <img src={logo} alt="Logo" className="h-12 mx-auto mb-6" />
           <h1 className="text-3xl font-bold text-foreground">Admin Access</h1>
-          <p className="text-muted-foreground mt-2">Sign in to manage your AI infrastructure</p>
+          <p className="text-muted-foreground mt-2">
+            Sign in to manage your AI infrastructure
+          </p>
         </div>
-        
+
         <div className="card-premium p-8 backdrop-blur-xl bg-black/40 border-white/10">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
@@ -69,7 +69,7 @@ const LoginPage = () => {
                 />
               </div>
             </div>
-            
+
             <div>
               <label className="block text-xs font-semibold mb-2 uppercase tracking-widest text-amber-500">
                 Password
@@ -86,13 +86,13 @@ const LoginPage = () => {
                 />
               </div>
             </div>
-            
+
             {error && (
               <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-500 text-xs text-center">
                 {error}
               </div>
             )}
-            
+
             <button
               type="submit"
               disabled={loading}
@@ -108,9 +108,9 @@ const LoginPage = () => {
               )}
             </button>
           </form>
-          
+
           <div className="mt-8 text-center">
-            <button 
+            <button
               onClick={() => navigate("/")}
               className="text-sm text-muted-foreground hover:text-amber-500 transition-colors"
             >
@@ -118,7 +118,7 @@ const LoginPage = () => {
             </button>
           </div>
         </div>
-        
+
         <p className="mt-8 text-center text-xs text-muted-foreground/60 tracking-wider uppercase">
           &copy; {new Date().getFullYear()} Horizon Bee Tech Core
         </p>

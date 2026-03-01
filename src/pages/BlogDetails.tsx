@@ -35,80 +35,166 @@ const BlogDetails = () => {
     );
   }
 
-  // Format content paragraphs
-  const paragraphs = blog.content.split('\n').filter(p => p.trim() !== '');
+  // Format content paragraphs and group into sections
+  const rawParagraphs = blog.content.split('\n').filter(p => p.trim() !== '');
+  const sections: { title?: string; content: string[] }[] = [];
+  let currentSection: { title?: string; content: string[] } = { content: [] };
+
+  rawParagraphs.forEach((paragraph) => {
+    if (paragraph.startsWith('### ')) {
+      if (currentSection.content.length > 0 || currentSection.title) {
+        sections.push(currentSection);
+      }
+      currentSection = { title: paragraph.replace('### ', ''), content: [] };
+    } else {
+      currentSection.content.push(paragraph);
+    }
+  });
+  if (currentSection.content.length > 0 || currentSection.title) {
+    sections.push(currentSection);
+  }
+
+  // Ensure the first section has a title for visual consistency if none exists
+  if (sections.length > 0 && !sections[0].title) {
+    sections[0].title = "Introduction";
+  }
+
+  // Get variety of images from other blogs
+  const allBlogImages = blogs.map(b => b.image);
+  const otherImages = allBlogImages.filter(img => img !== blog.image);
+  const sectionImages = otherImages.length > 0 ? otherImages : allBlogImages;
+
+  const getSectionImage = (idx: number) => {
+    return sectionImages[idx % sectionImages.length];
+  };
+
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-amber-500/30">
       <Navbar />
 
-      <main className="pt-32 pb-20">
-        <article className="max-w-4xl mx-auto px-6">
+      {/* 70vh Hero Section */}
+      <section className="relative h-[70vh] w-full flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={blog.image} 
+            alt={blog.title} 
+            className="w-full h-full object-cover"
+          />
+          {/* Subtle dark overlay for readability */}
+          <div className="absolute inset-0 bg-black/50 z-10" />
+        </div>
+
+        {/* Header Overlay */}
+        <header className="relative z-20 max-w-5xl mx-auto px-6 text-center">
+          <div className="flex items-center justify-center gap-4 text-xs font-semibold uppercase tracking-widest text-amber-500 mb-6">
+            <span className="flex items-center gap-1.5"><Tag className="w-3.5 h-3.5" /> {blog.category}</span>
+          </div>
           
-          {/* Back button */}
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-amber-500 mb-8 leading-[1.1]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            {blog.title}
+          </h1>
+
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-300">
+            <span className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-500">
+                <User className="w-3 h-3" />
+              </div>
+              {blog.author}
+            </span>
+            <span className="flex items-center gap-2">
+              <Clock className="w-4 h-4" />
+              {blog.date}
+            </span>
+          </div>
+        </header>
+      </section>
+
+      <main className="py-20 relative z-10 bg-background">
+        <article className="max-w-7xl mx-auto px-6">
+          
+          {/* Back button shifted below hero */}
           <Link 
             to="/blogs" 
-            className="inline-flex items-center gap-2 text-sm text-amber-500 hover:text-amber-400 transition-colors mb-8 group"
+            className="inline-flex items-center gap-2 text-sm text-amber-500 hover:text-amber-400 transition-colors mb-12 group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
             Back to all articles
           </Link>
 
-          {/* Header */}
-          <header className="mb-10 text-center">
-            <div className="flex items-center justify-center gap-4 text-xs font-semibold uppercase tracking-widest text-amber-500 mb-6">
-              <span className="flex items-center gap-1.5"><Tag className="w-3.5 h-3.5" /> {blog.category}</span>
-            </div>
-            
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-amber-500 mb-8 leading-[1.1]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              {blog.title}
-            </h1>
+          {/* Content Area - Sections */}
+          <div className="space-y-32">
+            {sections.map((section, index) => {
+              const isFirst = index === 0;
+              const isEven = index % 2 === 0;
+              const sectionImage = getSectionImage(index);
 
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
-              <span className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-500">
-                  <User className="w-3 h-3" />
+              if (isFirst) {
+                return (
+                  <div 
+                    key={index} 
+                    className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center"
+                  >
+                    {/* Image Column - Always first on mobile */}
+                    <div className={`order-1 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
+                      <div className="relative group">
+                        <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/20 to-amber-200/20 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                        <div className="relative aspect-[16/10] md:aspect-[4/3] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                          <img 
+                            src={sectionImage} 
+                            alt={section.title || blog.title} 
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Text Column */}
+                    <div className={`order-2 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
+                      {section.title && (
+                        <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-8" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                          {section.title}
+                        </h3>
+                      )}
+                      <div className="prose prose-invert prose-lg prose-amber max-w-none 
+                        prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-6
+                        prose-a:text-amber-500 hover:prose-a:text-amber-400
+                        prose-strong:text-amber-100 prose-strong:font-semibold">
+                        {section.content.map((p, pIdx) => (
+                          <p 
+                            key={pIdx} 
+                            className={pIdx === 0 ? "text-xl md:text-2xl text-foreground font-medium mb-10 leading-relaxed border-l-4 border-amber-500 pl-6" : ""}
+                          >
+                            {p}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+
+              // Text only sections for index > 0
+              return (
+                <div key={index} className="max-w-4xl mx-auto">
+                  {section.title && (
+                    <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-8" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {section.title}
+                    </h3>
+                  )}
+                  <div className="prose prose-invert prose-lg prose-amber max-w-none 
+                    prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-6
+                    prose-a:text-amber-500 hover:prose-a:text-amber-400
+                    prose-strong:text-amber-100 prose-strong:font-semibold">
+                    {section.content.map((p, pIdx) => (
+                      <p key={pIdx}>{p}</p>
+                    ))}
+                  </div>
                 </div>
-                {blog.author}
-              </span>
-              <span className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                {blog.date}
-              </span>
-            </div>
-          </header>
-
-          {/* Hero Image */}
-          <div className="w-full h-[40vh] md:h-[60vh] rounded-2xl overflow-hidden mb-12 border border-white/10 shadow-2xl relative">
-             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10 mix-blend-multiply" />
-            <img 
-              src={blog.image} 
-              alt={blog.title} 
-              className="w-full h-full object-cover"
-            />
+              );
+            })}
           </div>
-
-          {/* Content */}
-          <div className="max-w-3xl mx-auto">
-            <div className="prose prose-invert prose-lg prose-amber max-w-none 
-              prose-headings:font-bold prose-headings:text-foreground prose-h3:text-2xl prose-h3:mt-12 prose-h3:mb-6
-              prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-6
-              prose-a:text-amber-500 hover:prose-a:text-amber-400
-              prose-strong:text-amber-100 prose-strong:font-semibold">
-              
-              <p className="text-xl md:text-2xl text-foreground font-medium mb-10 leading-relaxed border-l-4 border-amber-500 pl-6">
-                {blog.excerpt}
-              </p>
-
-              {paragraphs.map((paragraph, index) => {
-                // If the paragraph starts with ###, treat it as an h3
-                if (paragraph.startsWith('### ')) {
-                  return <h3 key={index} className="text-2xl font-bold text-foreground mt-12 mb-6" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{paragraph.replace('### ', '')}</h3>;
-                }
-                // Otherwise render as a standard paragraph
-                return <p key={index} className="text-muted-foreground leading-relaxed mb-6">{paragraph}</p>;
-              })}
-            </div>
 
             {/* Tags/Footer of article */}
             <div className="mt-16 pt-8 border-t border-white/10 flex items-center justify-between">
@@ -122,9 +208,8 @@ const BlogDetails = () => {
                 </button>
               </div>
             </div>
-          </div>
-          
-        </article>
+            
+          </article>
       </main>
 
       <Footer />

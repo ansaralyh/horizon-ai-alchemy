@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import logo from "@/assets/horizon-bee-tech-logo.png";
+import logo from "@/assets/new-logo.png";
 
 const menuItems = [
   { label: "Dashboard", path: "/admin/dashboard", icon: BarChart3 },
@@ -44,15 +44,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         isOpen ? "w-64" : "w-0 -translate-x-full lg:w-20 lg:translate-x-0"
       }`}
     >
-      <div className="p-6 flex items-center justify-between">
+      <div className="p-6 relative flex items-center justify-center">
         {isOpen && (
-          <Link to="/" className="flex items-center gap-2 group">
-            <img src={logo} alt="Logo" className="h-8" />
+          <Link to="/" className="flex items-center justify-center group w-full">
+            <img src={logo} alt="Logo" className="h-14 w-auto object-contain" />
           </Link>
         )}
         <button 
           onClick={() => setIsOpen(!isOpen)}
-          className="p-2 rounded-lg hover:bg-white/5 transition-colors text-muted-foreground lg:inline-flex hidden"
+          className={`p-2 rounded-lg hover:bg-white/5 transition-colors text-muted-foreground lg:inline-flex hidden ${
+            isOpen ? "absolute right-2 top-2" : "mx-auto"
+          }`}
         >
           <ChevronLeft className={`w-5 h-5 transition-transform ${isOpen ? "" : "rotate-180"}`} />
         </button>
