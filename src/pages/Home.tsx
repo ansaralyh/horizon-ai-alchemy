@@ -3,6 +3,8 @@ import HeroSection from "@/components/HeroSection";
 import StatsSection from "@/components/StatsSection";
 import WhyChooseHorizonSection from "@/components/WhyChooseHorizonSection";
 import SolutionsJourneySection from "@/components/SolutionsJourneySection";
+import HowItWorksSection from "@/components/HowItWorksSection";
+import IndustriesSection from "@/components/IndustriesSection";
 import Footer from "@/components/Footer";
 
 const Home = () => {
@@ -13,6 +15,8 @@ const Home = () => {
       <StatsSection />
       <WhyChooseHorizonSection />
       <SolutionsJourneySection />
+      <HowItWorksSection />
+      <IndustriesSection />
       <Footer />
     </div>
   );

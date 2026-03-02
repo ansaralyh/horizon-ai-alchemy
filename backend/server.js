@@ -24,6 +24,9 @@ app.use('/api/auth', require('./routes/authRoutes'));
 // Upload Routes (Cloudinary + Multer)
 app.use('/api/upload', require('./routes/uploadRoutes'));
 
+// Blog Routes
+app.use('/api/admin/blogs', require('./routes/blogRoutes'));
+
 // Test / Health Check Route
 app.get('/', (req, res) => {
   res.json({ message: 'API is running...', status: 'success' });
