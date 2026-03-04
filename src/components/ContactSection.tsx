@@ -62,7 +62,7 @@ const ContactSection = () => {
               {[
                 { icon: Mail, text: "Contact@horizonbeetech.com" },
                 { icon: Phone, text: "07827622264" },
-                { icon: MapPin, text: "San Francisco, CA · Remote Globally" },
+                { icon: MapPin, text: "53 Saddlecote Close, Manchester, Greater Manchester, United Kingdom, M8 5QE" },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-3">
                   <div
