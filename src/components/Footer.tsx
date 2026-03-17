@@ -10,14 +10,14 @@ const footerLinks = {
 const Footer = () => {
   return (
     <footer
-      className="relative pt-16 pb-8 overflow-hidden"
+      className="relative pt-12 sm:pt-16 pb-6 sm:pb-8 overflow-hidden w-full"
       style={{
         background: "hsl(220 27% 5%)",
         borderTop: "1px solid hsl(220 20% 14%)",
       }}
     >
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full box-border">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 mb-10 sm:mb-12">
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
@@ -82,13 +82,13 @@ const Footer = () => {
 
         {/* Bottom bar */}
         <div
-          className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8"
+          className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 pt-6 sm:pt-8"
           style={{ borderTop: "1px solid hsl(220 20% 14%)" }}
         >
-          <p className="text-xs" style={{ color: "hsl(215 20% 40%)" }}>
+          <p className="text-xs text-center md:text-left" style={{ color: "hsl(215 20% 40%)" }}>
             © {new Date().getFullYear()} Horizon Bee Tech. All rights reserved.
           </p>
-          <p className="text-xs" style={{ color: "hsl(215 20% 35%)" }}>
+          <p className="text-xs text-center md:text-right" style={{ color: "hsl(215 20% 35%)" }}>
             Built with ⚡ precision — Silicon Valley AI standards.
           </p>
         </div>

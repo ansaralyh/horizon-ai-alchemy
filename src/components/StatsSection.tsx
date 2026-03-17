@@ -14,7 +14,7 @@ const StatItem = ({ value, suffix, label, desc }: typeof metrics[0]) => {
     <div className="text-center">
       <span
         ref={ref}
-        className="block text-5xl md:text-6xl font-black mb-2"
+        className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-1 sm:mb-2"
         style={{ color: "hsl(43 96% 56%)" }}
       >
         {count}{suffix}
@@ -36,7 +36,7 @@ const StatsSection = () => {
   const ref = useScrollReveal();
 
   return (
-    <section className="relative py-20 overflow-hidden">
+    <section className="relative py-12 sm:py-16 md:py-20 overflow-hidden">
       <div
         className="absolute inset-0"
         style={{
@@ -52,8 +52,8 @@ const StatsSection = () => {
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-6" ref={ref}>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 w-full box-border" ref={ref}>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10">
           {metrics.map((m, i) => (
             <div
               key={m.label}

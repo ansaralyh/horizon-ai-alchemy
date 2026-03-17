@@ -57,7 +57,7 @@ const SolutionsJourneySection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative py-28 overflow-hidden">
+    <section className="relative py-16 sm:py-20 md:py-28 overflow-hidden w-full">
       <div className="absolute inset-0 mesh-bg opacity-20" />
       <div
         className="absolute inset-0 pointer-events-none"
@@ -67,14 +67,14 @@ const SolutionsJourneySection = () => {
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-6" ref={ref}>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 w-full box-border" ref={ref}>
         {/* Heading */}
-        <div className="text-center mb-24 reveal">
+        <div className="text-center mb-12 sm:mb-16 md:mb-24 reveal">
           <span className="section-label inline-flex items-center gap-2 mb-4">
             <span className="glow-dot" />
             Solutions
           </span>
-          <h2 className="section-title text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="section-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
             Solutions for Your{" "}
             <span className="text-amber-gradient">AI Innovation Journey</span>
           </h2>
@@ -85,7 +85,7 @@ const SolutionsJourneySection = () => {
         </div>
 
         {/* Vertical Timeline */}
-        <div className="relative w-full max-w-5xl mx-auto">
+        <div className="relative w-full max-w-5xl mx-auto overflow-hidden">
           {/* Central Line for desktop */}
           <div className="absolute left-1/2 top-4 bottom-4 w-[2px] hidden md:block"
                style={{
@@ -94,27 +94,27 @@ const SolutionsJourneySection = () => {
                }} 
           />
           {/* Left Line for mobile */}
-          <div className="absolute left-[34px] top-4 bottom-4 w-[2px] block md:hidden"
+          <div className="absolute left-5 sm:left-6 top-4 bottom-4 w-[2px] block md:hidden"
                style={{
                  background: "linear-gradient(to bottom, transparent, hsl(43 96% 56% / 0.2) 5%, hsl(43 96% 56% / 0.2) 95%, transparent)"
                }} 
           />
 
-          <div className="space-y-24 md:space-y-32">
+          <div className="space-y-16 sm:space-y-20 md:space-y-24 lg:space-y-32">
             {steps.map((step, i) => {
               const isEven = i % 2 === 0;
               return (
-                <div key={i} className={`relative flex flex-col md:flex-row items-center gap-12 lg:gap-16 reveal ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`} style={{ transitionDelay: `${i * 100}ms` }}>
+                <div key={i} className={`relative flex flex-col md:flex-row items-stretch md:items-center gap-8 sm:gap-10 lg:gap-16 reveal min-w-0 ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`} style={{ transitionDelay: `${i * 100}ms` }}>
                   
                   {/* Image Side (DOM Child 1) */}
-                  <div className={`w-full md:w-1/2 pl-24 md:pl-0 ${isEven ? 'md:pr-16 lg:pr-20' : 'md:pl-16 lg:pl-20'}`}>
+                  <div className={`w-full min-w-0 md:w-1/2 pl-14 sm:pl-16 md:pl-0 ${isEven ? 'md:pr-8 lg:pr-16 xl:pr-20' : 'md:pl-8 lg:pl-16 xl:pl-20'}`}>
                     {/* Mobile Circle */}
-                    <div className="md:hidden absolute left-5 top-8 w-11 h-11 rounded-full flex items-center justify-center font-bold shadow-[0_0_15px_hsl(43_96%_56%_/_0.3)] z-10"
+                    <div className="md:hidden absolute left-0 top-6 w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center font-bold text-sm shadow-[0_0_15px_hsl(43_96%_56%_/_0.3)] z-10"
                          style={{ background: "linear-gradient(135deg, hsl(43 96% 56%) 0%, hsl(38 90% 48%) 100%)", color: "hsl(220 27% 6%)" }}>
                       {i + 1}
                     </div>
 
-                    <div className="rounded-2xl overflow-hidden card-premium aspect-[4/3] w-full max-w-md mx-auto group relative">
+                    <div className="rounded-xl sm:rounded-2xl overflow-hidden card-premium aspect-[4/3] w-full max-w-md mx-auto group relative">
                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10 mix-blend-multiply" />
                        <img src={step.image} alt={step.phase} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     </div>
@@ -127,12 +127,12 @@ const SolutionsJourneySection = () => {
                   </div>
 
                   {/* Text Content Side (DOM Child 2) */}
-                  <div className={`w-full md:w-1/2 pl-24 md:pl-0 ${isEven ? 'md:pl-16 lg:pl-20 md:text-left' : 'md:pr-16 lg:pr-20 md:text-right'}`}>
-                    <div className={`flex flex-col ${isEven ? 'md:items-start' : 'md:items-end'}`}>
-                      <span className="text-sm font-semibold tracking-wider uppercase mb-2" style={{ color: "hsl(43 96% 56%)" }}>
+                  <div className={`w-full min-w-0 md:w-1/2 pl-14 sm:pl-16 md:pl-0 ${isEven ? 'md:pl-8 lg:pl-16 xl:pl-20 md:text-left' : 'md:pr-8 lg:pr-16 xl:pr-20 md:text-right'}`}>
+                    <div className={`flex flex-col min-w-0 ${isEven ? 'md:items-start' : 'md:items-end'}`}>
+                      <span className="text-xs sm:text-sm font-semibold tracking-wider uppercase mb-1 sm:mb-2" style={{ color: "hsl(43 96% 56%)" }}>
                         Step {i + 1}
                       </span>
-                      <h3 className="text-2xl md:text-3xl font-bold mb-6 leading-tight" style={{ color: "hsl(210 40% 96%)" }}>
+                      <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 leading-tight break-words" style={{ color: "hsl(210 40% 96%)" }}>
                         {step.problem}
                       </h3>
                       <div className={`flex items-start gap-4 ${isEven ? 'flex-row' : 'flex-row md:flex-row-reverse'}`}>
@@ -140,11 +140,11 @@ const SolutionsJourneySection = () => {
                               style={{ background: "hsl(43 96% 56% / 0.12)", border: "1px solid hsl(43 96% 56% / 0.25)" }}>
                            <step.icon className="w-6 h-6" style={{ color: "hsl(43 96% 56%)" }} />
                          </div>
-                         <div className={`flex flex-col ${isEven ? 'text-left' : 'text-left md:text-right'}`}>
-                           <span className="text-base font-semibold mb-2" style={{ color: "hsl(43 96% 56%)" }}>
+                         <div className={`flex flex-col min-w-0 ${isEven ? 'text-left' : 'text-left md:text-right'}`}>
+                           <span className="text-sm sm:text-base font-semibold mb-1 sm:mb-2 break-words" style={{ color: "hsl(43 96% 56%)" }}>
                              {step.phase}
                            </span>
-                           <p className="text-base leading-relaxed" style={{ color: "hsl(215 20% 55%)" }}>
+                           <p className="text-sm sm:text-base leading-relaxed break-words" style={{ color: "hsl(215 20% 55%)" }}>
                              {step.description}
                            </p>
                          </div>
@@ -158,7 +158,7 @@ const SolutionsJourneySection = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-32 reveal">
+        <div className="text-center mt-16 sm:mt-24 md:mt-32 reveal">
           <button
             onClick={() => navigate("/contact")}
             className="btn-amber group text-base px-10 py-4"

@@ -35,7 +35,7 @@ const HowItWorksSection = () => {
   const ref = useScrollReveal();
 
   return (
-    <section className="relative py-28 overflow-hidden bg-background">
+    <section className="relative py-16 sm:py-20 md:py-28 overflow-hidden bg-background w-full">
       {/* Decorative gradients */}
       <div className="absolute inset-0 mesh-bg opacity-5" />
       <div
@@ -45,9 +45,9 @@ const HowItWorksSection = () => {
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-6" ref={ref}>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 w-full box-border" ref={ref}>
         {/* Heading */}
-        <div className="text-center mb-20 reveal">
+        <div className="text-center mb-12 sm:mb-16 md:mb-20 reveal">
           <span className="section-label">
             <span className="glow-dot" />
             Process
@@ -65,17 +65,17 @@ const HowItWorksSection = () => {
         </div>
 
         {/* Tabbed Content Area */}
-        <div className="grid lg:grid-cols-2 gap-16 items-center reveal delay-200">
+        <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 items-center reveal delay-200">
           {/* Left: Step Buttons and Description */}
-          <div className="space-y-10">
-            {/* Mobile Buttons (Scrollable) */}
-            <div className="flex lg:flex-col overflow-x-auto lg:overflow-x-visible pb-4 lg:pb-0 gap-3 scrollbar-hide">
+          <div className="space-y-6 sm:space-y-10 min-w-0">
+            {/* Mobile Buttons (Scrollable) - contain scroll within viewport */}
+            <div className="flex lg:flex-col overflow-x-auto lg:overflow-x-visible pb-4 lg:pb-0 gap-2 sm:gap-3 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
               {steps.map((step) => (
                 <button
                   key={step.id}
                   onClick={() => setActiveStep(step)}
                   className={cn(
-                    "whitespace-nowrap px-8 py-4 rounded-xl font-bold transition-all duration-300 border text-left",
+                    "whitespace-nowrap flex-shrink-0 px-5 py-3 sm:px-6 sm:py-3.5 md:px-8 md:py-4 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 border text-left",
                     activeStep.id === step.id
                       ? "bg-primary text-primary-foreground border-primary shadow-amber"
                       : "bg-background text-muted-foreground border-border hover:border-primary/40 hover:bg-primary/5"
@@ -87,15 +87,15 @@ const HowItWorksSection = () => {
             </div>
 
             {/* Step Description */}
-            <div className="min-h-[100px] p-6 rounded-2xl bg-navy-card/50 border border-navy-border/50 backdrop-blur-sm">
-              <p className="text-xl md:text-2xl font-medium leading-relaxed text-foreground transition-all duration-500 animate-fade-in-scale">
+            <div className="min-h-[80px] sm:min-h-[100px] p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-navy-card/50 border border-navy-border/50 backdrop-blur-sm">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium leading-relaxed text-foreground transition-all duration-500 animate-fade-in-scale break-words">
                 {activeStep.description}
               </p>
             </div>
           </div>
 
           {/* Right: Circular Image / Visual */}
-          <div className="relative aspect-square max-w-md mx-auto lg:mx-0 w-full animate-float">
+          <div className="relative aspect-square max-w-[280px] sm:max-w-sm md:max-w-md mx-auto lg:mx-0 w-full animate-float min-w-0">
              {/* Glow effect behind circle */}
              <div className="absolute inset-0 rounded-full bg-primary/20 blur-3xl" />
              

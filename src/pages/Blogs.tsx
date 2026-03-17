@@ -11,7 +11,7 @@ const Blogs = () => {
   const recentBlogs = blogs.slice(6, 9);
 
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-amber-500/30">
+    <div className="min-h-screen bg-background text-foreground selection:bg-amber-500/30 w-full overflow-x-hidden">
       <Navbar />
 
       <main className="pt-28 pb-20">

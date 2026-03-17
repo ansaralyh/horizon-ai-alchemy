@@ -49,7 +49,7 @@ const WhyChooseHorizonSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative py-28 overflow-hidden bg-background">
+    <section className="relative py-16 sm:py-20 md:py-28 overflow-hidden bg-background w-full">
       {/* Mesh background */}
       <div className="absolute inset-0 mesh-bg opacity-30" />
       <div
@@ -60,9 +60,9 @@ const WhyChooseHorizonSection = () => {
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-6" ref={ref}>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 w-full box-border" ref={ref}>
         {/* Heading */}
-        <div className="text-center mb-16 reveal">
+        <div className="text-center mb-10 sm:mb-16 reveal">
           <span className="section-label">
             <span className="glow-dot" />
             Why Choose Us
@@ -173,18 +173,18 @@ const WhyChooseHorizonSection = () => {
             </Swiper>
           </div>
 
-          {/* Custom Navigation Arrows */}
-          <button className="swiper-button-prev-why absolute top-1/2 -left-4 md:-left-8 lg:-left-12 z-20 w-12 h-12 -translate-y-1/2 flex items-center justify-center rounded-full border border-white/10 bg-background/50 backdrop-blur text-white/50 hover:text-amber-500 hover:border-amber-500/50 hover:bg-amber-500/10 transition-all opacity-0 group-hover/slider:opacity-100">
-            <ChevronLeft className="w-6 h-6" />
+          {/* Custom Navigation Arrows - visible on touch for mobile */}
+          <button className="swiper-button-prev-why absolute top-1/2 left-1 sm:left-0 md:-left-8 lg:-left-12 z-20 w-9 h-9 sm:w-12 sm:h-12 -translate-y-1/2 flex items-center justify-center rounded-full border border-white/10 bg-background/80 backdrop-blur text-white/70 hover:text-amber-500 hover:border-amber-500/50 hover:bg-amber-500/10 transition-all opacity-100 md:opacity-0 md:group-hover/slider:opacity-100">
+            <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
           </button>
-          <button className="swiper-button-next-why absolute top-1/2 -right-4 md:-right-8 lg:-right-12 z-20 w-12 h-12 -translate-y-1/2 flex items-center justify-center rounded-full border border-white/10 bg-background/50 backdrop-blur text-white/50 hover:text-amber-500 hover:border-amber-500/50 hover:bg-amber-500/10 transition-all opacity-0 group-hover/slider:opacity-100">
-            <ChevronRight className="w-6 h-6" />
+          <button className="swiper-button-next-why absolute top-1/2 right-1 sm:right-0 md:-right-8 lg:-right-12 z-20 w-9 h-9 sm:w-12 sm:h-12 -translate-y-1/2 flex items-center justify-center rounded-full border border-white/10 bg-background/80 backdrop-blur text-white/70 hover:text-amber-500 hover:border-amber-500/50 hover:bg-amber-500/10 transition-all opacity-100 md:opacity-0 md:group-hover/slider:opacity-100">
+            <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
           </button>
         </div>
 
 
         {/* Bottom CTA */}
-        <div className="text-center mt-16 reveal">
+        <div className="text-center mt-10 sm:mt-16 reveal">
           <button
             onClick={() => navigate("/contact")}
             className="btn-amber group text-base px-10 py-4"

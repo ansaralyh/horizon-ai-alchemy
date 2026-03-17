@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 
 const Contact = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground w-full overflow-x-hidden">
       <Navbar />
       <div className="pt-20">
         <ContactSection />

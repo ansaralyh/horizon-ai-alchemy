@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 
 const Services = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background w-full overflow-x-hidden">
       <Navbar />
       <div className="pt-20">
         <ServicesSection />

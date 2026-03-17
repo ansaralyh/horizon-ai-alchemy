@@ -134,10 +134,10 @@ const HeroSection = () => {
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 text-center box-border">
         {/* Badge */}
         <div
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold tracking-widest uppercase mb-8 animate-fade-up"
+          className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-[10px] sm:text-xs font-semibold tracking-widest uppercase mb-6 sm:mb-8 animate-fade-up"
           style={{
             background: "hsl(43 96% 56% / 0.1)",
             border: "1px solid hsl(43 96% 56% / 0.3)",
@@ -158,7 +158,7 @@ const HeroSection = () => {
 
         {/* Headline */}
         <h1
-          className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight mb-6 animate-fade-up delay-100"
+          className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.1] tracking-tight mb-4 sm:mb-6 animate-fade-up delay-100 break-words"
           style={{
             color: "hsl(210 40% 96%)",
             animationFillMode: "both",
@@ -176,7 +176,7 @@ const HeroSection = () => {
 
         {/* Subtitle */}
         <p
-          className="text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10 animate-fade-up delay-200"
+          className="text-base sm:text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-8 sm:mb-10 px-0 animate-fade-up delay-200"
           style={{
             color: "hsl(215 20% 60%)",
             animationFillMode: "both",
@@ -189,7 +189,7 @@ const HeroSection = () => {
 
         {/* CTAs */}
         <div
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-fade-up delay-300"
+          className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-12 sm:mb-16 animate-fade-up delay-300 w-full sm:w-auto"
           style={{ animationFillMode: "both" }}
         >
           <button onClick={scrollToContact} className="btn-amber group">
@@ -203,7 +203,7 @@ const HeroSection = () => {
 
         {/* Quick stats */}
         <div
-          className="grid grid-cols-3 gap-8 max-w-lg mx-auto animate-fade-up delay-400"
+          className="grid grid-cols-3 gap-3 sm:gap-6 md:gap-8 max-w-lg mx-auto animate-fade-up delay-400 w-full"
           style={{ animationFillMode: "both" }}
         >
           {[
@@ -211,15 +211,15 @@ const HeroSection = () => {
             { value: "8wk", label: "To Production" },
             { value: "100%", label: "Security Record" },
           ].map((stat) => (
-            <div key={stat.label} className="text-center">
+            <div key={stat.label} className="text-center min-w-0">
               <div
-                className="text-2xl font-bold mb-1"
+                className="text-lg sm:text-xl md:text-2xl font-bold mb-0.5 sm:mb-1"
                 style={{ color: "hsl(43 96% 56%)" }}
               >
                 {stat.value}
               </div>
               <div
-                className="text-xs font-medium tracking-wide"
+                className="text-[10px] sm:text-xs font-medium tracking-wide"
                 style={{ color: "hsl(215 20% 55%)" }}
               >
                 {stat.label}

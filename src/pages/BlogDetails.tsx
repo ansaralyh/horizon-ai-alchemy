@@ -18,7 +18,7 @@ const BlogDetails = () => {
 
   if (!blog) {
     return (
-      <div className="min-h-screen bg-background text-foreground flex flex-col">
+      <div className="min-h-screen bg-background text-foreground flex flex-col w-full overflow-x-hidden">
         <Navbar />
         <main className="flex-1 flex flex-col items-center justify-center pt-28 pb-20 px-6 text-center">
           <h1 className="text-4xl font-bold mb-4">Blog Post Not Found</h1>
@@ -70,7 +70,7 @@ const BlogDetails = () => {
 
 
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-amber-500/30">
+    <div className="min-h-screen bg-background text-foreground selection:bg-amber-500/30 w-full overflow-x-hidden">
       <Navbar />
 
       {/* 70vh Hero Section */}

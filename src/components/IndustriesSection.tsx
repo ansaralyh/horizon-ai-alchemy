@@ -37,7 +37,7 @@ const IndustriesSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative py-28 overflow-hidden bg-background">
+    <section className="relative py-16 sm:py-20 md:py-28 overflow-hidden bg-background w-full">
       <div className="absolute inset-0 mesh-bg opacity-10" />
       <div
         className="absolute inset-0 pointer-events-none"
@@ -47,9 +47,9 @@ const IndustriesSection = () => {
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-6" ref={ref}>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 w-full box-border" ref={ref}>
         {/* Heading */}
-        <div className="text-center mb-20 reveal">
+        <div className="text-center mb-12 sm:mb-16 md:mb-20 reveal">
           <span className="section-label">
             <span className="glow-dot" />
             Industries
@@ -67,25 +67,25 @@ const IndustriesSection = () => {
         </div>
 
         {/* Industries Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-20 reveal delay-200">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6 mb-12 sm:mb-16 md:mb-20 reveal delay-200">
           {industries.map((industry, index) => (
             <div
               key={index}
-              className="group flex flex-col items-center justify-center p-8 rounded-2xl card-premium text-center"
+              className="group flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl card-premium text-center min-w-0"
             >
               <div
-                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110"
+                className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 transition-transform duration-300 group-hover:scale-110 flex-shrink-0"
                 style={{
                   background: "hsl(43 96% 56% / 0.1)",
                   border: "1px solid hsl(43 96% 56% / 0.2)",
                 }}
               >
                 <industry.icon
-                  className="w-8 h-8 transition-colors duration-300 group-hover:text-primary"
+                  className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 transition-colors duration-300 group-hover:text-primary"
                   style={{ color: "hsl(43 96% 56%)" }}
                 />
               </div>
-              <h3 className="text-xl font-bold text-foreground">
+              <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-foreground break-words">
                 {industry.name}
               </h3>
             </div>

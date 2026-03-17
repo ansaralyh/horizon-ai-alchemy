@@ -31,10 +31,10 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 w-full ${
           scrolled
-            ? "py-3 backdrop-blur-xl"
-            : "py-5"
+            ? "py-2 sm:py-3 backdrop-blur-xl"
+            : "py-3 sm:py-4 md:py-5"
         }`}
         style={{
           background: scrolled
@@ -44,18 +44,18 @@ const Navbar = () => {
           boxShadow: scrolled ? "0 4px 30px hsl(0 0% 0% / 0.4)" : "none",
         }}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-2 min-w-0">
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-2 sm:gap-3 group min-w-0 flex-shrink"
           >
             <img
               src={logo}
               alt="Horizon Bee Tech"
-              className="h-20 object-contain object-left transition-all duration-300 group-hover:scale-105"
+              className="h-10 sm:h-14 md:h-20 w-auto object-contain object-left transition-all duration-300 group-hover:scale-105 flex-shrink-0"
             />
-            <span className="font-bold text-xl tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            <span className="font-bold text-base sm:text-lg md:text-xl tracking-tight truncate" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               <span style={{ color: "hsl(210 40% 96%)" }}>Horizon</span>
               <span style={{ color: "hsl(43 96% 56%)" }}> Bee Tech</span>
             </span>
@@ -108,7 +108,7 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {mobileOpen && (
           <div
-            className="md:hidden absolute top-full left-0 right-0 py-4 px-6"
+            className="md:hidden absolute top-full left-0 right-0 py-4 px-4 sm:px-6 max-h-[calc(100vh-5rem)] overflow-y-auto"
             style={{
               background: "hsl(220 24% 9% / 0.98)",
               borderBottom: "1px solid hsl(220 20% 16%)",
