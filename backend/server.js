@@ -41,8 +41,17 @@ app.use((err, req, res, next) => {
   });
 });
 
-// --- Start Server ---
+// --- Export app for serverless / external server ---
+// When running locally (e.g. `node server.js`), we still start a listener.
+// When deployed to platforms like Vercel (using @vercel/node), the platform
+// imports this file and uses the exported app instead of calling listen().
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
-});
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`);
+  });
+}
+
+module.exports = app;
