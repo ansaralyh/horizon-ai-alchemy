@@ -41,36 +41,42 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   return (
     <aside 
       className={`fixed lg:static inset-y-0 left-0 z-50 flex flex-col transition-all duration-300 ease-in-out border-r border-white/5 bg-black/40 backdrop-blur-xl ${
-        isOpen ? "w-64" : "w-0 -translate-x-full lg:w-20 lg:translate-x-0"
+        isOpen ? "w-64 translate-x-0" : "w-0 -translate-x-full lg:w-20 lg:translate-x-0"
       }`}
     >
-      <div className="p-6 relative flex items-center justify-center">
-        {isOpen && (
-          <Link to="/" className="flex items-center justify-center group w-full">
-            <img src={logo} alt="Logo" className="h-14 w-auto object-contain" />
+      <div className="p-4 sm:p-6 relative flex items-center justify-between lg:justify-center min-h-[4rem] flex-shrink-0">
+        {isOpen ? (
+          <Link to="/" className="flex items-center justify-center group flex-1 lg:flex-initial" onClick={() => window.innerWidth < 1024 && setIsOpen(false)}>
+            <img src={logo} alt="Logo" className="h-10 sm:h-14 w-auto object-contain" />
           </Link>
+        ) : (
+          <span className="flex-1 lg:hidden" />
         )}
         <button 
           onClick={() => setIsOpen(!isOpen)}
-          className={`p-2 rounded-lg hover:bg-white/5 transition-colors text-muted-foreground lg:inline-flex hidden ${
-            isOpen ? "absolute right-2 top-2" : "mx-auto"
+          className={`p-2.5 rounded-lg hover:bg-white/5 transition-colors text-muted-foreground lg:inline-flex hidden ${
+            isOpen ? "absolute right-2 top-1/2 -translate-y-1/2" : "mx-auto"
           }`}
         >
           <ChevronLeft className={`w-5 h-5 transition-transform ${isOpen ? "" : "rotate-180"}`} />
         </button>
         <button 
           onClick={() => setIsOpen(false)}
-          className="p-2 rounded-lg hover:bg-white/5 transition-colors text-muted-foreground lg:hidden"
+          className="p-2.5 rounded-lg hover:bg-white/5 transition-colors text-muted-foreground lg:hidden flex-shrink-0 touch-manipulation"
+          aria-label="Close menu"
         >
           <X className="w-6 h-6" />
         </button>
       </div>
 
-      <nav className="flex-1 px-3 py-4 space-y-1">
+      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
         {menuItems.map((item) => (
           <Link
             key={item.label}
             to={item.path}
+            onClick={() => {
+              if (typeof window !== "undefined" && window.innerWidth < 1024) setIsOpen(false);
+            }}
             className={`flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all group ${
               isActive(item.path) 
                 ? "bg-amber-500/10 text-amber-500 border border-amber-500/20" 
@@ -88,9 +94,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         ))}
       </nav>
 
-      <div className="p-4 border-t border-white/5">
+      <div className="p-4 border-t border-white/5 flex-shrink-0">
         <button
-          onClick={logout}
+          onClick={() => {
+            if (typeof window !== "undefined" && window.innerWidth < 1024) setIsOpen(false);
+            logout();
+          }}
           className="flex items-center gap-3 w-full px-3 py-3 rounded-lg text-sm font-medium text-red-500 hover:bg-red-500/5 transition-all group"
         >
           <LogOut className="w-5 h-5 flex-shrink-0" />

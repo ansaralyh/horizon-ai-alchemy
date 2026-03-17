@@ -76,21 +76,21 @@ const ManageServices = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fade-up">
+    <div className="space-y-4 sm:space-y-6 animate-fade-up min-w-0">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Manage Services</h1>
-          <p className="text-sm text-muted-foreground mt-1">Add, edit or remove your core service offerings.</p>
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground truncate">Manage Services</h1>
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">Add, edit or remove your core service offerings.</p>
         </div>
-        <button onClick={handleOpenAddModal} className="btn-amber px-5 py-2.5 text-xs flex items-center gap-2 w-fit">
+        <button onClick={handleOpenAddModal} className="btn-amber px-5 py-2.5 text-xs flex items-center justify-center gap-2 w-full sm:w-fit flex-shrink-0 touch-manipulation">
           <Plus className="w-4 h-4" />
           Add New Service
         </button>
       </div>
 
       {/* Filters & Search */}
-      <div className="card-premium p-4 flex flex-col md:flex-row gap-4 items-center justify-between border-white/5 bg-white/5">
-        <div className="relative w-full md:w-96">
+      <div className="card-premium p-3 sm:p-4 flex flex-col md:flex-row gap-3 sm:gap-4 items-stretch md:items-center justify-between border-white/5 bg-white/5 min-w-0">
+        <div className="relative w-full md:w-96 min-w-0">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <input 
             type="text" 
@@ -112,56 +112,56 @@ const ManageServices = () => {
         </div>
       </div>
 
-      {/* Services Table */}
-      <div className="card-premium overflow-hidden border-white/5 p-0">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+      {/* Services Table - horizontal scroll on small screens */}
+      <div className="card-premium overflow-hidden border-white/5 p-0 min-w-0">
+        <div className="overflow-x-auto scrollbar-hide -mx-px">
+          <table className="w-full text-left border-collapse min-w-[600px]">
             <thead>
               <tr className="bg-white/5 border-b border-white/5">
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">Service Name</th>
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">Category</th>
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">Status</th>
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">Date Added</th>
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground text-right">Actions</th>
+                <th className="px-3 py-3 sm:px-6 sm:py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">Service Name</th>
+                <th className="px-3 py-3 sm:px-6 sm:py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">Category</th>
+                <th className="px-3 py-3 sm:px-6 sm:py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">Status</th>
+                <th className="px-3 py-3 sm:px-6 sm:py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground hidden sm:table-cell">Date Added</th>
+                <th className="px-3 py-3 sm:px-6 sm:py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
               {filteredServices.map((service) => (
                 <tr key={service.id} className="group hover:bg-white/[0.02] transition-colors">
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center overflow-hidden shrink-0">
+                  <td className="px-3 py-3 sm:px-6 sm:py-4">
+                    <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center overflow-hidden shrink-0">
                         {service.image.startsWith('http') || service.image.startsWith('src') ? (
                           <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
                         ) : (
-                          <Briefcase className="w-5 h-5 text-amber-500" />
+                          <Briefcase className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500" />
                         )}
                       </div>
-                      <span className="text-sm font-semibold text-foreground">{service.title}</span>
+                      <span className="text-xs sm:text-sm font-semibold text-foreground truncate">{service.title}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4">
-                    <span className="text-xs px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-muted-foreground">
+                  <td className="px-3 py-3 sm:px-6 sm:py-4">
+                    <span className="text-xs px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-white/5 border border-white/10 text-muted-foreground whitespace-nowrap">
                       {service.category}
                     </span>
                   </td>
-                  <td className="px-6 py-4">
-                    <span className={`flex items-center gap-1.5 text-xs font-medium ${
+                  <td className="px-3 py-3 sm:px-6 sm:py-4">
+                    <span className={`flex items-center gap-1.5 text-xs font-medium whitespace-nowrap ${
                       service.status === "Active" ? "text-green-500" : "text-amber-500"
                     }`}>
-                      {service.status === "Active" ? <CheckCircle2 className="w-3.5 h-3.5" /> : <XCircle className="w-3.5 h-3.5" />}
+                      {service.status === "Active" ? <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" /> : <XCircle className="w-3.5 h-3.5 flex-shrink-0" />}
                       {service.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4">
-                    <span className="text-sm text-muted-foreground">{service.date}</span>
+                  <td className="px-3 py-3 sm:px-6 sm:py-4 hidden sm:table-cell">
+                    <span className="text-xs sm:text-sm text-muted-foreground">{service.date}</span>
                   </td>
-                  <td className="px-6 py-4 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <button onClick={() => handleOpenEditModal(service)} className="p-2 rounded-lg hover:bg-white/5 text-muted-foreground hover:text-amber-500 transition-all" title="Edit">
+                  <td className="px-3 py-3 sm:px-6 sm:py-4 text-right">
+                    <div className="flex items-center justify-end gap-1 sm:gap-2">
+                      <button onClick={() => handleOpenEditModal(service)} className="p-2 rounded-lg hover:bg-white/5 text-muted-foreground hover:text-amber-500 transition-all touch-manipulation" title="Edit">
                         <Edit2 className="w-4 h-4" />
                       </button>
-                      <button onClick={() => handleDelete(service.id)} className="p-2 rounded-lg hover:bg-white/5 text-muted-foreground hover:text-red-500 transition-all" title="Delete">
+                      <button onClick={() => handleDelete(service.id)} className="p-2 rounded-lg hover:bg-white/5 text-muted-foreground hover:text-red-500 transition-all touch-manipulation" title="Delete">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
@@ -181,9 +181,9 @@ const ManageServices = () => {
           </div>
         )}
 
-        <div className="px-6 py-4 border-t border-white/5 flex items-center justify-between">
+        <div className="px-3 sm:px-6 py-3 sm:py-4 border-t border-white/5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2">
           <p className="text-xs text-muted-foreground">Showing {filteredServices.length} of {services.length} services</p>
-          <div className="flex gap-2">
+          <div className="flex gap-2 justify-end">
             <button className="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs disabled:opacity-50" disabled>Previous</button>
             <button className="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs disabled:opacity-50" disabled>Next</button>
           </div>
@@ -192,16 +192,17 @@ const ManageServices = () => {
 
       {/* CRUD Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="card-premium w-full max-w-lg border-white/10 p-6 relative animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
+          <div className="card-premium w-full max-w-lg border-white/10 p-4 sm:p-6 relative animate-in fade-in zoom-in-95 duration-200 my-4 max-h-[calc(100vh-2rem)] overflow-y-auto">
             <button 
               onClick={() => setIsModalOpen(false)}
-              className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/5 text-muted-foreground transition-all"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 rounded-lg hover:bg-white/5 text-muted-foreground transition-all touch-manipulation z-10"
+              aria-label="Close"
             >
               <X className="w-5 h-5" />
             </button>
             
-            <h2 className="text-xl font-bold mb-6">{editingId ? 'Edit Service' : 'Add New Service'}</h2>
+            <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 pr-10">{editingId ? 'Edit Service' : 'Add New Service'}</h2>
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -216,7 +217,7 @@ const ManageServices = () => {
                 />
               </div>
               
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-medium text-muted-foreground mb-1.5">Category</label>
                   <input 
