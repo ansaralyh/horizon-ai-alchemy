@@ -12,7 +12,11 @@ const app = express();
 connectDB(); // MongoDB connection
 
 // --- Middleware ---
-app.use(cors()); // Enable CORS
+app.use(cors({
+  origin: '*', // allow all origins
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+}));
 app.use(express.json()); // Parse JSON requests
 app.use(express.urlencoded({ extended: false })); // Parse URL-encoded requests
 app.use(morgan('dev')); // Logging requests (use 'tiny' in production)
