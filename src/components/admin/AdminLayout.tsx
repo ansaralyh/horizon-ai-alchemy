@@ -3,25 +3,20 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 
-const LG_BREAKPOINT = 1024;
-
 const AdminLayout = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(() =>
-    typeof window !== "undefined" && window.innerWidth >= LG_BREAKPOINT
-  );
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth >= LG_BREAKPOINT) setSidebarOpen(true);
-      else setSidebarOpen(false);
-    };
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    const media = window.matchMedia("(min-width: 1024px)");
+    const handler = () => setSidebarOpen(media.matches);
+    handler();
+    media.addEventListener("change", handler);
+    return () => media.removeEventListener("change", handler);
   }, []);
 
   return (
     <div className="min-h-screen bg-background flex w-full overflow-x-hidden">
-      {/* Sidebar - overlay on mobile when open, static on desktop */}
+      {/* Sidebar - drawer on mobile, fixed width on desktop */}
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
 
       {/* Main Content - full width on mobile when sidebar closed */}
@@ -35,7 +30,7 @@ const AdminLayout = () => {
         </main>
       </div>
 
-      {/* Mobile overlay: when sidebar is open on small screens, tap outside to close */}
+      {/* Mobile overlay: tap outside to close sidebar */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
