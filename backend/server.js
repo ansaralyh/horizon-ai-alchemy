@@ -28,7 +28,7 @@ app.use('/api/upload', require('./routes/uploadRoutes'));
 app.use('/api/admin/blogs', require('./routes/blogRoutes'));
 
 // Test / Health Check Route
-app.get('/', (req, res) => {
+app.get('/health', (req, res) => {
   res.json({ message: 'API is running...', status: 'success' });
 });
 
