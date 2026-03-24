@@ -78,20 +78,12 @@ const Navbar = () => {
           </div>
 
           {/* CTA */}
-          <div className="hidden md:flex items-center gap-5">
+          <div className="hidden md:flex items-center">
             <Link
               to="/contact"
               className="btn-amber text-sm px-6 py-3"
             >
               Contact Us
-            </Link>
-            <Link
-              to="/admin/login"
-              className="p-2 rounded-full transition-all duration-300 hover:bg-white/10 hover:text-amber-400 group relative"
-              style={{ color: "hsl(215 20% 65%)" }}
-              title="Admin Login"
-            >
-              <User className="w-5 h-5 transition-transform group-hover:scale-110" />
             </Link>
           </div>
 
@@ -127,15 +119,6 @@ const Navbar = () => {
                   {link.label}
                 </Link>
               ))}
-              <Link
-                to="/admin/login"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors"
-                style={{ color: "hsl(215 20% 65%)" }}
-              >
-                <User className="w-5 h-5" />
-                Admin Login
-              </Link>
               <Link
                 to="/contact"
                 onClick={() => setMobileOpen(false)}

@@ -47,7 +47,7 @@ const Blogs = () => {
                   />
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="text-lg font-bold mb-3 text-foreground group-hover:text-amber-400 transition-colors line-clamp-2 leading-snug">
+                  <h3 className="text-base font-bold mb-3 text-foreground group-hover:text-amber-400 transition-colors line-clamp-2 leading-snug">
                     {blog.title}
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3 flex-1 mb-0">
@@ -76,7 +76,7 @@ const Blogs = () => {
                   />
                 </div>
                 <div className="md:w-2/3 p-6 md:p-8 flex flex-col justify-center">
-                  <h3 className="text-xl md:text-2xl font-bold mb-3 text-foreground group-hover:text-amber-400 transition-colors leading-snug">
+                  <h3 className="text-lg md:text-xl font-bold mb-3 text-foreground group-hover:text-amber-400 transition-colors leading-snug">
                     {blog.title}
                   </h3>
                   <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6">

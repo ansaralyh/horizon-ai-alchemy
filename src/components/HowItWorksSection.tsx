@@ -7,26 +7,31 @@ const steps = [
     id: "discovery",
     title: "Discovery",
     description: "We identify where AI automation can remove friction and improve efficiency.",
+    image: "/assets/service-analytics.jpg"
   },
   {
     id: "planning",
     title: "Planning",
     description: "We create a strategic roadmap for your AI journey, ensuring every step adds measurable value to your business.",
+    image: "/assets/service-ml.jpg"
   },
   {
     id: "design",
     title: "Workflow Design",
     description: "We design custom AI workflows that integrate seamlessly with your existing technology stack and team processes.",
+    image: "/assets/service-automation.jpg"
   },
   {
     id: "implementation",
     title: "Implementation",
     description: "Our engineers build and deploy your AI solutions with a focus on reliability, security, and immediate impact.",
+    image: "/assets/service-chatbot.jpg"
   },
   {
     id: "optimization",
     title: "Optimization",
     description: "We continuously monitor and refine your AI agents to ensure they adapt to new data and maximize operational performance.",
+    image: "/assets/service-vision.jpg"
   },
 ];
 
@@ -66,16 +71,14 @@ const HowItWorksSection = () => {
 
         {/* Tabbed Content Area */}
         <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 items-center reveal delay-200">
-          {/* Left: Step Buttons and Description */}
-          <div className="space-y-6 sm:space-y-10 min-w-0">
-            {/* Mobile Buttons (Scrollable) - contain scroll within viewport */}
-            <div className="flex lg:flex-col overflow-x-auto lg:overflow-x-visible pb-4 lg:pb-0 gap-2 sm:gap-3 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
-              {steps.map((step) => (
+          {/* Left: Step Buttons */}
+          <div className="space-y-3 sm:space-y-4 min-w-0 flex flex-col items-center">
+            {steps.map((step) => (
+              <div key={step.id} className="w-[85%] sm:w-[80%] md:w-[75%] lg:w-[70%] flex flex-col">
                 <button
-                  key={step.id}
                   onClick={() => setActiveStep(step)}
                   className={cn(
-                    "whitespace-nowrap flex-shrink-0 px-5 py-3 sm:px-6 sm:py-3.5 md:px-8 md:py-4 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 border text-left",
+                    "w-full px-4 py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-3.5 rounded-xl font-bold text-base transition-all duration-300 border text-center",
                     activeStep.id === step.id
                       ? "bg-primary text-primary-foreground border-primary shadow-amber"
                       : "bg-background text-muted-foreground border-border hover:border-primary/40 hover:bg-primary/5"
@@ -83,37 +86,39 @@ const HowItWorksSection = () => {
                 >
                   {step.title}
                 </button>
-              ))}
+              </div>
+            ))}
+          </div>
+
+          {/* Right: Circular Image / Visual & Description */}
+          <div className="flex flex-col items-center gap-6 lg:gap-8">
+            <div className="relative aspect-square max-w-[220px] sm:max-w-[280px] md:max-w-[320px] mx-auto w-full animate-float min-w-0">
+               {/* Glow effect behind circle */}
+               <div className="absolute inset-0 rounded-full bg-primary/20 blur-3xl" />
+               
+               {/* Circular Image Container */}
+               <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-primary/30 p-2">
+                  <div className="w-full h-full rounded-full overflow-hidden border-4 border-background">
+                      <img 
+                          src={activeStep.image} 
+                          alt={activeStep.title}
+                          className="w-full h-full object-cover grayscale-[0.2] hover:grayscale-0 transition-all duration-700"
+                      />
+                  </div>
+               </div>
+               
+               {/* Decorative small circles */}
+               <div className="absolute -top-4 right-10 w-8 h-8 rounded-full bg-primary/40 blur-sm animate-pulse-amber" />
+               <div className="absolute top-1/2 -right-8 w-12 h-12 rounded-full bg-primary/20 blur-md animate-float delay-100" />
+               <div className="absolute -bottom-6 left-1/4 w-10 h-10 rounded-full bg-primary/30 blur-md animate-pulse-amber delay-500" />
             </div>
 
-            {/* Step Description */}
-            <div className="min-h-[80px] sm:min-h-[100px] p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-navy-card/50 border border-navy-border/50 backdrop-blur-sm">
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium leading-relaxed text-foreground transition-all duration-500 animate-fade-in-scale break-words">
+            {/* Step Description below image */}
+            <div className="w-full max-w-lg p-5 sm:p-6 rounded-2xl bg-navy-card/50 border border-navy-border/50 backdrop-blur-sm shadow-xl">
+              <p className="text-sm sm:text-base md:text-lg font-medium leading-relaxed text-foreground animate-fade-in-scale break-words text-center">
                 {activeStep.description}
               </p>
             </div>
-          </div>
-
-          {/* Right: Circular Image / Visual */}
-          <div className="relative aspect-square max-w-[280px] sm:max-w-sm md:max-w-md mx-auto lg:mx-0 w-full animate-float min-w-0">
-             {/* Glow effect behind circle */}
-             <div className="absolute inset-0 rounded-full bg-primary/20 blur-3xl" />
-             
-             {/* Circular Image Container */}
-             <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-primary/30 p-2">
-                <div className="w-full h-full rounded-full overflow-hidden border-4 border-background">
-                    <img 
-                        src="/assets/ai-process-visual.png" 
-                        alt="AI Automation Process"
-                        className="w-full h-full object-cover grayscale-[0.2] hover:grayscale-0 transition-all duration-700"
-                    />
-                </div>
-             </div>
-             
-             {/* Decorative small circles */}
-             <div className="absolute -top-4 right-10 w-8 h-8 rounded-full bg-primary/40 blur-sm animate-pulse-amber" />
-             <div className="absolute top-1/2 -right-8 w-12 h-12 rounded-full bg-primary/20 blur-md animate-float delay-100" />
-             <div className="absolute -bottom-6 left-1/4 w-10 h-10 rounded-full bg-primary/30 blur-md animate-pulse-amber delay-500" />
           </div>
         </div>
       </div>

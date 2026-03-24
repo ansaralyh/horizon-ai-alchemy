@@ -1,10 +1,34 @@
 import { Zap } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const footerLinks = {
-  Services: ["AI/ML Development", "Automation Systems", "AI Chatbots", "Predictive Analytics", "Computer Vision", "NLP Solutions"],
-  Company: ["About Us", "Our Process", "Case Studies", "Careers", "Blog"],
-  Resources: ["Documentation", "API Reference", "AI Glossary", "Research Papers"],
-  Legal: ["Privacy Policy", "Terms of Service", "Security", "GDPR"],
+  Services: [
+    { label: "AI/ML Development", href: "/services#ai-ml-development" },
+    { label: "Automation Systems", href: "/services#intelligent-automation" },
+    { label: "AI Chatbots", href: "/services#ai-chatbots-agents" },
+    { label: "Predictive Analytics", href: "/services#predictive-analytics" },
+    { label: "Computer Vision", href: "/services#computer-vision" },
+    { label: "NLP Solutions", href: "/services#nlp-solutions" },
+  ],
+  Company: [
+    { label: "About Us", href: "/about" },
+    { label: "Our Process", href: "/about" },
+    { label: "Case Studies", href: "/projects" },
+    { label: "Careers", href: "#" },
+    { label: "Blog", href: "/blogs" },
+  ],
+  Resources: [
+    { label: "Documentation", href: "#" },
+    { label: "API Reference", href: "#" },
+    { label: "AI Glossary", href: "#" },
+    { label: "Research Papers", href: "#" },
+  ],
+  Legal: [
+    { label: "Privacy Policy", href: "#" },
+    { label: "Terms of Service", href: "#" },
+    { label: "Security", href: "#" },
+    { label: "GDPR", href: "#" },
+  ],
 };
 
 const Footer = () => {
@@ -59,20 +83,48 @@ const Footer = () => {
               </h4>
               <ul className="space-y-2.5">
                 {links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="text-sm transition-colors duration-200"
-                      style={{ color: "hsl(215 20% 45%)" }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.color = "hsl(210 40% 80%)";
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.color = "hsl(215 20% 45%)";
-                      }}
-                    >
-                      {link}
-                    </a>
+                  <li key={link.label}>
+                    {link.href.startsWith('/') ? (
+                      <Link
+                        to={link.href}
+                        onClick={(e) => {
+                          if (link.href.includes('#')) {
+                            const [path, hash] = link.href.split('#');
+                            if (window.location.pathname === path) {
+                              e.preventDefault();
+                              const el = document.getElementById(hash);
+                              if (el) el.scrollIntoView({ behavior: 'smooth' });
+                            }
+                          } else {
+                            window.scrollTo(0, 0);
+                          }
+                        }}
+                        className="text-sm transition-colors duration-200 block"
+                        style={{ color: "hsl(215 20% 45%)" }}
+                        onMouseEnter={(e) => {
+                          (e.currentTarget as HTMLElement).style.color = "hsl(210 40% 80%)";
+                        }}
+                        onMouseLeave={(e) => {
+                          (e.currentTarget as HTMLElement).style.color = "hsl(215 20% 45%)";
+                        }}
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.href}
+                        className="text-sm transition-colors duration-200 block"
+                        style={{ color: "hsl(215 20% 45%)" }}
+                        onMouseEnter={(e) => {
+                          (e.currentTarget as HTMLElement).style.color = "hsl(210 40% 80%)";
+                        }}
+                        onMouseLeave={(e) => {
+                          (e.currentTarget as HTMLElement).style.color = "hsl(215 20% 45%)";
+                        }}
+                      >
+                        {link.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>

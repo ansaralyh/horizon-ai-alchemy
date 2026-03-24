@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { Send, Mail, Phone, MapPin, Linkedin, Twitter, Github } from "lucide-react";
+import { Send, Mail, Phone, MapPin, Linkedin, Twitter, Instagram, Facebook } from "lucide-react";
 
 const ContactSection = () => {
   const [form, setForm] = useState({ name: "", email: "", company: "", message: "" });
@@ -84,12 +84,16 @@ const ContactSection = () => {
             {/* Social */}
             <div className="flex gap-3">
               {[
-                { icon: Linkedin, label: "LinkedIn" },
-                { icon: Twitter, label: "Twitter" },
-                { icon: Github, label: "GitHub" },
-              ].map(({ icon: Icon, label }) => (
-                <button
+                { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/company/horizon-bee-tech/" },
+                { icon: Twitter, label: "Twitter", href: "https://x.com/HorizonBeeTech" },
+                { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/horizonbeetech?utm_source=qr&igsh=bmduYmQwZngxa3Az" },
+                { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/share/14SSM3jPLXV/" },
+              ].map(({ icon: Icon, label, href }) => (
+                <a
                   key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110"
                   style={{
                     background: "hsl(220 20% 12%)",
@@ -106,7 +110,7 @@ const ContactSection = () => {
                   }}
                 >
                   <Icon className="w-4 h-4" />
-                </button>
+                </a>
               ))}
             </div>
           </div>

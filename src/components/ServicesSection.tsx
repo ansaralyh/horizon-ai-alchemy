@@ -43,6 +43,7 @@ const ServicesSection = () => {
           {services.map((svc, i) => (
             <div
               key={svc.id}
+              id={svc.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}
               className="group rounded-2xl overflow-hidden transition-all duration-400 reveal flex flex-col h-full"
               style={{
                 background: "hsl(220 24% 9%)",
