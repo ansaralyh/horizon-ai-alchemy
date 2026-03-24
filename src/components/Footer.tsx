@@ -1,4 +1,4 @@
-import { Zap } from "lucide-react";
+import { Zap, Linkedin, Twitter, Instagram, Facebook } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const footerLinks = {
@@ -70,6 +70,39 @@ const Footer = () => {
               Next-generation AI & ML solutions for enterprises ready to lead
               the intelligence revolution.
             </p>
+
+            {/* Social Links */}
+            <div className="flex gap-3 mt-6">
+              {[
+                { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/company/horizon-bee-tech/" },
+                { icon: Twitter, label: "Twitter", href: "https://x.com/HorizonBeeTech" },
+                { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/horizonbeetech?utm_source=qr&igsh=bmduYmQwZngxa3Az" },
+                { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/share/14SSM3jPLXV/" },
+              ].map(({ icon: Icon, label, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110"
+                  style={{
+                    background: "hsl(220 20% 12%)",
+                    border: "1px solid hsl(220 20% 18%)",
+                    color: "hsl(215 20% 55%)",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.borderColor = "hsl(43 96% 56% / 0.4)";
+                    (e.currentTarget as HTMLElement).style.color = "hsl(43 96% 56%)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.borderColor = "hsl(220 20% 18%)";
+                    (e.currentTarget as HTMLElement).style.color = "hsl(215 20% 55%)";
+                  }}
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Links */}
