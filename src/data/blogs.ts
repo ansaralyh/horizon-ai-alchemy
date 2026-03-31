@@ -1,5 +1,5 @@
 export interface BlogPost {
-  id: number;
+  id: string;
   title: string;
   excerpt: string;
   content: string;
@@ -11,7 +11,7 @@ export interface BlogPost {
 
 export const blogs: BlogPost[] = [
   {
-    id: 1,
+    id: "1",
     title: "Why Do Enterprises Need Integrated AI Architectures?",
     category: "Architecture",
     author: "Dr. Sarah Chen",
@@ -21,7 +21,7 @@ export const blogs: BlogPost[] = [
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1200",
   },
   {
-    id: 2,
+    id: "2",
     title: "The Future of Automation: Innovations Transforming Workflows",
     category: "Automation",
     author: "Marcus Vance",
@@ -31,7 +31,7 @@ export const blogs: BlogPost[] = [
     image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200",
   },
   {
-    id: 3,
+    id: "3",
     title: "Boost Your Tech Stack Success with Smart Scaling Strategies",
     category: "Infrastructure",
     author: "Elena Rodriguez",
@@ -41,7 +41,7 @@ export const blogs: BlogPost[] = [
     image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200",
   },
   {
-    id: 4,
+    id: "4",
     title: "Streamline Operations: How Machine Learning Transforms Work",
     category: "Machine Learning",
     author: "Dr. Sarah Chen",
@@ -51,7 +51,7 @@ export const blogs: BlogPost[] = [
     image: "https://images.unsplash.com/photo-1531297172868-c4536f3d17a3?auto=format&fit=crop&q=80&w=1200",
   },
   {
-    id: 5,
+    id: "5",
     title: "Improving User Engagement with Conversational AI",
     category: "AI Interfaces",
     author: "Priya Sharma",
@@ -61,7 +61,7 @@ export const blogs: BlogPost[] = [
     image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=1200",
   },
   {
-    id: 6,
+    id: "6",
     title: "The Role of Neural Networks in Revenue Optimization",
     category: "Finance",
     author: "David Kim",
@@ -71,7 +71,7 @@ export const blogs: BlogPost[] = [
     image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1200",
   },
   {
-    id: 7,
+    id: "7",
     title: "Streamline Operations: How Predictive Models Transform Enterprises",
     category: "Predictive AI",
     author: "Elena Rodriguez",
@@ -81,7 +81,7 @@ export const blogs: BlogPost[] = [
     image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=1200",
   },
   {
-    id: 8,
+    id: "8",
     title: "Improving Global Security with Advanced Computer Vision",
     category: "Computer Vision",
     author: "Marcus Vance",
@@ -91,7 +91,7 @@ export const blogs: BlogPost[] = [
     image: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&q=80&w=1200",
   },
   {
-    id: 9,
+    id: "9",
     title: "The Role of Large Language Models in Content Strategy",
     category: "Generative AI",
     author: "Priya Sharma",

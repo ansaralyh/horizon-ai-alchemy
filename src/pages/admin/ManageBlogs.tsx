@@ -12,7 +12,8 @@ const ManageBlogs = () => {
   
   // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   
   // Image Upload reference
   const fileInputRef = React.useRef<HTMLInputElement>(null);
@@ -57,7 +58,7 @@ const ManageBlogs = () => {
     setIsModalOpen(true);
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     if (confirm("Are you sure you want to delete this blog post?")) {
       deleteBlog(id);
     }
@@ -66,6 +67,7 @@ const ManageBlogs = () => {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setFormData({ ...formData, image: reader.result as string });
@@ -74,14 +76,28 @@ const ManageBlogs = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (editingId) {
-      updateBlog(editingId, formData);
-    } else {
-      addBlog(formData);
+    
+    const data = new FormData();
+    data.append("title", formData.title);
+    data.append("excerpt", formData.excerpt);
+    data.append("content", formData.content);
+    data.append("author", formData.author);
+    data.append("category", formData.category);
+    
+    if (imageFile) {
+      data.append("image", imageFile);
     }
+
+    if (editingId) {
+      await updateBlog(editingId, data);
+    } else {
+      await addBlog(data);
+    }
+    
     setIsModalOpen(false);
+    setImageFile(null);
   };
 
   return (

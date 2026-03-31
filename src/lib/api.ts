@@ -46,15 +46,40 @@ export async function apiFetch(
 ): Promise<Response> {
   const url = apiUrl(path);
   const { body, ...rest } = options;
+  const token = localStorage.getItem("adminToken");
+
   const init: RequestInit = {
     ...rest,
     headers: {
       "Content-Type": "application/json",
+      ...(token ? { "Authorization": `Bearer ${token}` } : {}),
       ...(rest.headers as HeadersInit),
     },
   };
   if (body != null && typeof body === "object") {
     init.body = JSON.stringify(body);
   }
+  return fetch(url, init);
+}
+
+/**
+ * Fetch wrapper for multipart/form-data (e.g. file uploads).
+ * Automatically handles the Authorization header if a token exists in localStorage.
+ */
+export async function apiFetchMultipart(
+  path: string,
+  options: Omit<RequestInit, "body"> & { body: FormData }
+): Promise<Response> {
+  const url = apiUrl(path);
+  const token = localStorage.getItem("adminToken");
+  
+  const init: RequestInit = {
+    ...options,
+    headers: {
+      ...(token ? { "Authorization": `Bearer ${token}` } : {}),
+      ...(options.headers as HeadersInit),
+    },
+  };
+  
   return fetch(url, init);
 }

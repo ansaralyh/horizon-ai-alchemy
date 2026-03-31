@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { blogs as defaultBlogs, BlogPost } from "@/data/blogs";
+import { apiFetch, apiFetchMultipart } from "@/lib/api";
 
 // Service Interface
 export interface ServiceItem {
@@ -104,9 +105,10 @@ interface DataContextType {
   deleteService: (id: number) => void;
   
   blogs: BlogPost[];
-  addBlog: (blog: Omit<BlogPost, "id">) => void;
-  updateBlog: (id: number, blog: Partial<BlogPost>) => void;
-  deleteBlog: (id: number) => void;
+  addBlog: (formData: FormData) => Promise<void>;
+  updateBlog: (id: string, formData: FormData) => Promise<void>;
+  deleteBlog: (id: string) => Promise<void>;
+  loading: boolean;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -117,9 +119,46 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return saved ? JSON.parse(saved) : defaultServices;
   });
 
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     localStorage.setItem("horizon_services", JSON.stringify(services));
   }, [services]);
+
+  const fetchBlogs = async () => {
+    try {
+      setLoading(true);
+      const response = await apiFetch("/api/admin/blogs");
+      const result = await response.json();
+      if (result.success) {
+        // Map backend to frontend schema
+        const mappedBlogs: BlogPost[] = result.data.blogs.map((b: any) => ({
+          id: b._id,
+          title: b.title,
+          excerpt: b.excerpt,
+          content: b.content,
+          image: b.thumbnail,
+          author: b.author,
+          category: b.category,
+          date: new Date(b.createdAt).toLocaleDateString('en-US', { 
+            month: 'long', 
+            day: 'numeric', 
+            year: 'numeric' 
+          })
+        }));
+        setBlogs(mappedBlogs);
+      }
+    } catch (error) {
+      console.error("Failed to fetch blogs:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
 
   const addService = (service: Omit<ServiceItem, "id" | "date">) => {
     const newService: ServiceItem = {
@@ -138,35 +177,51 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setServices(prev => prev.filter(s => s.id !== id));
   };
 
-  const [blogs, setBlogs] = useState<BlogPost[]>(() => {
-    const saved = localStorage.getItem("horizon_blogs");
-    return saved ? JSON.parse(saved) : defaultBlogs;
-  });
-
-  useEffect(() => {
-    localStorage.setItem("horizon_blogs", JSON.stringify(blogs));
-  }, [blogs]);
-
-  const addBlog = (blog: Omit<BlogPost, "id">) => {
-    const newBlog: BlogPost = {
-      ...blog,
-      id: Date.now(),
-    };
-    setBlogs(prev => [newBlog, ...prev]);
+  const addBlog = async (formData: FormData) => {
+    try {
+      const response = await apiFetchMultipart("/api/admin/blogs", {
+        method: "POST",
+        body: formData
+      });
+      if (response.ok) {
+        await fetchBlogs();
+      }
+    } catch (error) {
+      console.error("Add blog failed:", error);
+    }
   };
 
-  const updateBlog = (id: number, updatedFields: Partial<BlogPost>) => {
-    setBlogs(prev => prev.map(b => b.id === id ? { ...b, ...updatedFields } : b));
+  const updateBlog = async (id: string, formData: FormData) => {
+    try {
+      const response = await apiFetchMultipart(`/api/admin/blogs/${id}`, {
+        method: "PUT",
+        body: formData
+      });
+      if (response.ok) {
+        await fetchBlogs();
+      }
+    } catch (error) {
+      console.error("Update blog failed:", error);
+    }
   };
 
-  const deleteBlog = (id: number) => {
-    setBlogs(prev => prev.filter(b => b.id !== id));
+  const deleteBlog = async (id: string) => {
+    try {
+      const response = await apiFetch(`/api/admin/blogs/${id}`, {
+        method: "DELETE"
+      });
+      if (response.ok) {
+        await fetchBlogs();
+      }
+    } catch (error) {
+      console.error("Delete blog failed:", error);
+    }
   };
 
   return (
     <DataContext.Provider value={{ 
       services, addService, updateService, deleteService,
-      blogs, addBlog, updateBlog, deleteBlog
+      blogs, addBlog, updateBlog, deleteBlog, loading
     }}>
       {children}
     </DataContext.Provider>

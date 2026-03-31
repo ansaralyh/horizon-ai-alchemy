@@ -10,7 +10,7 @@ const BlogDetails = () => {
   const navigate = useNavigate();
   const { blogs } = useData();
   
-  const blog = blogs.find(b => b.id === Number(id));
+  const blog = blogs.find(b => b.id === id);
 
   useEffect(() => {
     window.scrollTo(0, 0);
