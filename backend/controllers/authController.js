@@ -51,6 +51,10 @@ const loginAdmin = async (req, res) => {
     try {
         const { email, password } = req.body;
 
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Please provide email and password' });
+        }
+
         // Check for admin email
         const admin = await Admin.findOne({ email }).select('+password');
 
@@ -65,6 +69,7 @@ const loginAdmin = async (req, res) => {
             res.status(401).json({ message: 'Invalid credentials' });
         }
     } catch (error) {
+        console.error('Login Error Stack Trace:', error);
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };

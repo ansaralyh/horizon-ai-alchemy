@@ -39,6 +39,7 @@ const getBlogs = async (req, res) => {
             },
         });
     } catch (error) {
+        console.error('Fetch Blogs Error:', error);
         res.status(500).json({ success: false, message: error.message });
     }
 };
@@ -69,16 +70,27 @@ const getBlogById = async (req, res) => {
 // @access  Private
 const createBlog = async (req, res) => {
     try {
-        const { title, slug, content, category, author, status, thumbnail } = req.body;
+        console.log('Create Blog Request Body:', req.body);
+        const { title, slug, content, excerpt, category, author, status, thumbnail } = req.body;
 
+        // --- Data Validation ---
+        if (!title || !content || !excerpt || !category || !author) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'All fields (title, content, excerpt, category, author) are required' 
+            });
+        }
+
+        // --- Image Handling ---
         // If manual thumbnail upload via multer was used, req.file.path would be here
-        // But for this controller, we'll assume the URL is passed or handled by route middleware
         const imageUrl = req.file ? req.file.path : thumbnail;
 
+        // --- Blog Creation ---
         const blog = await Blog.create({
             title,
-            slug: slug || title.toLowerCase().split(' ').join('-'),
+            slug: slug || title.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''),
             content,
+            excerpt,
             category,
             author,
             status: status || 'draft',
@@ -91,6 +103,14 @@ const createBlog = async (req, res) => {
             data: blog,
         });
     } catch (error) {
+        console.error('Create Blog Error:', error);
+        
+        // Handle MongoDB/Mongoose specific errors
+        if (error.name === 'ValidationError') {
+            const messages = Object.values(error.errors).map(err => err.message);
+            return res.status(400).json({ success: false, message: messages.join(', ') });
+        }
+
         if (error.code === 11000) {
             return res.status(400).json({ success: false, message: 'Slug already exists' });
         }
@@ -103,7 +123,7 @@ const createBlog = async (req, res) => {
 // @access  Private
 const updateBlog = async (req, res) => {
     try {
-        const { title, slug, content, category, author, status, thumbnail } = req.body;
+        const { title, slug, content, excerpt, category, author, status, thumbnail } = req.body;
 
         let blog = await Blog.findById(req.params.id);
 
@@ -117,12 +137,13 @@ const updateBlog = async (req, res) => {
             req.params.id,
             {
                 title,
-                slug,
+                slug: slug || (title ? title.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') : undefined),
                 content,
+                excerpt,
                 category,
                 author,
                 status,
-                thumbnail: imageUrl !== undefined ? imageUrl : blog.thumbnail,
+                thumbnail: imageUrl !== undefined && imageUrl !== null ? imageUrl : blog.thumbnail,
             },
             { new: true, runValidators: true }
         );

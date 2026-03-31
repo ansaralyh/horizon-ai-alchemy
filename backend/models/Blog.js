@@ -17,6 +17,10 @@ const blogSchema = new mongoose.Schema(
             type: String,
             required: [true, 'Please add content'],
         },
+        excerpt: {
+            type: String,
+            required: [true, 'Please add an excerpt'],
+        },
         category: {
             type: String,
             required: [true, 'Please add a category'],
