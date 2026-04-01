@@ -101,7 +101,7 @@ const HeroSection = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+      className="relative overflow-hidden min-h-screen"
     >
       {/* Background image */}
       <div
@@ -134,7 +134,7 @@ const HeroSection = () => {
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 text-center box-border">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 text-center box-border pt-24 sm:pt-32 pb-20 sm:pb-24 flex flex-col items-center justify-center min-h-screen">
         {/* Badge */}
         <div
           className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-[10px] sm:text-xs font-semibold tracking-widest uppercase mb-6 sm:mb-8 animate-fade-up"

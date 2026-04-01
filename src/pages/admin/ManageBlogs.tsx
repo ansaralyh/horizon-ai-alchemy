@@ -14,6 +14,8 @@ const ManageBlogs = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   
   // Image Upload reference
   const fileInputRef = React.useRef<HTMLInputElement>(null);
@@ -37,6 +39,7 @@ const ManageBlogs = () => {
 
   const handleOpenAddModal = () => {
     setEditingId(null);
+    setError(null);
     setFormData({ 
       title: "", excerpt: "", content: "", image: "", author: "", category: "", 
       date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) 
@@ -46,6 +49,7 @@ const ManageBlogs = () => {
 
   const handleOpenEditModal = (blog: BlogPost) => {
     setEditingId(blog.id);
+    setError(null);
     setFormData({
       title: blog.title,
       excerpt: blog.excerpt,
@@ -78,26 +82,35 @@ const ManageBlogs = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
     
-    const data = new FormData();
-    data.append("title", formData.title);
-    data.append("excerpt", formData.excerpt);
-    data.append("content", formData.content);
-    data.append("author", formData.author);
-    data.append("category", formData.category);
-    
-    if (imageFile) {
-      data.append("image", imageFile);
-    }
+    try {
+      const data = new FormData();
+      data.append("title", formData.title);
+      data.append("excerpt", formData.excerpt);
+      data.append("content", formData.content);
+      data.append("author", formData.author);
+      data.append("category", formData.category);
+      
+      if (imageFile) {
+        data.append("image", imageFile);
+      }
 
-    if (editingId) {
-      await updateBlog(editingId, data);
-    } else {
-      await addBlog(data);
+      if (editingId) {
+        await updateBlog(editingId, data);
+      } else {
+        await addBlog(data);
+      }
+      
+      setIsModalOpen(false);
+      setImageFile(null);
+    } catch (err: any) {
+      console.error("Form submission error:", err);
+      setError(err.message || "Failed to save blog. Please check your connection and try again.");
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    setIsModalOpen(false);
-    setImageFile(null);
   };
 
   return (
@@ -221,7 +234,11 @@ const ManageBlogs = () => {
               <X className="w-5 h-5" />
             </button>
             
-            <h2 className="text-xl font-bold mb-6">{editingId ? 'Edit Blog' : 'Add New Blog'}</h2>
+            {error && (
+              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs mb-4 animate-shake">
+                {error}
+              </div>
+            )}
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -331,9 +348,17 @@ const ManageBlogs = () => {
                 </button>
                 <button 
                   type="submit"
-                  className="btn-amber px-6 py-2.5 text-sm"
+                  disabled={isSubmitting}
+                  className="btn-amber px-6 py-2.5 text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
-                  {editingId ? 'Save Changes' : 'Create Blog'}
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                      {editingId ? 'Saving...' : 'Creating...'}
+                    </>
+                  ) : (
+                    editingId ? 'Save Changes' : 'Create Blog'
+                  )}
                 </button>
               </div>
             </form>
