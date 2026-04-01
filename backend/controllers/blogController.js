@@ -70,11 +70,15 @@ const getBlogById = async (req, res) => {
 // @access  Private
 const createBlog = async (req, res) => {
     try {
-        console.log('Create Blog Request Body:', req.body);
+        console.log('--- Start Create Blog Process ---');
+        console.log('Request Headers:', req.headers['content-type']);
+        console.log('Request Body Keys:', Object.keys(req.body));
+        
         const { title, slug, content, excerpt, category, author, status, thumbnail } = req.body;
 
         // --- Data Validation ---
         if (!title || !content || !excerpt || !category || !author) {
+            console.warn('Validation Failed: Missing required fields');
             return res.status(400).json({ 
                 success: false, 
                 message: 'All fields (title, content, excerpt, category, author) are required' 
@@ -82,11 +86,20 @@ const createBlog = async (req, res) => {
         }
 
         // --- Image Handling ---
-        // If manual thumbnail upload via multer was used, req.file.path would be here
+        console.log('Handling Image...');
         const imageUrl = req.file ? req.file.path : thumbnail;
+        if (req.file) {
+            console.log('Image uploaded to Cloudinary:', req.file.path);
+        } else if (thumbnail) {
+            console.log('Using provided thumbnail URL');
+        } else {
+            console.log('No image provided');
+        }
 
         // --- Blog Creation ---
-        const blog = await Blog.create({
+        console.log('Creating Blog in Database...');
+        
+        const blogData = {
             title,
             slug: slug || title.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''),
             content,
@@ -95,7 +108,11 @@ const createBlog = async (req, res) => {
             author,
             status: status || 'draft',
             thumbnail: imageUrl || '',
-        });
+        };
+
+        const blog = await Blog.create(blogData);
+        
+        console.log('✅ Blog created successfully in DB:', blog._id);
 
         res.status(201).json({
             success: true,
@@ -103,7 +120,7 @@ const createBlog = async (req, res) => {
             data: blog,
         });
     } catch (error) {
-        console.error('Create Blog Error:', error);
+        console.error('❌ Create Blog Error:', error);
         
         // Handle MongoDB/Mongoose specific errors
         if (error.name === 'ValidationError') {
@@ -114,9 +131,10 @@ const createBlog = async (req, res) => {
         if (error.code === 11000) {
             return res.status(400).json({ success: false, message: 'Slug already exists' });
         }
-        res.status(500).json({ success: false, message: error.message });
+        res.status(500).json({ success: false, message: error.message || 'Internal Server Error' });
     }
 };
+
 
 // @desc    Update blog
 // @route   PUT /api/admin/blogs/:id
