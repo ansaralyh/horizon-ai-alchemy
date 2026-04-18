@@ -10,16 +10,14 @@ const {
 const { protect } = require('../middleware/authMiddleware');
 const { upload } = require('../config/cloudinary');
 
-// All routes are protected (admin only)
-router.use(protect);
+// GET routes are public
+router.route('/').get(getBlogs);
+router.route('/:id').get(getBlogById);
 
-router.route('/')
-    .get(getBlogs)
-    .post(upload.single('image'), createBlog);
-
+// POST, PUT, DELETE routes require admin protection
+router.route('/').post(protect, upload.single('image'), createBlog);
 router.route('/:id')
-    .get(getBlogById)
-    .put(upload.single('image'), updateBlog)
-    .delete(deleteBlog);
+    .put(protect, upload.single('image'), updateBlog)
+    .delete(protect, deleteBlog);
 
 module.exports = router;
