@@ -38,7 +38,7 @@ const BlogDetails = () => {
   // Improved splitting logic to handle different newline formats and ensure gaps
   const rawParagraphs = blog.content.split(/\n+/).filter(p => p.trim() !== '');
   
-  const sections: { title?: string; content: string[] }[] = [];
+  let sections: { title?: string; content: string[] }[] = [];
   let currentSection: { title?: string; content: string[] } = { content: [] };
 
   rawParagraphs.forEach((paragraph) => {
@@ -55,121 +55,138 @@ const BlogDetails = () => {
     sections.push(currentSection);
   }
 
+  // If there's only one section, split it for the intro layout
+  if (sections.length === 1 && sections[0].content.length > 2) {
+    const introCount = Math.min(2, Math.floor(sections[0].content.length / 2));
+    const introContent = sections[0].content.slice(0, introCount);
+    const bodyContent = sections[0].content.slice(introCount);
+    sections = [
+      { content: introContent },
+      { content: bodyContent }
+    ];
+  }
+
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-amber-500/30 w-full overflow-x-hidden font-sans">
+    <div className="min-h-screen bg-background text-foreground selection:bg-amber-500/30 w-full overflow-x-hidden">
       <Navbar />
 
-      <main className="pt-32 pb-24">
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
+      <main>
+        {/* --- HERO SECTION (Screenshot 1 Style) --- */}
+        <section className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <img 
+              src={blog.image} 
+              alt={blog.title} 
+              className="w-full h-full object-cover"
+            />
+            {/* Gradient Overlay for Text Readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-black/30" />
+          </div>
           
-          {/* Back Navigation */}
-          <Link 
-            to="/blogs" 
-            className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-amber-500 transition-colors mb-12 group"
-          >
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-            <span className="font-bold tracking-widest uppercase text-[10px]">Back to Insights</span>
-          </Link>
-
-          {/* Header Section: Full Width Stack */}
-          <header className="w-full mb-16 lg:mb-24">
-            <div className="inline-flex items-center px-4 py-1.5 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold text-amber-500 mb-8">
+          <div className="relative z-10 max-w-5xl mx-auto px-6 text-center pt-20">
+            <div className="inline-block px-4 py-1.5 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold text-amber-500 mb-8 animate-fade-in shadow-lg shadow-amber-500/5">
               {blog.category}
             </div>
-
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-10 tracking-tight leading-[1.1]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-10 tracking-tighter leading-[1.05] animate-slide-up" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               {blog.title}
             </h1>
-
-            <div className="flex flex-wrap items-center gap-8 text-sm text-gray-400 border-y border-white/5 py-8">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
-                  <User className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="block text-[10px] uppercase tracking-wider text-gray-500 font-bold">Written by</span>
-                  <span className="text-white font-medium">{blog.author}</span>
-                </div>
-              </div>
-              <div className="h-10 w-px bg-white/10 hidden sm:block" />
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-amber-500/60" />
-                <span>{blog.date}</span>
-              </div>
+            <div className="flex items-center justify-center gap-8 text-sm text-gray-400 font-medium">
+              <span className="flex items-center gap-2"><User className="w-4 h-4 text-amber-500" /> {blog.author}</span>
+              <div className="w-1 h-1 rounded-full bg-gray-500" />
+              <span className="flex items-center gap-2"><Clock className="w-4 h-4 text-amber-500" /> {blog.date}</span>
             </div>
-          </header>
+          </div>
+        </section>
 
-          {/* Featured Image: Full Width of Container */}
-          <figure className="w-full mb-20 lg:mb-28">
-            <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border border-white/10 bg-navy-card aspect-[21/9]">
-              <img 
-                src={blog.image} 
-                alt={blog.title} 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-            </div>
-            {blog.imageCaption && (
-              <figcaption className="mt-4 text-center text-sm text-gray-500 italic">
-                {blog.imageCaption}
-              </figcaption>
-            )}
-          </figure>
-
-          {/* Content Area: Full Width (1200px container) */}
-          <div className="w-full">
-            <div className="grid grid-cols-1 gap-20 lg:gap-32">
-              {sections.map((section, index) => (
-                <section key={index} className="w-full">
-                  {section.title && (
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {section.title}
+        {/* --- 2ND SECTION: INTRODUCTION (Text Left, Image Right) --- */}
+        {sections.length > 0 && (
+          <section className="py-24 lg:py-32 bg-background relative overflow-hidden">
+            {/* Ambient Background Glow */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
+            
+            <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-start">
+                <div className="lg:col-span-7 space-y-10">
+                  {sections[0].title && (
+                    <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {sections[0].title}
                     </h2>
                   )}
-                  <div className="space-y-12 lg:space-y-16">
-                    {section.content.map((p, pIdx) => {
-                      const isFirstParagraph = index === 0 && pIdx === 0;
-                      return (
-                        <p 
-                          key={pIdx} 
-                          className={`text-left leading-relaxed ${
-                            isFirstParagraph 
-                              ? "text-2xl md:text-3xl font-bold text-white pl-8 border-l-4 border-amber-500 py-2" 
-                              : "text-lg md:text-xl text-gray-400 font-normal"
-                          }`}
-                        >
-                          {p}
-                        </p>
-                      );
-                    })}
+                  <div className="space-y-8">
+                    {sections[0].content.map((p, pIdx) => (
+                      <p 
+                        key={pIdx} 
+                        className={`leading-relaxed ${
+                          pIdx === 0 
+                            ? "text-2xl md:text-3xl font-bold text-white border-l-4 border-amber-500 pl-8" 
+                            : "text-lg md:text-xl text-gray-400"
+                        }`}
+                      >
+                        {p}
+                      </p>
+                    ))}
                   </div>
-                </section>
-              ))}
-            </div>
-
-            {/* Bottom Navigation */}
-            <footer className="mt-32 pt-16 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-12">
-              <button 
-                onClick={() => navigate('/blogs')}
-                className="group relative px-10 py-5 bg-transparent border border-amber-500/30 rounded-full overflow-hidden transition-all hover:border-amber-500"
-              >
-                <span className="relative z-10 text-white font-bold text-xs uppercase tracking-widest transition-colors group-hover:text-black">
-                  Back to All Blogs
-                </span>
-                <div className="absolute inset-0 bg-amber-500 translate-y-full transition-transform group-hover:translate-y-0" />
-              </button>
-              
-              <div className="flex flex-col items-center sm:items-end">
-                <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-amber-500/60 mb-4">Read More</span>
-                <Link 
-                  to="/blogs" 
-                  className="text-2xl font-bold text-white hover:text-amber-500 transition-all duration-300 group inline-flex items-center gap-3"
-                >
-                  Next Insight <ArrowLeft className="w-6 h-6 rotate-180 transition-transform group-hover:translate-x-2" />
-                </Link>
+                </div>
+                
+                {/* Introduction Image on Right */}
+                <div className="lg:col-span-5 relative group mt-12 lg:mt-0">
+                  <div className="absolute -inset-4 bg-amber-500/10 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 aspect-[4/5] lg:aspect-[3/4]">
+                    <img 
+                      src={blog.image} 
+                      alt="Introduction visual" 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                    />
+                    <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[2.5rem]" />
+                  </div>
+                </div>
               </div>
-            </footer>
-          </div>
+            </div>
+          </section>
+        )}
+
+        {/* --- REMAINING CONTENT: FULL WIDTH --- */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 space-y-24 lg:space-y-32 pb-32">
+          {sections.slice(1).map((section, index) => (
+            <article key={index} className="w-full">
+              {section.title && (
+                <h2 className="text-3xl md:text-5xl font-bold text-white mb-12 tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {section.title}
+                </h2>
+              )}
+              <div className="space-y-12 max-w-5xl">
+                {section.content.map((p, pIdx) => (
+                  <p 
+                    key={pIdx} 
+                    className="text-lg md:text-2xl text-gray-400 font-normal leading-relaxed"
+                  >
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </article>
+          ))}
+
+          {/* Bottom Navigation */}
+          <footer className="pt-20 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-12">
+            <Link 
+              to="/blogs" 
+              className="inline-flex items-center gap-3 text-sm text-gray-400 hover:text-amber-500 transition-all group"
+            >
+              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-2" />
+              <span className="font-bold tracking-widest uppercase text-[10px]">Back to Insights</span>
+            </Link>
+
+            <button 
+              onClick={() => navigate('/blogs')}
+              className="group relative px-10 py-5 bg-navy-card border border-white/10 rounded-full overflow-hidden transition-all hover:border-amber-500"
+            >
+              <span className="relative z-10 text-white font-bold text-xs uppercase tracking-widest transition-colors">
+                Explore More Articles
+              </span>
+              <div className="absolute inset-0 bg-amber-500 translate-y-full transition-transform group-hover:translate-y-0" />
+            </button>
+          </footer>
         </div>
       </main>
 

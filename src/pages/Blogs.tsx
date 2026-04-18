@@ -76,10 +76,10 @@ const Blogs = () => {
                   />
                 </div>
                 <div className="md:w-2/3 p-6 md:p-8 flex flex-col justify-center">
-                  <h3 className="text-xl md:text-2xl font-bold mb-3 text-foreground group-hover:text-amber-400 transition-colors leading-snug">
+                  <h3 className="text-3xl font-bold mb-3 text-foreground group-hover:text-amber-400 transition-colors leading-snug">
                     {blog.title}
                   </h3>
-                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-6">
+                  <p className="text-xl text-muted-foreground leading-relaxed mb-6">
                     {blog.excerpt}
                   </p>
                   <div>
