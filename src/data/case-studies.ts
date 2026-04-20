@@ -41,6 +41,31 @@ export interface CaseStudy {
     content: string;
     buttons: { label: string; href: string }[];
   };
+  challenge?: {
+    title: string;
+    content: string;
+    problems: string[];
+    image?: string;
+  };
+  solution?: {
+    title: string;
+    content: string;
+    image?: string;
+  };
+  featuresList?: {
+    iconName: string;
+    title: string;
+    desc: string;
+    points?: string[];
+  }[];
+  results?: {
+    title: string;
+    content: string;
+    bullets: string[];
+    image?: string;
+  };
+  techStack?: string[];
+  skills?: string[];
   bonusLine?: string;
   image?: string;
   gallery?: string[];
@@ -156,5 +181,108 @@ export const caseStudies: CaseStudy[] = [
     title: "Revenue Forecast Accuracy from 65% → 94%",
     desc: "Deployed a multi-model ensemble for revenue and market trend prediction that outperformed all existing BI tools by 29 percentage points.",
     metrics: ["94% accuracy", "+29pp uplift", "6wk delivery"],
+  },
+  {
+    id: "ai-content-automation",
+    tag: "AI Automation / Workflow Systems",
+    client: "horizonbeetech.com",
+    title: "AI-Powered Content Automation System",
+    desc: "Fully automated AI-driven system for content generation and publishing at scale.",
+    metrics: ["100% Automated", "90% Cost Reduction", "Daily Continuity"],
+    image: "/assets/ai-process-visual.png",
+    gallery: ["/assets/service-automation.jpg", "/assets/service-nlp.jpg", "/assets/service-analytics.jpg"],
+    themeColor: "amber",
+    hero: {
+      headline: "AI-Powered Content Automation System",
+      subheadline: "Fully automated AI-driven system for content generation and publishing at scale.",
+      stats: [
+        { label: "Manual Effort", value: "0%" },
+        { label: "Production Speed", value: "10x Faster" },
+        { label: "Workflow Logic", value: "n8n Core" },
+        { label: "Output Quality", value: "SEO Ready" }
+      ]
+    },
+    overview: {
+      title: "Project Overview",
+      content: [
+        "We designed and implemented a fully automated content generation and publishing system for horizonbeetech.com, eliminating manual effort across the entire blogging workflow.",
+        "This solution leverages AI and workflow automation to streamline content creation, improve efficiency, and enable consistent publishing at scale."
+      ],
+      features: [
+        "End-to-end automation pipeline",
+        "Multi-LLM integration (GPT-4/Claude)",
+        "Automated SEO optimization",
+        "Direct CMS publishing"
+      ]
+    },
+    challenge: {
+      title: "The Challenge",
+      content: "Managing a consistent content pipeline required significant manual effort—from writing and formatting articles to uploading and publishing them. The team faced massive bottlenecks that limited growth.",
+      problems: [
+        "Time inefficiencies in research and writing",
+        "Inconsistent publishing schedules due to burnout",
+        "High operational overhead for content managers"
+      ],
+      image: "/assets/service-ml.jpg"
+    },
+    solution: {
+      title: "The Solution",
+      content: "We built an end-to-end automation system using n8n, integrating AI-driven content generation with seamless data handling and direct publishing capabilities via REST APIs.",
+      image: "/assets/service-nlp.jpg"
+    },
+    featuresList: [
+      {
+        iconName: "BrainCircuit",
+        title: "AI Content Generation",
+        desc: "Integrated Large Language Models (LLMs) to generate SEO-optimized articles automatically.",
+        points: [
+          "Integrated Large Language Models (LLMs)",
+          "Automatically generates SEO-optimized articles",
+          "Supports keyword-based and topic-based inputs",
+          "Ensures structured, readable, and relevant content"
+        ]
+      },
+      {
+        iconName: "FileJson",
+        title: "Automated Data Management",
+        desc: "Formats content into clean drafts and stores articles in Google Docs via API.",
+        points: [
+          "Formats generated content into clean, structured drafts",
+          "Stores articles directly in Google Docs via API",
+          "Enables easy review, editing, and version control"
+        ]
+      },
+      {
+        iconName: "Send",
+        title: "Direct Publishing Pipeline",
+        desc: "Connects to backend via REST APIs to automatically upload blog posts.",
+        points: [
+          "Connects to website backend via REST APIs",
+          "Automatically uploads and stages blog posts",
+          "Creates a seamless flow from generation → review → publication"
+        ]
+      }
+    ],
+    results: {
+      title: "Results & Impact",
+      content: "The system transformed content production from a manual burden into a scalable automated engine.",
+      bullets: [
+        "Eliminated manual blogging workflow completely",
+        "Reduced content production time by over 90%",
+        "Enabled scalable and consistent publishing frequency",
+        "Improved overall operational efficiency and ROI"
+      ],
+      image: "/assets/monthly-performance.png"
+    },
+    techStack: ["n8n", "OpenAI / Anthropic", "Google Docs API", "REST APIs", "Node.js"],
+    skills: ["Automation System Design", "AI Workflow Integration", "API Development", "End-to-end Deployment"],
+    cta: {
+      title: "Work With Us",
+      content: "Looking to automate your content or operations?",
+      buttons: [
+        { label: "👉 Book a Consultation", href: "/contact" },
+        { label: "👉 Discuss Your Project", href: "/contact" }
+      ]
+    }
   },
 ];

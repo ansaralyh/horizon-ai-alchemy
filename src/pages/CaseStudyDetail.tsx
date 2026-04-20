@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, CheckCircle2, TrendingUp, ShieldCheck, Activity, ArrowUpRight, BarChart3, Clock, Target, Globe } from "lucide-react";
+import { ArrowLeft, CheckCircle2, TrendingUp, ShieldCheck, Activity, ArrowUpRight, BarChart3, Clock, Target, Globe, Layers, Settings } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { caseStudies } from "@/data/case-studies";
@@ -10,12 +10,19 @@ const CaseStudyDetail = () => {
   const caseStudy = caseStudies.find(cs => cs.id === id);
 
   const isGreenTheme = caseStudy?.themeColor === "emerald";
-  const accentColorClass = isGreenTheme ? "emerald-500" : "amber-500";
-  const accentBorderClass = isGreenTheme ? "border-emerald-500/20" : "border-amber-500/20";
-  const accentBgClass = isGreenTheme ? "bg-emerald-500/10" : "bg-amber-500/10";
-  const accentTextClass = isGreenTheme ? "text-emerald-500" : "text-amber-500";
-  const accentGlowClass = isGreenTheme ? "shadow-[0_0_20px_#10b981]" : "shadow-[0_0_20px_#f59e0b]";
-  const accentGradientClass = isGreenTheme ? "from-emerald-500/10" : "from-amber-500/10";
+  const isIndigoTheme = caseStudy?.themeColor === "indigo";
+  
+  const theme = {
+    accent: isGreenTheme ? "emerald-500" : isIndigoTheme ? "indigo-500" : "amber-500",
+    border: isGreenTheme ? "border-emerald-500/20" : isIndigoTheme ? "border-indigo-500/20" : "border-amber-500/20",
+    borderStrong: isGreenTheme ? "border-emerald-500/40" : isIndigoTheme ? "border-indigo-500/40" : "border-amber-500/40",
+    bg: isGreenTheme ? "bg-emerald-500/10" : isIndigoTheme ? "bg-indigo-500/10" : "bg-amber-500/10",
+    text: isGreenTheme ? "text-emerald-500" : isIndigoTheme ? "text-indigo-500" : "text-amber-500",
+    gradient: isGreenTheme ? "from-emerald-500/10" : isIndigoTheme ? "from-indigo-500/10" : "from-amber-500/10",
+    glow: isGreenTheme ? "shadow-[0_0_20px_#10b981]" : isIndigoTheme ? "shadow-[0_0_20px_#6366f1]" : "shadow-[0_0_20px_#f59e0b]",
+    btn: isGreenTheme ? "btn-emerald" : isIndigoTheme ? "btn-indigo" : "btn-amber",
+    btnOutline: isGreenTheme ? "btn-outline-emerald" : isIndigoTheme ? "btn-outline-indigo" : "btn-outline-amber"
+  };
   
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -42,7 +49,7 @@ const CaseStudyDetail = () => {
         {/* --- SECTION 1: HERO SECTION --- */}
         <section className="relative pt-40 pb-32 overflow-hidden border-b border-white/5">
            {/* Background Accents */}
-           <div className={`absolute top-0 right-0 w-[800px] h-[800px] ${accentBgClass} blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2 opacity-30 pointer-events-none`} />
+           <div className={`absolute top-0 right-0 w-[800px] h-[800px] ${theme.bg} blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2 opacity-30 pointer-events-none`} />
            
            <div className="max-w-7xl mx-auto px-6 relative z-10">
               <Link to="/case-studies" className="inline-flex items-center gap-2 text-white/40 hover:text-white transition-colors mb-12 group">
@@ -52,40 +59,46 @@ const CaseStudyDetail = () => {
               
               <div className="grid lg:grid-cols-12 gap-16 items-center">
                 <div className="lg:col-span-7 space-y-8 animate-fade-up">
-                  <div className={`inline-flex items-center gap-3 px-4 py-1.5 ${accentBgClass} border ${accentBorderClass} rounded-full text-[11px] font-bold ${accentTextClass} uppercase tracking-[0.2em]`}>
-                    <span className={`w-2 h-2 rounded-full ${isGreenTheme ? "bg-emerald-500 shadow-[0_0_8px_#10b981]" : "bg-amber-500 shadow-[0_0_8px_#f59e0b]"}`} />
+                  <div className={`inline-flex items-center gap-3 px-4 py-1.5 ${theme.bg} border ${theme.border} rounded-full text-[11px] font-bold ${theme.text} uppercase tracking-[0.2em]`}>
+                    <span className={`w-2 h-2 rounded-full ${theme.text.replace('text-', 'bg-')} ${theme.glow}`} />
                     {caseStudy.tag}
                   </div>
                   <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.1]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    {caseStudy.hero.headline.split("Verified Performance")[0]}
-                    <span className="text-amber-gradient block sm:inline">Verified Performance</span>
+                    {caseStudy.themeColor === 'amber' ? (
+                      <>
+                        {caseStudy.hero.headline.split("Verified Performance")[0]}
+                        <span className="text-amber-gradient block sm:inline">Verified Performance</span>
+                      </>
+                    ) : (
+                      caseStudy.hero.headline
+                    )}
                   </h1>
                   <p className="text-xl md:text-2xl text-[#A0AEC0] font-medium leading-premium max-w-2xl">
                     {caseStudy.hero.subheadline}
                   </p>
 
                   {caseStudy.bonusLine && (
-                    <div className={`py-6 border-l-4 ${isGreenTheme ? "border-emerald-500" : "border-amber-500"} pl-8 bg-white/5 rounded-r-2xl inline-block mt-4`}>
-                       <p className={`${accentTextClass} text-lg font-bold italic tracking-wide`}>
+                    <div className={`py-6 border-l-4 ${theme.text.replace('text-', 'border-')} pl-8 bg-white/5 rounded-r-2xl inline-block mt-4`}>
+                       <p className={`${theme.text} text-lg font-bold italic tracking-wide`}>
                           "{caseStudy.bonusLine}"
                        </p>
                     </div>
                   )}
                   
                   <div className="flex flex-wrap gap-6 pt-6">
-                    <a href="#performance" className={`${isGreenTheme ? 'btn-emerald' : 'btn-amber'} px-10 py-5 text-base`}>
-                      View Full Performance
+                    <a href="#challenge" className={`${theme.btn} px-10 py-5 text-base`}>
+                      Explore Case Study
                     </a>
-                    <Link to="/contact" className={`${isGreenTheme ? 'btn-outline-emerald' : 'btn-outline-amber'} px-10 py-5 text-base`}>
-                      Request Strategy Access
+                    <Link to="/contact" className={`${theme.btnOutline} px-10 py-5 text-base`}>
+                      Get in Touch
                     </Link>
                   </div>
                 </div>
                 
                 {/* Hero Visual Image */}
                 <div className="lg:col-span-5 relative hidden lg:block animate-fade-in-scale delay-300">
-                  <div className={`absolute -inset-10 ${accentBgClass} rounded-full blur-[100px] shadow-2xl opacity-20`} />
-                  <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-navy-card shadow-2xl group">
+                  <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[100px] shadow-2xl opacity-20`} />
+                  <div className={`relative rounded-2xl overflow-hidden border border-white/10 bg-navy-card shadow-2xl group hover:${theme.borderStrong}`}>
                       <img 
                         src={caseStudy.image || "/assets/placeholder-chart.jpg"} 
                         alt={caseStudy.title} 
@@ -103,7 +116,7 @@ const CaseStudyDetail = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {caseStudy.hero.stats.map((stat, idx) => (
                 <div key={idx} className="metric-card group reveal visible">
-                  <span className={`text-[11px] font-bold ${accentTextClass} opacity-60 uppercase tracking-[0.2em] mb-4 block group-hover:opacity-100 transition-opacity`}>
+                  <span className={`text-[11px] font-bold ${theme.text} opacity-60 uppercase tracking-[0.2em] mb-4 block group-hover:opacity-100 transition-opacity`}>
                     {stat.label}
                   </span>
                   <span className="text-4xl md:text-5xl font-bold text-white tracking-tighter" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
@@ -117,10 +130,10 @@ const CaseStudyDetail = () => {
 
         {/* --- SECTION 3: STRATEGY OVERVIEW --- */}
         {caseStudy.overview && (
-          <section className="py-32 relative overflow-hidden">
+          <section className="py-24 relative overflow-hidden">
              <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="grid lg:grid-cols-12 gap-20">
-                   <div className="lg:col-span-7 space-y-10">
+                <div className="grid lg:grid-cols-2 gap-20 items-center">
+                   <div className="space-y-10">
                       <div className="space-y-6">
                         <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                           {caseStudy.overview.title}
@@ -134,94 +147,249 @@ const CaseStudyDetail = () => {
                           ))}
                         </div>
                       </div>
-                   </div>
 
-                   <div className="lg:col-span-5 pt-4">
-                      <div className="p-10 rounded-[2.5rem] bg-navy-card border border-white/10 space-y-10 shadow-2xl relative overflow-hidden group">
-                        <div className={`absolute inset-0 bg-gradient-to-br ${accentGradientClass} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                        <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-4">
-                           <span className={`w-10 h-1 rounded-full ${accentTextClass.replace('text-', 'bg-')}`} />
-                           Key Features
-                        </h3>
-                        <ul className="space-y-6">
-                          {caseStudy.overview.features.map((feature, idx) => (
-                            <li key={idx} className="flex items-start gap-5 group/item">
-                              <div className={`w-6 h-6 rounded-full ${accentBgClass} border ${accentBorderClass} flex items-center justify-center shrink-0 mt-1 self-start group-hover/item:bg-${isGreenTheme ? 'emerald' : 'amber'}-500 transition-all`}>
-                                 <CheckCircle2 className={`w-4 h-4 ${accentTextClass} group-hover/item:text-[#0B0F19] transition-all`} />
-                              </div>
-                              <span className="text-gray-300 font-semibold text-lg">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                   </div>
-                </div>
-             </div>
-          </section>
-        )}
-
-        {/* --- SECTION 4: PERFORMANCE HIGHLIGHTS --- */}
-        {caseStudy.performance && (
-          <section id="performance" className="py-40 relative overflow-hidden">
-             {/* Background Effects */}
-             <div className={`absolute -left-20 top-1/2 w-[800px] h-[800px] ${accentBgClass} blur-[160px] rounded-full opacity-10 pointer-events-none`} />
-             
-             <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="flex flex-col gap-16">
-                   {/* Text Content Area */}
-                   <div className="max-w-4xl space-y-8 animate-fade-up">
-                      <div className="space-y-8">
-                        <div className="flex items-center gap-4">
-                           <div className={`w-12 h-[2px] ${isGreenTheme ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-                           <span className={`text-sm font-bold uppercase tracking-[0.3em] ${accentTextClass}`}>Technical Breakdown</span>
-                        </div>
-                        <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tighter leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                          {caseStudy.performance.title}
-                        </h2>
-                        <p className={`text-lg md:text-xl text-[#A0AEC0] leading-premium border-l-4 ${isGreenTheme ? 'border-emerald-500/50' : 'border-amber-500/50'} pl-8`}>
-                          {caseStudy.performance.content}
-                        </p>
-                      </div>
-                      
-                      {/* Highlight Cards Grid */}
-                      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {caseStudy.performance.bullets.map((bullet, idx) => {
-                          const icons = [Target, Activity, TrendingUp, ShieldCheck];
-                          const Icon = icons[idx % icons.length];
-                          return (
-                            <div key={idx} className="group p-6 rounded-3xl bg-white/[0.03] border border-white/5 hover:border-white/10 hover:bg-white/[0.05] transition-all duration-300">
-                               <div className={`w-10 h-10 rounded-2xl ${isGreenTheme ? 'bg-emerald-500/10' : 'bg-amber-500/10'} border border-white/5 flex items-center justify-center mb-5`}>
-                                  <Icon className={`${accentTextClass} w-5 h-5`} />
-                               </div>
-                               <h4 className="text-base font-bold text-gray-200 group-hover:text-white transition-colors leading-tight">{bullet}</h4>
-                            </div>
-                          );
-                        })}
-                      </div>
-                   </div>
-
-                   {/* Visual Showcase Area */}
-                   <div className="relative pt-12">
-                      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] ${accentBgClass} blur-[140px] opacity-10 rounded-full`} />
-                      
-                      <div className="grid md:grid-cols-2 gap-12 relative z-10">
-                        {caseStudy.gallery?.map((img, idx) => (
-                          <div key={idx} className={`rounded-[2.5rem] overflow-hidden border border-white/10 bg-navy-card shadow-3xl hover:scale-[1.02] transition-all duration-700 reveal visible group`}>
-                             <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] to-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-700" />
-                             <img src={img} alt="Performance Insight" className="w-full h-full object-cover" />
-                             <div className="absolute bottom-10 left-10 opacity-0 group-hover:opacity-100 transition-all duration-700 translate-y-4 group-hover:translate-y-0">
-                                <p className="text-white font-bold text-xl drop-shadow-lg">Performance Analytics v3.2</p>
-                             </div>
+                      {/* OverView Features */}
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        {caseStudy.overview.features.map((feature, idx) => (
+                          <div key={idx} className="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 transition-colors group">
+                            <CheckCircle2 className={`w-5 h-5 ${theme.text} group-hover:scale-110 transition-transform`} />
+                            <span className="text-gray-300 font-medium">{feature}</span>
                           </div>
                         ))}
                       </div>
                    </div>
+
+                   {/* Overview Image */}
+                   <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-navy-card group">
+                      <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/60 z-10" />
+                      <img 
+                        src={caseStudy.gallery?.[0] || "/assets/service-automation.jpg"} 
+                        alt="Project Overview" 
+                        className="w-full aspect-[4/3] object-cover group-hover:scale-110 transition-transform duration-[2000ms]" 
+                      />
+                      <div className="absolute bottom-8 left-8 z-20">
+                         <div className={`px-4 py-1 rounded-full ${theme.bg} border ${theme.border} text-[10px] font-bold ${theme.text} uppercase tracking-widest`}>
+                            Operational View
+                         </div>
+                      </div>
+                   </div>
                 </div>
              </div>
           </section>
         )}
 
-        {/* --- SECTION 5: MONTHLY PERFORMANCE GRID --- */}
+        {/* --- SECTION 4: CHALLENGE & PROBLEMS --- */}
+        {caseStudy.challenge && (
+          <section id="challenge" className="py-24 relative overflow-hidden bg-white/[0.01]">
+             <div className="max-w-7xl mx-auto px-6 relative z-10">
+                <div className="grid lg:grid-cols-2 gap-20 items-center">
+                   <div className="lg:order-2 space-y-10">
+                      <div className="space-y-6">
+                        <div className="flex items-center gap-4">
+                           <div className={`w-12 h-[2px] ${theme.text.replace('text-', 'bg-')}`} />
+                           <span className={`text-sm font-bold uppercase tracking-[0.3em] ${theme.text}`}>The Challenge</span>
+                        </div>
+                        <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                          {caseStudy.challenge.title}
+                        </h2>
+                        <p className="text-xl text-[#A0AEC0] leading-premium font-medium italic">
+                          "{caseStudy.challenge.content}"
+                        </p>
+                      </div>
+
+                      <div className="space-y-4">
+                        {caseStudy.challenge.problems.map((prob, idx) => (
+                          <div key={idx} className="flex items-start gap-4 p-5 rounded-2xl bg-red-500/5 border border-red-500/10 hover:border-red-500/20 transition-all group">
+                             <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-500/20 flex items-center justify-center shrink-0 mt-1">
+                                <span className="text-red-500 text-xs font-bold">!</span>
+                             </div>
+                             <span className="text-gray-300 font-semibold text-lg">{prob}</span>
+                          </div>
+                        ))}
+                      </div>
+                   </div>
+
+                   <div className="lg:order-1 relative">
+                      <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[100px] opacity-10`} />
+                      <div className="relative rounded-[2.5rem] overflow-hidden border border-white/10 bg-navy-card shadow-2xl group">
+                         <img src={caseStudy.challenge.image || "/assets/service-ml.jpg"} alt="Challenge Visualization" className="w-full aspect-[4/5] object-cover group-hover:scale-105 transition-transform duration-1000" />
+                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-bottom p-10">
+                            <p className="text-white/60 font-medium mt-auto">Legacy workflow limitations during peak operation.</p>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </section>
+        )}
+
+        {/* --- SECTION 5: THE SOLUTION & KEY FEATURES --- */}
+        {caseStudy.solution && (
+          <section className="py-24 relative overflow-hidden">
+             <div className="max-w-7xl mx-auto px-6 relative z-10">
+                <div className="grid lg:grid-cols-2 gap-20 items-center mb-24">
+                   <div className="space-y-10">
+                      <div className="space-y-6">
+                        <div className="flex items-center gap-4">
+                           <div className={`w-12 h-[2px] ${theme.text.replace('text-', 'bg-')}`} />
+                           <span className={`text-sm font-bold uppercase tracking-[0.3em] ${theme.text}`}>The Solution</span>
+                        </div>
+                        <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                          {caseStudy.solution.title}
+                        </h2>
+                        <p className={`text-xl text-[#A0AEC0] leading-premium border-l-4 ${theme.text.replace('text-', 'border-')}/50 pl-8`}>
+                          {caseStudy.solution.content}
+                        </p>
+                      </div>
+                   </div>
+
+                   <div className="relative">
+                      <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[100px] opacity-20`} />
+                      <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl group">
+                         <img src={caseStudy.solution.image || "/assets/service-nlp.jpg"} alt="Solution Implementation" className="w-full aspect-video object-cover" />
+                         <div className={`absolute inset-0 ${theme.bg} mix-blend-overlay`} />
+                      </div>
+                   </div>
+                </div>
+
+                {/* Detailed Features Breakdown */}
+                {caseStudy.featuresList && (
+                   <div className="space-y-16 animate-fade-up">
+                      <div className="flex items-center gap-4">
+                         <div className={`w-2 h-2 rounded-full ${theme.text.replace('text-', 'bg-')}`} />
+                         <h3 className="text-3xl font-bold text-white tracking-wider flex items-center gap-3">
+                            <span className={theme.text}>✨</span> Key Features
+                         </h3>
+                      </div>
+                      <div className="grid md:grid-cols-3 gap-8">
+                         {caseStudy.featuresList.map((feat, idx) => {
+                            const icons: any = { BrainCircuit: Activity, FileJson: BarChart3, Send: Globe };
+                            const Icon = icons[feat.iconName] || Settings;
+                            return (
+                              <div key={idx} className="group p-10 rounded-[2.5rem] bg-navy-card border border-white/10 hover:border-white/20 transition-all duration-500 relative overflow-hidden">
+                                 <div className={`absolute inset-0 bg-gradient-to-br ${theme.gradient} to-transparent opacity-0 group-hover:opacity-100 transition-opacity`} />
+                                 <div className={`w-14 h-14 rounded-2xl ${theme.bg} border ${theme.border} flex items-center justify-center mb-8 relative z-10`}>
+                                    <Icon className={`${theme.text} w-7 h-7`} />
+                                 </div>
+                                 <h4 className="text-2xl font-bold text-white mb-6 relative z-10">{feat.title}</h4>
+                                 {feat.points ? (
+                                   <div className="space-y-4 relative z-10">
+                                      {feat.points.map((point, pIdx) => (
+                                        <div key={pIdx} className="flex items-start gap-3 group/item">
+                                           <CheckCircle2 className={`${theme.text} w-5 h-5 shrink-0 mt-1 opacity-60 group-hover/item:opacity-100 transition-opacity`} />
+                                           <span className="text-gray-400 group-hover:text-gray-200 transition-colors leading-snug">{point}</span>
+                                        </div>
+                                      ))}
+                                   </div>
+                                 ) : (
+                                   <p className="text-gray-400 leading-relaxed relative z-10">{feat.desc}</p>
+                                 )}
+                              </div>
+                            );
+                         })}
+                      </div>
+                   </div>
+                )}
+             </div>
+          </section>
+        )}
+
+        {/* --- SECTION 7: RESULTS & IMPACT --- */}
+        {(caseStudy.results || caseStudy.performance) && (
+          <section id="results" className="py-32 relative overflow-hidden border-t border-white/5">
+             <div className="max-w-7xl mx-auto px-6 relative z-10">
+                <div className="grid lg:grid-cols-2 gap-20 items-center">
+                   <div className="space-y-10">
+                      <div className="space-y-6">
+                        <div className="flex items-center gap-4">
+                           <div className={`w-12 h-[2px] ${theme.text.replace('text-', 'bg-')}`} />
+                           <span className={`text-sm font-bold uppercase tracking-[0.3em] ${theme.text}`}>Impact Measured</span>
+                        </div>
+                        <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                          {caseStudy.results?.title || caseStudy.performance?.title}
+                        </h2>
+                        <p className={`text-xl text-[#A0AEC0] leading-premium border-l-4 ${theme.text.replace('text-', 'border-')}/50 pl-8`}>
+                          {caseStudy.results?.content || caseStudy.performance?.content}
+                        </p>
+                      </div>
+
+                      <div className="grid gap-6">
+                        {(caseStudy.results?.bullets || caseStudy.performance?.bullets || []).map((bullet, idx) => (
+                           <div key={idx} className="flex items-center gap-5 group p-4 rounded-2xl bg-white/5 hover:bg-white/[0.08] transition-all">
+                              <div className={`w-10 h-10 rounded-xl ${theme.bg} border ${theme.border} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform`}>
+                                 <TrendingUp className={`${theme.text} w-5 h-5`} />
+                              </div>
+                              <span className="text-lg md:text-xl text-gray-300 group-hover:text-white transition-colors">{bullet}</span>
+                           </div>
+                        ))}
+                      </div>
+                   </div>
+
+                   <div className="relative">
+                      <div className={`absolute -inset-20 ${theme.bg} rounded-full blur-[160px] opacity-20`} />
+                      <div className="relative rounded-[3rem] overflow-hidden border border-white/10 bg-navy-card shadow-3xl group">
+                         <img 
+                          src={caseStudy.results?.image || caseStudy.gallery?.[1] || "/assets/placeholder-chart.jpg"} 
+                          alt="Results Impact" 
+                          className="w-full aspect-square object-cover opacity-80 group-hover:opacity-100 transition-opacity" 
+                        />
+                         <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] to-transparent opacity-60" />
+                         <div className="absolute bottom-10 left-10 p-8 rounded-3xl bg-black/40 backdrop-blur-xl border border-white/10">
+                            <p className="text-white font-bold text-2xl mb-1">Impact Summary</p>
+                            <p className="text-gray-400">Verified through operational data.</p>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </section>
+        )}
+
+        {/* --- SECTION 8: TECH STACK & SKILLS --- */}
+        {(caseStudy.techStack || caseStudy.skills) && (
+          <section className="py-24 relative border-y border-white/5 bg-white/[0.01]">
+             <div className="max-w-7xl mx-auto px-6">
+                <div className="grid lg:grid-cols-2 gap-20">
+                   {/* Tech Stack */}
+                   {caseStudy.techStack && (
+                     <div className="space-y-10">
+                        <div className="flex items-center gap-4">
+                           <Layers className={`${theme.text} w-6 h-6`} />
+                           <h2 className="text-2xl font-bold text-white tracking-widest uppercase">Technology Stack</h2>
+                        </div>
+                        <div className="flex flex-wrap gap-4">
+                           {caseStudy.techStack.map((tech, idx) => (
+                             <div key={idx} className={`px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-${theme.accent}/40 hover:bg-${theme.accent}/5 transition-all text-gray-400 hover:text-white font-semibold flex items-center gap-3 group`}>
+                                <div className={`w-2 h-2 rounded-full ${theme.bg} border ${theme.border} group-hover:${theme.glow}`} />
+                                {tech}
+                             </div>
+                           ))}
+                        </div>
+                     </div>
+                   )}
+
+                   {/* Skills */}
+                   {caseStudy.skills && (
+                     <div className="space-y-10">
+                        <div className="flex items-center gap-4">
+                           <Target className={`${theme.text} w-6 h-6`} />
+                           <h2 className="text-2xl font-bold text-white tracking-widest uppercase">Deliverables & Skills</h2>
+                        </div>
+                        <div className="flex flex-wrap gap-4">
+                           {caseStudy.skills.map((skill, idx) => (
+                             <div key={idx} className={`px-6 py-3 rounded-xl border border-white/10 hover:border-white/30 transition-all text-gray-400 hover:text-white font-medium bg-navy-card`}>
+                                {skill}
+                             </div>
+                           ))}
+                        </div>
+                     </div>
+                   )}
+                </div>
+             </div>
+          </section>
+        )}
+
+        {/* --- SECTION 9: MONTHLY PERFORMANCE GRID --- */}
         {caseStudy.monthly && (
           <section className="py-32 relative">
              <div className="max-w-7xl mx-auto px-6">
@@ -238,19 +406,19 @@ const CaseStudyDetail = () => {
                       
                       <div className="grid sm:grid-cols-2 gap-6">
                         {caseStudy.monthly.returns.map((ret, idx) => (
-                          <div key={idx} className={`p-8 rounded-3xl bg-navy-card border border-white/10 flex flex-col gap-4 group hover:${accentBorderClass} transition-all duration-300`}>
+                          <div key={idx} className={`p-8 rounded-3xl bg-navy-card border border-white/10 flex flex-col gap-4 group hover:${theme.border} transition-all duration-300`}>
                             <div className="flex justify-between items-center">
                                <span className="text-[11px] font-bold text-gray-500 uppercase tracking-[0.2em]">{ret.month}</span>
-                               <div className={`${accentBgClass} rounded-lg p-2`}>
-                                  <ArrowUpRight className={`${accentTextClass} w-4 h-4`} />
+                               <div className={`${theme.bg} rounded-lg p-2`}>
+                                  <ArrowUpRight className={`${theme.text} w-4 h-4`} />
                                </div>
                             </div>
                             <div className="flex items-baseline gap-2">
-                               <span className={`text-4xl font-bold ${accentTextClass} font-mono italic`}>{ret.value}</span>
+                               <span className={`text-4xl font-bold ${theme.text} font-mono italic`}>{ret.value}</span>
                                <span className="text-xs font-bold text-gray-600 uppercase">Growth</span>
                             </div>
                             <div className="mt-2 h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                               <div className={`h-full bg-gradient-to-r from-amber-500 to-amber-600`} style={{ width: `${Math.min(parseFloat(ret.value), 100)}%` }} />
+                               <div className={`h-full bg-gradient-to-r ${theme.text.replace('text-', 'from-')} to-black/20`} style={{ width: `${Math.min(parseFloat(ret.value), 100)}%` }} />
                             </div>
                           </div>
                         ))}
@@ -259,8 +427,8 @@ const CaseStudyDetail = () => {
 
                    {/* Monthly Visual Image */}
                    <div className="relative aspect-square hidden lg:flex items-center justify-center">
-                      <div className={`absolute inset-0 ${accentBgClass} rounded-full blur-[100px] opacity-20`} />
-                      <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden border border-white/10 bg-[#0B0F19] shadow-2xl group transition-all duration-700 hover:border-amber-500/30">
+                      <div className={`absolute inset-0 ${theme.bg} rounded-full blur-[100px] opacity-20`} />
+                      <div className={`relative w-full h-full rounded-[2.5rem] overflow-hidden border border-white/10 bg-[#0B0F19] shadow-2xl group transition-all duration-700 hover:${theme.borderStrong}`}>
                          <img 
                            src={caseStudy.monthlyVisual || "/assets/placeholder-chart.jpg"} 
                            alt="Monthly Performance Chart" 
@@ -274,7 +442,7 @@ const CaseStudyDetail = () => {
           </section>
         )}
 
-        {/* --- SECTION 6: RISK MANAGEMENT SPLIT --- */}
+        {/* --- SECTION 10: RISK MANAGEMENT SPLIT --- */}
         {caseStudy.risk && (
           <section className="py-32 bg-white/[0.01] border-y border-white/5 relative">
              <div className="max-w-7xl mx-auto px-6">
@@ -288,12 +456,12 @@ const CaseStudyDetail = () => {
                       </p>
                       <div className="grid sm:grid-cols-2 gap-6 pt-8">
                          <div className="p-6 rounded-2xl bg-white/5 border border-white/5 space-y-4">
-                            <Clock className={`${accentTextClass} w-8 h-8`} />
+                            <Clock className={`${theme.text} w-8 h-8`} />
                             <div className="text-sm text-gray-400 capitalize">Fast Execution</div>
                             <div className="text-2xl font-bold">~6h Avg. Hold</div>
                          </div>
                          <div className="p-6 rounded-2xl bg-white/5 border border-white/5 space-y-4">
-                            <Target className={`${accentTextClass} w-8 h-8`} />
+                            <Target className={`${theme.text} w-8 h-8`} />
                             <div className="text-sm text-gray-400 capitalize">High Precision</div>
                             <div className="text-2xl font-bold">1:1.91 R:R</div>
                          </div>
@@ -302,10 +470,10 @@ const CaseStudyDetail = () => {
 
                    <div className="space-y-6">
                       {caseStudy.risk.metrics.map((m, idx) => (
-                        <div key={idx} className="flex justify-between items-center p-8 rounded-3xl bg-navy-card border border-white/10 group hover:border-emerald-500/30 transition-all">
+                        <div key={idx} className={`flex justify-between items-center p-8 rounded-3xl bg-navy-card border border-white/10 group hover:${theme.borderStrong} transition-all`}>
                            <div className="flex items-center gap-6">
-                              <div className={`p-4 rounded-2xl ${accentBgClass}`}>
-                                 <ShieldCheck className={`${accentTextClass} w-6 h-6`} />
+                              <div className={`p-4 rounded-2xl ${theme.bg}`}>
+                                 <ShieldCheck className={`${theme.text} w-6 h-6`} />
                               </div>
                               <span className="text-lg font-bold text-gray-300 group-hover:text-white transition-colors">{m.label}</span>
                            </div>
@@ -318,13 +486,13 @@ const CaseStudyDetail = () => {
           </section>
         )}
 
-        {/* --- SECTION 7: TRUST / VERIFICATION --- */}
+        {/* --- SECTION 11: TRUST / VERIFICATION --- */}
         {caseStudy.trust && (
           <section className="py-40 relative">
-             <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] ${accentBgClass} blur-[120px] opacity-10 rounded-full`} />
+             <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] ${theme.bg} blur-[120px] opacity-10 rounded-full`} />
              <div className="max-w-5xl mx-auto px-6 text-center space-y-12">
-                <div className={`inline-flex items-center justify-center p-6 ${accentBgClass} rounded-[2.5rem] border ${accentBorderClass} mb-4`}>
-                   <Globe className={`${accentTextClass} w-10 h-10`} />
+                <div className={`inline-flex items-center justify-center p-6 ${theme.bg} rounded-[2.5rem] border ${theme.border} mb-4`}>
+                   <Globe className={`${theme.text} w-10 h-10`} />
                 </div>
                 <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                   {caseStudy.trust.title}
@@ -334,8 +502,8 @@ const CaseStudyDetail = () => {
                 </p>
                 <div className="flex flex-wrap justify-center gap-6">
                   {caseStudy.trust.points.map((p, idx) => (
-                    <div key={idx} className={`flex items-center gap-4 px-8 py-5 bg-navy-card border border-white/10 rounded-2xl group hover:${accentBorderClass.replace('/20', '/40')} transition-all`}>
-                       <CheckCircle2 className={`w-6 h-6 ${accentTextClass}`} />
+                    <div key={idx} className={`flex items-center gap-4 px-8 py-5 bg-navy-card border border-white/10 rounded-2xl group hover:${theme.borderStrong} transition-all`}>
+                       <CheckCircle2 className={`w-6 h-6 ${theme.text}`} />
                        <span className="text-lg font-bold text-gray-200 group-hover:text-white transition-colors">{p}</span>
                     </div>
                   ))}
@@ -344,12 +512,12 @@ const CaseStudyDetail = () => {
           </section>
         )}
 
-        {/* --- SECTION 8: FULL WIDTH CTA --- */}
+        {/* --- SECTION 10: FULL WIDTH CTA --- */}
         {caseStudy.cta && (
           <section className="pb-40 px-6">
              <div className={`max-w-7xl mx-auto rounded-[4rem] px-8 py-20 relative overflow-hidden text-center space-y-8 bg-gradient-to-b from-[#111726] to-[#0B0F19] border border-white/5`}>
-                <div className={`absolute -top-40 -left-40 w-96 h-96 ${accentBgClass} blur-[100px] opacity-20`} />
-                <div className={`absolute -bottom-40 -right-40 w-96 h-96 ${accentBgClass} blur-[100px] opacity-20`} />
+                <div className={`absolute -top-40 -left-40 w-96 h-96 ${theme.bg} blur-[100px] opacity-20`} />
+                <div className={`absolute -bottom-40 -right-40 w-96 h-96 ${theme.bg} blur-[100px] opacity-20`} />
                 
                 <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tighter max-w-4xl mx-auto leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                   {caseStudy.cta.title}
@@ -358,10 +526,10 @@ const CaseStudyDetail = () => {
                   {caseStudy.cta.content}
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center gap-6 pt-6">
-                  <Link to={caseStudy.cta.buttons[0].href} className={`${isGreenTheme ? 'btn-emerald' : 'btn-amber'} px-10 py-5 text-lg shadow-2xl`}>
+                  <Link to={caseStudy.cta.buttons[0].href} className={`${theme.btn} px-10 py-5 text-lg shadow-2xl transition-all hover:scale-105 active:scale-95`}>
                     {caseStudy.cta.buttons[0].label}
                   </Link>
-                  <Link to={caseStudy.cta.buttons[1].href} className={`${isGreenTheme ? 'btn-outline-emerald' : 'btn-outline-amber'} px-10 py-5 text-lg`}>
+                  <Link to={caseStudy.cta.buttons[1].href} className={`${theme.btnOutline} px-10 py-5 text-lg transition-all hover:bg-white/5`}>
                     {caseStudy.cta.buttons[1].label}
                   </Link>
                 </div>
