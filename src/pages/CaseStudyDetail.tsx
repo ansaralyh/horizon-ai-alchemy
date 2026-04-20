@@ -21,7 +21,8 @@ const CaseStudyDetail = () => {
     gradient: isGreenTheme ? "from-emerald-500/10" : isIndigoTheme ? "from-indigo-500/10" : "from-amber-500/10",
     glow: isGreenTheme ? "shadow-[0_0_20px_#10b981]" : isIndigoTheme ? "shadow-[0_0_20px_#6366f1]" : "shadow-[0_0_20px_#f59e0b]",
     btn: isGreenTheme ? "btn-emerald" : isIndigoTheme ? "btn-indigo" : "btn-amber",
-    btnOutline: isGreenTheme ? "btn-outline-emerald" : isIndigoTheme ? "btn-outline-indigo" : "btn-outline-amber"
+    btnOutline: isGreenTheme ? "btn-outline-emerald" : isIndigoTheme ? "btn-outline-indigo" : "btn-outline-amber",
+    glowColor: isGreenTheme ? "#10b981" : isIndigoTheme ? "#6366f1" : "#f59e0b"
   };
   
   useEffect(() => {
@@ -58,12 +59,12 @@ const CaseStudyDetail = () => {
               </Link>
               
               <div className="grid lg:grid-cols-12 gap-16 items-center">
-                <div className="lg:col-span-7 space-y-8 animate-fade-up">
+                <div className="lg:col-span-12 lg:text-center space-y-8 animate-fade-up">
                   <div className={`inline-flex items-center gap-3 px-4 py-1.5 ${theme.bg} border ${theme.border} rounded-full text-[11px] font-bold ${theme.text} uppercase tracking-[0.2em]`}>
                     <span className={`w-2 h-2 rounded-full ${theme.text.replace('text-', 'bg-')} ${theme.glow}`} />
                     {caseStudy.tag}
                   </div>
-                  <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.1]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.1] max-w-5xl mx-auto" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                     {caseStudy.themeColor === 'amber' ? (
                       <>
                         {caseStudy.hero.headline.split("Verified Performance")[0]}
@@ -73,19 +74,19 @@ const CaseStudyDetail = () => {
                       caseStudy.hero.headline
                     )}
                   </h1>
-                  <p className="text-xl md:text-2xl text-[#A0AEC0] font-medium leading-premium max-w-2xl">
+                  <p className="text-lg md:text-xl text-[#A0AEC0] font-medium leading-premium max-w-3xl mx-auto">
                     {caseStudy.hero.subheadline}
                   </p>
 
                   {caseStudy.bonusLine && (
-                    <div className={`py-6 border-l-4 ${theme.text.replace('text-', 'border-')} pl-8 bg-white/5 rounded-r-2xl inline-block mt-4`}>
+                    <div className={`py-6 border-l-4 ${theme.text.replace('text-', 'border-')} pl-8 bg-white/5 rounded-r-2xl inline-block mt-4 text-left`}>
                        <p className={`${theme.text} text-lg font-bold italic tracking-wide`}>
                           "{caseStudy.bonusLine}"
                        </p>
                     </div>
                   )}
                   
-                  <div className="flex flex-wrap gap-6 pt-6">
+                  <div className="flex flex-wrap justify-center gap-6 pt-6">
                     <a href="#challenge" className={`${theme.btn} px-10 py-5 text-base`}>
                       Explore Case Study
                     </a>
@@ -96,13 +97,13 @@ const CaseStudyDetail = () => {
                 </div>
                 
                 {/* Hero Visual Image */}
-                <div className="lg:col-span-5 relative hidden lg:block animate-fade-in-scale delay-300">
+                <div className="lg:col-span-12 relative animate-fade-in-scale delay-300">
                   <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[100px] shadow-2xl opacity-20`} />
-                  <div className={`relative rounded-2xl overflow-hidden border border-white/10 bg-navy-card shadow-2xl group hover:${theme.borderStrong}`}>
+                  <div className={`relative rounded-3xl overflow-hidden border border-white/10 bg-navy-card shadow-2xl group hover:${theme.borderStrong} max-w-5xl mx-auto`}>
                       <img 
                         src={caseStudy.image || "/assets/placeholder-chart.jpg"} 
                         alt={caseStudy.title} 
-                        className="w-full h-full object-contain group-hover:scale-[1.02] transition-transform duration-1000" 
+                        className="w-full h-full object-contain group-hover:scale-[1.01] transition-transform duration-1000" 
                       />
                   </div>
                 </div>
@@ -128,21 +129,25 @@ const CaseStudyDetail = () => {
           </div>
         </section>
 
-        {/* --- SECTION 3: STRATEGY OVERVIEW --- */}
+        {/* --- SECTION 3: OVERVIEW --- */}
         {caseStudy.overview && (
           <section className="py-24 relative overflow-hidden">
              <div className="max-w-7xl mx-auto px-6 relative z-10">
                 <div className="grid lg:grid-cols-2 gap-20 items-center">
                    <div className="space-y-10">
                       <div className="space-y-6">
+                        <div className="flex items-center gap-4">
+                           <div className={`w-12 h-[2px] ${theme.text.replace('text-', 'bg-')}`} />
+                           <span className={`text-sm font-bold uppercase tracking-[0.3em] ${theme.text}`}>Project Overview</span>
+                        </div>
                         <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                           {caseStudy.overview.title}
                         </h2>
                         <div className="space-y-6">
                           {caseStudy.overview.content.map((p, idx) => (
                             <p key={idx} className="text-xl text-[#A0AEC0] leading-premium font-medium">
-                              {idx === 0 ? <strong className="text-white block mb-2">{p.split('.')[0]}.</strong> : null}
-                              {idx === 0 ? p.split('.').slice(1).join('.') : p}
+                              {idx === 0 && p.includes('.') ? <strong className="text-white block mb-2">{p.split('.')[0]}.</strong> : null}
+                              {idx === 0 && p.includes('.') ? p.split('.').slice(1).join('.') : p}
                             </p>
                           ))}
                         </div>
@@ -178,7 +183,7 @@ const CaseStudyDetail = () => {
           </section>
         )}
 
-        {/* --- SECTION 4: CHALLENGE & PROBLEMS --- */}
+        {/* --- SECTION 4: CHALLENGE / OBJECTIVE --- */}
         {caseStudy.challenge && (
           <section id="challenge" className="py-24 relative overflow-hidden bg-white/[0.01]">
              <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -187,21 +192,21 @@ const CaseStudyDetail = () => {
                       <div className="space-y-6">
                         <div className="flex items-center gap-4">
                            <div className={`w-12 h-[2px] ${theme.text.replace('text-', 'bg-')}`} />
-                           <span className={`text-sm font-bold uppercase tracking-[0.3em] ${theme.text}`}>The Challenge</span>
+                           <span className={`text-sm font-bold uppercase tracking-[0.3em] ${theme.text}`}>{caseStudy.id === 'nas100-algo-trading' ? 'Strategic Objective' : 'The Challenge'}</span>
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                           {caseStudy.challenge.title}
                         </h2>
-                        <p className="text-xl text-[#A0AEC0] leading-premium font-medium italic">
+                        <p className="text-xl md:text-2xl text-[#A0AEC0] leading-premium font-medium italic">
                           "{caseStudy.challenge.content}"
                         </p>
                       </div>
 
                       <div className="space-y-4">
                         {caseStudy.challenge.problems.map((prob, idx) => (
-                          <div key={idx} className="flex items-start gap-4 p-5 rounded-2xl bg-red-500/5 border border-red-500/10 hover:border-red-500/20 transition-all group">
-                             <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-500/20 flex items-center justify-center shrink-0 mt-1">
-                                <span className="text-red-500 text-xs font-bold">!</span>
+                          <div key={idx} className={`flex items-start gap-4 p-5 rounded-2xl ${theme.bg} border ${theme.border} hover:${theme.borderStrong} transition-all group`}>
+                             <div className={`w-6 h-6 rounded-full ${theme.bg} border ${theme.border} flex items-center justify-center shrink-0 mt-1`}>
+                                <CheckCircle2 className={`${theme.text} w-4 h-4`} />
                              </div>
                              <span className="text-gray-300 font-semibold text-lg">{prob}</span>
                           </div>
@@ -214,7 +219,7 @@ const CaseStudyDetail = () => {
                       <div className="relative rounded-[2.5rem] overflow-hidden border border-white/10 bg-navy-card shadow-2xl group">
                          <img src={caseStudy.challenge.image || "/assets/service-ml.jpg"} alt="Challenge Visualization" className="w-full aspect-[4/5] object-cover group-hover:scale-105 transition-transform duration-1000" />
                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-bottom p-10">
-                            <p className="text-white/60 font-medium mt-auto">Legacy workflow limitations during peak operation.</p>
+                            <p className="text-white/60 font-medium mt-auto">Operational overview and strategic visualization.</p>
                          </div>
                       </div>
                    </div>
@@ -258,12 +263,20 @@ const CaseStudyDetail = () => {
                       <div className="flex items-center gap-4">
                          <div className={`w-2 h-2 rounded-full ${theme.text.replace('text-', 'bg-')}`} />
                          <h3 className="text-3xl font-bold text-white tracking-wider flex items-center gap-3">
-                            <span className={theme.text}>✨</span> Key Features
+                            <span className={theme.text}>✨</span> {caseStudy.id === 'nas100-algo-trading' ? 'Strategy Components' : 'Key Features'}
                          </h3>
                       </div>
-                      <div className="grid md:grid-cols-3 gap-8">
+                      <div className={`grid gap-8 ${caseStudy.featuresList.length === 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-3'}`}>
                          {caseStudy.featuresList.map((feat, idx) => {
-                            const icons: any = { BrainCircuit: Activity, FileJson: BarChart3, Send: Globe };
+                            const icons: any = { 
+                                BrainCircuit: Activity, 
+                                FileJson: BarChart3, 
+                                Send: Globe,
+                                Target: Target,
+                                BarChart3: BarChart3,
+                                Activity: Activity,
+                                Settings: Settings
+                            };
                             const Icon = icons[feat.iconName] || Settings;
                             return (
                               <div key={idx} className="group p-10 rounded-[2.5rem] bg-navy-card border border-white/10 hover:border-white/20 transition-all duration-500 relative overflow-hidden">
@@ -336,7 +349,7 @@ const CaseStudyDetail = () => {
                          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] to-transparent opacity-60" />
                          <div className="absolute bottom-10 left-10 p-8 rounded-3xl bg-black/40 backdrop-blur-xl border border-white/10">
                             <p className="text-white font-bold text-2xl mb-1">Impact Summary</p>
-                            <p className="text-gray-400">Verified through operational data.</p>
+                            <p className="text-gray-400">Verified through historical backtesting.</p>
                          </div>
                       </div>
                    </div>
@@ -407,19 +420,19 @@ const CaseStudyDetail = () => {
                       <div className="grid sm:grid-cols-2 gap-6">
                         {caseStudy.monthly.returns.map((ret, idx) => (
                           <div key={idx} className={`p-8 rounded-3xl bg-navy-card border border-white/10 flex flex-col gap-4 group hover:${theme.border} transition-all duration-300`}>
-                            <div className="flex justify-between items-center">
-                               <span className="text-[11px] font-bold text-gray-500 uppercase tracking-[0.2em]">{ret.month}</span>
-                               <div className={`${theme.bg} rounded-lg p-2`}>
-                                  <ArrowUpRight className={`${theme.text} w-4 h-4`} />
-                               </div>
-                            </div>
-                            <div className="flex items-baseline gap-2">
-                               <span className={`text-4xl font-bold ${theme.text} font-mono italic`}>{ret.value}</span>
-                               <span className="text-xs font-bold text-gray-600 uppercase">Growth</span>
-                            </div>
-                            <div className="mt-2 h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                               <div className={`h-full bg-gradient-to-r ${theme.text.replace('text-', 'from-')} to-black/20`} style={{ width: `${Math.min(parseFloat(ret.value), 100)}%` }} />
-                            </div>
+                             <div className="flex justify-between items-center">
+                                <span className="text-[11px] font-bold text-gray-500 uppercase tracking-[0.2em]">{ret.month}</span>
+                                <div className={`${theme.bg} rounded-lg p-2`}>
+                                   <ArrowUpRight className={`${theme.text} w-4 h-4`} />
+                                </div>
+                             </div>
+                             <div className="flex items-baseline gap-2">
+                                <span className={`text-4xl font-bold ${theme.text} font-mono italic`}>{ret.value}</span>
+                                <span className="text-xs font-bold text-gray-600 uppercase">Growth</span>
+                             </div>
+                             <div className="mt-2 h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                                <div className={`h-full bg-gradient-to-r ${theme.text.replace('text-', 'from-')} to-black/20`} style={{ width: `${Math.min(parseFloat(ret.value), 100)}%` }} />
+                             </div>
                           </div>
                         ))}
                       </div>
@@ -501,18 +514,18 @@ const CaseStudyDetail = () => {
                   {caseStudy.trust.content}
                 </p>
                 <div className="flex flex-wrap justify-center gap-6">
-                  {caseStudy.trust.points.map((p, idx) => (
+                   {caseStudy.trust.points.map((p, idx) => (
                     <div key={idx} className={`flex items-center gap-4 px-8 py-5 bg-navy-card border border-white/10 rounded-2xl group hover:${theme.borderStrong} transition-all`}>
                        <CheckCircle2 className={`w-6 h-6 ${theme.text}`} />
                        <span className="text-lg font-bold text-gray-200 group-hover:text-white transition-colors">{p}</span>
                     </div>
-                  ))}
+                   ))}
                 </div>
              </div>
           </section>
         )}
 
-        {/* --- SECTION 10: FULL WIDTH CTA --- */}
+        {/* --- SECTION 12: CTA --- */}
         {caseStudy.cta && (
           <section className="pb-40 px-6">
              <div className={`max-w-7xl mx-auto rounded-[4rem] px-8 py-20 relative overflow-hidden text-center space-y-8 bg-gradient-to-b from-[#111726] to-[#0B0F19] border border-white/5`}>
@@ -526,12 +539,11 @@ const CaseStudyDetail = () => {
                   {caseStudy.cta.content}
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center gap-6 pt-6">
-                  <Link to={caseStudy.cta.buttons[0].href} className={`${theme.btn} px-10 py-5 text-lg shadow-2xl transition-all hover:scale-105 active:scale-95`}>
-                    {caseStudy.cta.buttons[0].label}
-                  </Link>
-                  <Link to={caseStudy.cta.buttons[1].href} className={`${theme.btnOutline} px-10 py-5 text-lg transition-all hover:bg-white/5`}>
-                    {caseStudy.cta.buttons[1].label}
-                  </Link>
+                  {caseStudy.cta.buttons.map((btn, idx) => (
+                    <Link key={idx} to={btn.href} className={`${idx === 0 ? theme.btn : theme.btnOutline} px-10 py-5 text-lg transition-all hover:scale-105 active:scale-95`}>
+                      {btn.label}
+                    </Link>
+                  ))}
                 </div>
              </div>
           </section>

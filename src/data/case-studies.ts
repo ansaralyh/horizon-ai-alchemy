@@ -285,4 +285,120 @@ export const caseStudies: CaseStudy[] = [
       ]
     }
   },
+  {
+    id: "nas100-algo-trading",
+    tag: "Algorithmic Trading / Quantitative Systems",
+    client: "Private Trading System",
+    title: "NAS100 Algorithmic Trading Strategy (ORB + FVG)",
+    desc: "Rule-based trading system combining price action and quantitative logic for consistent performance.",
+    metrics: ["60% Win Rate", "NAS100 Focused", "ORB + FVG Logic"],
+    image: "/assets/trading-hero.png",
+    gallery: ["/assets/trading-chart-1.png", "/assets/trading-chart-2.png"],
+    themeColor: "amber",
+    monthlyVisual: "/assets/monthly-performance.png",
+    bonusLine: "Quantitative precision. Institutional imbalances. Systematic results.",
+    hero: {
+      headline: "NAS100 Algorithmic Trading Strategy (ORB + FVG)",
+      subheadline: "Rule-based trading system combining price action and quantitative logic for consistent performance.",
+      stats: [
+        { label: "Win Rate", value: "60%" },
+        { label: "Asset Class", value: "NAS100" },
+        { label: "Logic", value: "ORB + FVG" },
+        { label: "Execution", value: "Automated" }
+      ]
+    },
+    overview: {
+      title: "Strategy Overview",
+      content: [
+        "We developed and optimized a proprietary algorithmic trading strategy for NAS100, leveraging Opening Range Breakouts (ORB) and Fair Value Gaps (FVG) to identify high-probability trade opportunities.",
+        "The system combines price action precision with quantitative logic, delivering consistent performance through structured execution and automation."
+      ],
+      features: [
+        "Opening Range Breakouts (ORB)",
+        "Fair Value Gaps (FVG) Identification",
+        "Multi-timeframe confirmation",
+        "Automated risk management"
+      ]
+    },
+    challenge: {
+      title: "The Objective",
+      content: "To create a rule-based trading system capable of identifying institutional price imbalances and capturing session volatility with minimal manual intervention.",
+      problems: [
+        "Capturing volatility during key market sessions",
+        "Identifying institutional price imbalances",
+        "Executing trades with minimal manual intervention"
+      ],
+      image: "/assets/trading-chart-1.png"
+    },
+    solution: {
+      title: "Rule-Based Execution Framework",
+      content: "The strategy utilizes a multi-layered approach: identifying the 30-minute opening range, detecting Fair Value Gaps for entry confluences, and applying institutional-grade risk management parameters.",
+      image: "/assets/trading-chart-2.png"
+    },
+    featuresList: [
+      {
+        iconName: "BarChart3",
+        title: "Opening Range Breakout (ORB)",
+        desc: "Identifies breakout levels from initial session range.",
+        points: [
+          "Identifies key breakout levels based on initial range",
+          "Captures early momentum and directional bias",
+          "Rules-based session open volatility capture"
+        ]
+      },
+      {
+        iconName: "Target",
+        title: "Fair Value Gaps (FVG)",
+        desc: "Detects price inefficiencies for institutional entries.",
+        points: [
+          "Detects inefficiencies in price delivery",
+          "Enables entries at institutional imbalance zones",
+          "Improves risk-to-reward setups via gap refills"
+        ]
+      },
+      {
+        iconName: "Settings",
+        title: "Implementation",
+        desc: "Structured for clarity, scalability, and performance.",
+        points: [
+          "Developed using Pine Script v5 on TradingView",
+          "Incorporated multi-timeframe analysis for enhanced signal confirmation",
+          "Built precise entry, stop-loss, and take-profit logic",
+          "Structured for clarity, scalability, and performance"
+        ]
+      },
+      {
+        iconName: "Activity",
+        title: "Automation & Execution",
+        desc: "To ensure efficiency and eliminate emotional bias:",
+        points: [
+          "Automated alerts for trade entries",
+          "Dynamic stop-loss and take-profit levels",
+          "Designed for hands-free execution workflows",
+          "Easily integrable with trading platforms"
+        ]
+      }
+    ],
+    results: {
+      title: "Backtesting & Validation",
+      content: "Rigorous testing on NAS100 historical data confirmed the strategy's stability and edge across various market conditions.",
+      bullets: [
+        "Consistent 60% Win Rate over tested samples",
+        "Stability across different market volatility phases",
+        "Optimized risk-to-reward execution parameters",
+        "Hands-free execution workflow integrated"
+      ],
+      image: "/assets/monthly-performance.png"
+    },
+    techStack: ["TradingView (Pine Script v5)", "MetaTrader 4", "MetaTrader 5", "Automation Alerts"],
+    skills: ["Quantitative Strategy Development", "Pine Script Engineering", "Backtesting & Optimization", "Trade Automation Systems"],
+    cta: {
+      title: "Work With Us",
+      content: "Looking to implement a similar mechanical strategy or have one built for your fund or personal trading?",
+      buttons: [
+        { label: "Book a Consultation", href: "/contact" },
+        { label: "Request Strategy Demo", href: "/contact" }
+      ]
+    }
+  },
 ];
