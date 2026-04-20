@@ -45,6 +45,7 @@ export interface CaseStudy {
   image?: string;
   gallery?: string[];
   themeColor?: string;
+  monthlyVisual?: string;
 }
 
 export const caseStudies: CaseStudy[] = [
@@ -58,6 +59,7 @@ export const caseStudies: CaseStudy[] = [
     image: "/assets/trading-hero.png", 
     gallery: ["/assets/trading-chart-1.png", "/assets/trading-chart-2.png"],
     themeColor: "amber",
+    monthlyVisual: "/assets/monthly-performance.png",
     bonusLine: "No discretion. No emotions. Just rules and results.",
     hero: {
       headline: "Mechanical Trading Strategy – 8 Months Verified Performance",
@@ -123,11 +125,11 @@ export const caseStudies: CaseStudy[] = [
       ]
     },
     cta: {
-      title: "Looking to implement a similar mechanical strategy?",
-      content: "Whether you need a custom-built automated system or want access to existing strategies, we can help.",
+      title: "Work With Us",
+      content: "Looking to implement a similar mechanical strategy or have one built for your fund or personal trading?",
       buttons: [
-        { label: "Book a Consultation", href: "/contact" },
-        { label: "Request Strategy Demo", href: "/contact" }
+        { label: "👉 Book a Consultation", href: "/contact" },
+        { label: "👉 Request Strategy Demo", href: "/contact" }
       ]
     }
   },
