@@ -57,7 +57,7 @@ export const caseStudies: CaseStudy[] = [
     metrics: ["+320.70% Gain", "30.14% Max DD", "$3,334+ Profit"],
     image: "/assets/trading-hero.png", 
     gallery: ["/assets/trading-chart-1.png", "/assets/trading-chart-2.png"],
-    themeColor: "emerald",
+    themeColor: "amber",
     bonusLine: "No discretion. No emotions. Just rules and results.",
     hero: {
       headline: "Mechanical Trading Strategy – 8 Months Verified Performance",

@@ -57,7 +57,12 @@ const CaseStudyDetail = () => {
                     {caseStudy.tag}
                   </div>
                   <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.1]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    {caseStudy.hero.headline}
+                    {caseStudy.hero.headline.includes("Verified Performance") ? (
+                      <>
+                        {caseStudy.hero.headline.split("Verified Performance")[0]}
+                        <span className="text-amber-gradient">Verified Performance</span>
+                      </>
+                    ) : caseStudy.hero.headline}
                   </h1>
                   <p className="text-xl md:text-2xl text-[#A0AEC0] font-medium leading-premium max-w-2xl">
                     {caseStudy.hero.subheadline}
@@ -175,7 +180,7 @@ const CaseStudyDetail = () => {
 
                <div className="grid md:grid-cols-2 gap-8">
                   {caseStudy.gallery?.map((img, idx) => (
-                    <div key={idx} className="rounded-3xl overflow-hidden border border-white/10 bg-navy-card aspect-video shadow-2xl reveal visible group transition-all duration-500 hover:border-emerald-500/30 cursor-zoom-in">
+                    <div key={idx} className={`rounded-3xl overflow-hidden border border-white/10 bg-navy-card aspect-video shadow-2xl reveal visible group transition-all duration-500 hover:${accentBorderClass} cursor-zoom-in`}>
                        <img src={img} alt="Performance Chart detail" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000 opacity-80 group-hover:opacity-100" />
                     </div>
                   ))}
@@ -203,16 +208,16 @@ const CaseStudyDetail = () => {
                           <div key={idx} className={`p-8 rounded-3xl bg-navy-card border border-white/10 flex flex-col gap-4 group hover:${accentBorderClass} transition-all duration-300`}>
                             <div className="flex justify-between items-center">
                                <span className="text-[11px] font-bold text-gray-500 uppercase tracking-[0.2em]">{ret.month}</span>
-                               <div className="p-2 bg-green-500/10 rounded-lg">
-                                  <ArrowUpRight className="text-green-500 w-4 h-4" />
+                               <div className={`${isGreenTheme ? "bg-green-500/10" : "bg-amber-500/10"} p-2 rounded-lg`}>
+                                  <ArrowUpRight className={`${isGreenTheme ? "text-green-500" : "text-amber-500"} w-4 h-4`} />
                                </div>
                             </div>
                             <div className="flex items-baseline gap-2">
-                               <span className="text-4xl font-bold text-green-400 font-mono italic">{ret.value}</span>
+                               <span className={`text-4xl font-bold ${isGreenTheme ? "text-green-400" : "text-amber-400"} font-mono italic`}>{ret.value}</span>
                                <span className="text-xs font-bold text-gray-600 uppercase">Growth</span>
                             </div>
                             <div className="mt-2 h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                               <div className="h-full bg-gradient-to-r from-green-500 to-emerald-400" style={{ width: `${Math.min(parseFloat(ret.value), 100)}%` }} />
+                               <div className={`h-full bg-gradient-to-r ${isGreenTheme ? "from-green-500 to-emerald-400" : "from-amber-500 to-amber-400"}`} style={{ width: `${Math.min(parseFloat(ret.value), 100)}%` }} />
                             </div>
                           </div>
                         ))}
@@ -224,8 +229,8 @@ const CaseStudyDetail = () => {
                       <div className={`absolute inset-0 ${accentBgClass} rounded-full blur-[120px] opacity-20`} />
                       <div className="relative w-full h-full p-12 bg-white/[0.02] rounded-full border border-white/5 flex items-center justify-center group animate-spin-slow">
                          <BarChart3 className={`${accentTextClass} w-32 h-32 opacity-10 group-hover:scale-110 transition-transform`} />
-                         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-emerald-500 shadow-[0_0_15px_#10b981]" />
-                         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-4 h-4 rounded-full bg-amber-500 shadow-[0_0_15px_#f59e0b]" />
+                         <div className={`absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full ${isGreenTheme ? "bg-emerald-500 shadow-[0_0_15px_#10b981]" : "bg-amber-500 shadow-[0_0_15px_#f59e0b]"}`} />
+                         <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-4 h-4 rounded-full ${!isGreenTheme ? "bg-emerald-500 shadow-[0_0_15px_#10b981]" : "bg-amber-500 shadow-[0_0_15px_#f59e0b]"}`} />
                       </div>
                    </div>
                 </div>
@@ -261,7 +266,7 @@ const CaseStudyDetail = () => {
 
                    <div className="space-y-6">
                       {caseStudy.risk.metrics.map((m, idx) => (
-                        <div key={idx} className="flex justify-between items-center p-8 rounded-3xl bg-navy-card border border-white/10 group hover:border-emerald-500/30 transition-all">
+                        <div key={idx} className="flex justify-between items-center p-8 rounded-3xl bg-navy-card border border-white/10 group hover:${accentBorderClass} transition-all">
                            <div className="flex items-center gap-6">
                               <div className={`p-4 rounded-2xl ${accentBgClass}`}>
                                  <ShieldCheck className={`${accentTextClass} w-6 h-6`} />
@@ -293,8 +298,8 @@ const CaseStudyDetail = () => {
                 </p>
                 <div className="flex flex-wrap justify-center gap-6">
                   {caseStudy.trust.points.map((p, idx) => (
-                    <div key={idx} className="flex items-center gap-4 px-8 py-5 bg-navy-card border border-white/10 rounded-2xl group hover:border-emerald-500/40 transition-all">
-                       <CheckCircle2 className="w-6 h-6 text-emerald-500" />
+                    <div key={idx} className={`flex items-center gap-4 px-8 py-5 bg-navy-card border border-white/10 rounded-2xl group hover:${accentBorderClass} transition-all`}>
+                       <CheckCircle2 className={`w-6 h-6 ${accentTextClass}`} />
                        <span className="text-lg font-bold text-gray-200 group-hover:text-white transition-colors">{p}</span>
                     </div>
                   ))}
@@ -335,3 +340,4 @@ const CaseStudyDetail = () => {
 };
 
 export default CaseStudyDetail;
+
