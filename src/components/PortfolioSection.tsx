@@ -1,29 +1,7 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { ArrowUpRight } from "lucide-react";
-
-const caseStudies = [
-  {
-    tag: "Predictive Analytics",
-    client: "TechFlow",
-    title: "340% Efficiency Gain with AI Data Pipeline",
-    desc: "Redesigned their legacy data infrastructure with a real-time ML pipeline, reducing processing time by 87% and enabling predictive demand forecasting.",
-    metrics: ["340% efficiency", "87% faster", "$4.2M saved"],
-  },
-  {
-    tag: "LLM / NLP",
-    client: "NovaSoft",
-    title: "Autonomous Support Chatbot — 80% Query Resolution",
-    desc: "Built an enterprise LLM chatbot trained on 3 years of support data, now handling 80% of customer queries without human intervention.",
-    metrics: ["80% autonomous", "$2M/yr saved", "4.8★ CSAT"],
-  },
-  {
-    tag: "Predictive AI",
-    client: "DataVerse",
-    title: "Revenue Forecast Accuracy from 65% → 94%",
-    desc: "Deployed a multi-model ensemble for revenue and market trend prediction that outperformed all existing BI tools by 29 percentage points.",
-    metrics: ["94% accuracy", "+29pp uplift", "6wk delivery"],
-  },
-];
+import { ArrowUpRight, TrendingUp, ShieldCheck, BarChart3 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { caseStudies } from "@/data/case-studies";
 
 const PortfolioSection = () => {
   const ref = useScrollReveal();
@@ -58,74 +36,76 @@ const PortfolioSection = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-6 mb-10">
-          {caseStudies.map((cs, i) => (
-            <div
-              key={cs.title}
-              className="card-premium group cursor-pointer reveal"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {caseStudies.slice(0, 3).map((cs, i) => (
+            <Link
+              to={`/case-studies/${cs.id}`}
+              key={cs.id}
+              className="card-premium group flex flex-col h-full reveal"
               style={{ transitionDelay: `${i * 120}ms` }}
             >
-              <div className="flex items-center justify-between mb-4">
-                <span
-                  className="px-3 py-1 rounded-full text-xs font-semibold"
-                  style={{
-                    background: "hsl(43 96% 56% / 0.1)",
-                    color: "hsl(43 96% 56%)",
-                    border: "1px solid hsl(43 96% 56% / 0.2)",
-                  }}
-                >
-                  {cs.tag}
-                </span>
-                <ArrowUpRight
-                  className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  style={{ color: "hsl(43 96% 56% / 0.5)" }}
+              <div className="relative h-48 mb-6 rounded-xl overflow-hidden bg-navy-elevated border border-white/5">
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-transparent opacity-60 z-10" />
+                <img 
+                  src={cs.image || "/assets/placeholder-chart.jpg"} 
+                  alt={cs.client}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-40 group-hover:opacity-60"
                 />
+                <div className="absolute inset-0 flex items-center justify-center z-20">
+                   <div className="p-3 rounded-full bg-black/40 backdrop-blur-md border border-white/10 group-hover:border-amber-500/50 transition-colors">
+                      {cs.themeColor === "emerald" ? (
+                        <TrendingUp className="w-6 h-6 text-emerald-500" />
+                      ) : cs.tag.includes("LLM") ? (
+                        <ShieldCheck className="w-6 h-6 text-amber-500" />
+                      ) : (
+                        <BarChart3 className="w-6 h-6 text-amber-500" />
+                      )}
+                   </div>
+                </div>
+                <div className="absolute top-3 left-3 z-30">
+                  <span className={`px-2.5 py-1 ${cs.themeColor === 'emerald' ? 'bg-emerald-500 border-emerald-400/50' : 'bg-amber-500 border-amber-400/50'} border rounded-full text-[9px] font-bold uppercase tracking-widest text-[#0B0F19]`}>
+                    {cs.tag}
+                  </span>
+                </div>
               </div>
 
-              <div
-                className="text-xs font-semibold mb-2 tracking-wide"
-                style={{ color: "hsl(215 20% 50%)" }}
-              >
-                {cs.client}
+              <div className="flex-1 px-1">
+                <div className={`text-[10px] font-bold uppercase tracking-[0.2em] ${cs.themeColor === 'emerald' ? 'text-emerald-500/80' : 'text-amber-500/80'} mb-2`}>
+                  {cs.client}
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-amber-500 transition-colors leading-tight">
+                  {cs.title}
+                </h3>
+                <p className="text-gray-400 mb-5 leading-premium text-sm font-medium line-clamp-3">
+                  {cs.desc}
+                </p>
               </div>
 
-              <h3
-                className="text-base font-bold mb-3 leading-snug"
-                style={{ color: "hsl(210 40% 96%)" }}
-              >
-                {cs.title}
-              </h3>
-              <p
-                className="text-sm leading-relaxed mb-5"
-                style={{ color: "hsl(215 20% 55%)" }}
-              >
-                {cs.desc}
-              </p>
-
-              {/* Metrics */}
-              <div className="flex gap-2 flex-wrap">
-                {cs.metrics.map((m) => (
+              <div className="flex flex-wrap gap-2 mb-6 px-1">
+                {cs.metrics.map((m, idx) => (
                   <span
-                    key={m}
-                    className="px-2.5 py-1 rounded-lg text-xs font-semibold"
-                    style={{
-                      background: "hsl(220 20% 14%)",
-                      color: "hsl(43 96% 56%)",
-                      border: "1px solid hsl(220 20% 18%)",
-                    }}
+                    key={idx}
+                    className="px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg text-[10px] font-bold text-gray-300 group-hover:border-amber-500/30 group-hover:text-amber-500 transition-all"
                   >
                     {m}
                   </span>
                 ))}
               </div>
-            </div>
+
+              <div className="flex items-center justify-between pt-5 border-t border-white/5 px-1 mt-auto">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-white/40 group-hover:text-white transition-colors">
+                  View Case Study
+                </span>
+                <ArrowUpRight className="w-4 h-4 text-white/30 group-hover:text-amber-500 transition-all" />
+              </div>
+            </Link>
           ))}
         </div>
 
         <div className="text-center reveal">
-          <button className="btn-outline-amber">
+          <Link to="/case-studies" className="btn-outline-amber px-10 py-4 text-base">
             View All Case Studies →
-          </button>
+          </Link>
         </div>
       </div>
     </section>

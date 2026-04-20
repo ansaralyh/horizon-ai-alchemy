@@ -68,6 +68,11 @@
     --sidebar-accent-foreground: 210 40% 96%;
     --sidebar-border: 220 20% 16%;
     --sidebar-ring: 43 96% 56%;
+
+    /* Emerald Theme (Trading) */
+    --emerald: 158 64% 52%;
+    --emerald-dark: 160 84% 39%;
+    --gradient-emerald: linear-gradient(135deg, hsl(158 64% 52%) 0%, hsl(160 84% 39%) 100%);
   }
 }
 
@@ -135,6 +140,44 @@
     border-color: hsl(var(--amber));
     box-shadow: 0 0 20px hsl(43 96% 56% / 0.2);
     transform: translateY(-2px);
+  }
+
+  .btn-emerald {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold text-sm tracking-wide transition-all duration-300;
+    background: var(--gradient-emerald);
+    color: #0B0F19;
+    box-shadow: 0 0 30px hsl(158 64% 52% / 0.25);
+  }
+
+  .btn-emerald:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 40px hsl(158 64% 52% / 0.4);
+  }
+
+  .btn-outline-emerald {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold text-sm tracking-wide transition-all duration-300;
+    border: 1.5px solid hsl(158 64% 52% / 0.6);
+    color: hsl(158 64% 52%);
+    background: transparent;
+  }
+
+  .btn-outline-emerald:hover {
+    background: hsl(158 64% 52% / 0.08);
+    border-color: hsl(158 64% 52%);
+    transform: translateY(-2px);
+  }
+
+  .leading-premium {
+    line-height: 1.75;
+  }
+
+  .metric-card {
+    @apply p-8 rounded-3xl bg-navy-card border border-white/5 shadow-2xl transition-all duration-500 flex flex-col items-center justify-center text-center;
+  }
+
+  .metric-card:hover {
+    @apply -translate-y-2 border-amber-500/30;
+    box-shadow: 0 20px 40px -20px hsl(43 96% 56% / 0.3);
   }
 
   /* Cards */

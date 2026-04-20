@@ -57,6 +57,12 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        navy: {
+          bg: "hsl(var(--background))",
+          card: "hsl(var(--navy-card))",
+          elevated: "hsl(var(--navy-elevated))",
+          border: "hsl(var(--navy-border))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
