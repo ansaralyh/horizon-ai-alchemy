@@ -158,30 +158,7 @@ export const caseStudies: CaseStudy[] = [
       ]
     }
   },
-  {
-    id: "techflow-pipeline",
-    tag: "Predictive Analytics",
-    client: "TechFlow",
-    title: "340% Efficiency Gain with AI Data Pipeline",
-    desc: "Redesigned their legacy data infrastructure with a real-time ML pipeline, reducing processing time by 87% and enabling predictive demand forecasting.",
-    metrics: ["340% efficiency", "87% faster", "$4.2M saved"],
-  },
-  {
-    id: "novasoft-chatbot",
-    tag: "LLM / NLP",
-    client: "NovaSoft",
-    title: "Autonomous Support Chatbot — 80% Query Resolution",
-    desc: "Built an enterprise LLM chatbot trained on 3 years of support data, now handling 80% of customer queries without human intervention.",
-    metrics: ["80% autonomous", "$2M/yr saved", "4.8★ CSAT"],
-  },
-  {
-    id: "dataverse-revenue",
-    tag: "Predictive AI",
-    client: "DataVerse",
-    title: "Revenue Forecast Accuracy from 65% → 94%",
-    desc: "Deployed a multi-model ensemble for revenue and market trend prediction that outperformed all existing BI tools by 29 percentage points.",
-    metrics: ["94% accuracy", "+29pp uplift", "6wk delivery"],
-  },
+
   {
     id: "ai-content-automation",
     tag: "AI Automation / Workflow Systems",
