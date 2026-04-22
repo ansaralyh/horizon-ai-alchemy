@@ -48,62 +48,79 @@ const CaseStudyDetail = () => {
 
       <main>
         {/* --- SECTION 1: HERO SECTION --- */}
-        <section className="relative pt-40 pb-32 overflow-hidden border-b border-white/5">
+        <section className="relative min-h-[90vh] lg:h-[calc(100vh-80px)] lg:max-h-[900px] flex items-center overflow-hidden border-b border-white/5 pt-20 lg:pt-0">
            {/* Background Accents */}
            <div className={`absolute top-0 right-0 w-[800px] h-[800px] ${theme.bg} blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2 opacity-30 pointer-events-none`} />
            
-           <div className="max-w-7xl mx-auto px-6 relative z-10">
-              <Link to="/case-studies" className="inline-flex items-center gap-2 text-white/40 hover:text-white transition-colors mb-12 group">
+           <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+              <Link to="/case-studies" className="inline-flex items-center gap-2 text-white/40 hover:text-white transition-colors mb-8 lg:mb-12 group">
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                 <span className="text-xs font-bold uppercase tracking-widest">Back to Library</span>
               </Link>
               
-              <div className="grid lg:grid-cols-12 gap-16 items-center">
-                <div className="lg:col-span-12 lg:text-center space-y-8 animate-fade-up">
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <div className="space-y-6 lg:space-y-8 animate-fade-up">
                   <div className={`inline-flex items-center gap-3 px-4 py-1.5 ${theme.bg} border ${theme.border} rounded-full text-[11px] font-bold ${theme.text} uppercase tracking-[0.2em]`}>
                     <span className={`w-2 h-2 rounded-full ${theme.text.replace('text-', 'bg-')} ${theme.glow}`} />
                     {caseStudy.tag}
                   </div>
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.1] max-w-5xl mx-auto" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.1] max-w-2xl" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                     {caseStudy.themeColor === 'amber' ? (
                       <>
-                        {caseStudy.hero.headline.split("Verified Performance")[0]}
-                        <span className="text-amber-gradient block sm:inline">Verified Performance</span>
+                        {caseStudy.hero.headline.includes("Verified Performance") ? (
+                          <>
+                            {caseStudy.hero.headline.split("Verified Performance")[0]}
+                            <span className="text-amber-gradient block sm:inline">Verified Performance</span>
+                          </>
+                        ) : (
+                          caseStudy.hero.headline
+                        )}
                       </>
                     ) : (
                       caseStudy.hero.headline
                     )}
                   </h1>
-                  <p className="text-lg md:text-xl text-[#A0AEC0] font-medium leading-premium max-w-3xl mx-auto">
+                  <p className="text-base md:text-lg text-[#A0AEC0] font-medium leading-relaxed max-w-xl">
                     {caseStudy.hero.subheadline}
                   </p>
 
                   {caseStudy.bonusLine && (
-                    <div className={`py-6 border-l-4 ${theme.text.replace('text-', 'border-')} pl-8 bg-white/5 rounded-r-2xl inline-block mt-4 text-left`}>
-                       <p className={`${theme.text} text-lg font-bold italic tracking-wide`}>
+                    <div className={`py-4 border-l-4 ${theme.text.replace('text-', 'border-')} pl-6 bg-white/5 rounded-r-xl inline-block text-left`}>
+                       <p className={`${theme.text} text-base font-bold italic tracking-wide`}>
                           "{caseStudy.bonusLine}"
                        </p>
                     </div>
                   )}
                   
-                  <div className="flex flex-wrap justify-center gap-6 pt-6">
-                    <a href="#challenge" className={`${theme.btn} px-10 py-5 text-base`}>
+                  <div className="flex flex-wrap gap-4 pt-4">
+                    <a href="#challenge" className={`${theme.btn} px-8 py-4 text-sm font-bold`}>
                       Explore Case Study
                     </a>
-                    <Link to="/contact" className={`${theme.btnOutline} px-10 py-5 text-base`}>
+                    <Link to="/contact" className={`${theme.btnOutline} px-8 py-4 text-sm font-bold`}>
                       Get in Touch
                     </Link>
                   </div>
                 </div>
                 
                 {/* Hero Visual Image */}
-                <div className="lg:col-span-12 relative animate-fade-in-scale delay-300">
+                <div className="relative animate-fade-in-scale delay-300 hidden lg:block">
                   <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[100px] shadow-2xl opacity-20`} />
-                  <div className={`relative rounded-3xl overflow-hidden border border-white/10 bg-navy-card shadow-2xl group hover:${theme.borderStrong} max-w-5xl mx-auto`}>
+                  <div className={`relative rounded-3xl overflow-hidden border border-white/10 bg-navy-card shadow-2xl group hover:${theme.borderStrong}`}>
                       <img 
                         src={caseStudy.image || "/assets/placeholder-chart.jpg"} 
                         alt={caseStudy.title} 
-                        className="w-full h-full object-contain group-hover:scale-[1.01] transition-transform duration-1000" 
+                        className="w-full h-auto max-h-[70vh] object-contain group-hover:scale-[1.02] transition-transform duration-1000" 
+                      />
+                  </div>
+                </div>
+
+                {/* Mobile Image (smaller) */}
+                <div className="lg:hidden relative animate-fade-in-scale delay-300">
+                  <div className={`relative rounded-2xl overflow-hidden border border-white/10 bg-navy-card shadow-xl`}>
+                      <img 
+                        src={caseStudy.image || "/assets/placeholder-chart.jpg"} 
+                        alt={caseStudy.title} 
+                        className="w-full h-auto object-contain" 
                       />
                   </div>
                 </div>
@@ -120,7 +137,7 @@ const CaseStudyDetail = () => {
                   <span className={`text-[11px] font-bold ${theme.text} opacity-60 uppercase tracking-[0.2em] mb-4 block group-hover:opacity-100 transition-opacity`}>
                     {stat.label}
                   </span>
-                  <span className="text-4xl md:text-5xl font-bold text-white tracking-tighter" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  <span className="text-2xl md:text-3xl font-bold text-white tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                     {stat.value}
                   </span>
                 </div>

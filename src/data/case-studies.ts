@@ -170,7 +170,7 @@ export const caseStudies: CaseStudy[] = [
     gallery: ["/assets/service-automation.jpg", "/assets/service-nlp.jpg", "/assets/service-analytics.jpg"],
     themeColor: "amber",
     hero: {
-      headline: "AI-Powered Content Automation System",
+      headline: "AI-Powered Content Automation – Verified Performance",
       subheadline: "Fully automated AI-driven system for content generation and publishing at scale.",
       stats: [
         { label: "Manual Effort", value: "0%" },
@@ -275,7 +275,7 @@ export const caseStudies: CaseStudy[] = [
     monthlyVisual: "/assets/monthly-performance.png",
     bonusLine: "Quantitative precision. Institutional imbalances. Systematic results.",
     hero: {
-      headline: "NAS100 Algorithmic Trading Strategy (ORB + FVG)",
+      headline: "NAS100 Algorithmic Trading – Verified Performance",
       subheadline: "Rule-based trading system combining price action and quantitative logic for consistent performance.",
       stats: [
         { label: "Win Rate", value: "60%" },
@@ -501,7 +501,7 @@ export const caseStudies: CaseStudy[] = [
     themeColor: "amber",
     bonusLine: "From raw documentation to intelligent outputs—instantly.",
     hero: {
-      headline: "AI-Powered RAG System for D2Lang Code Generation",
+      headline: "AI-Powered RAG System – Verified Performance",
       subheadline: "We designed and implemented a fully automated Retrieval-Augmented Generation (RAG) system that generates accurate D2Lang code directly from user queries.",
       stats: [
         { label: "Automation Level", value: "100%" },
