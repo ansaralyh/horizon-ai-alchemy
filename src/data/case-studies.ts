@@ -378,4 +378,228 @@ export const caseStudies: CaseStudy[] = [
       ]
     }
   },
+  {
+    id: "horizon-bee-connector",
+    tag: "Trading Infrastructure / Real-Time Systems",
+    client: "Internal Product / Trading System",
+    title: "Horizon Bee Connector – Verified Performance",
+    desc: "A high-performance middleware connecting TradingView signals to MetaTrader 4 and MetaTrader 5 for real-time automated trade execution.",
+    metrics: ["Real-Time", "Zero Latency", "100% Automated"],
+    image: "/assets/horizon-bee-connector-hero.png",
+    gallery: ["/assets/trading-chart-1.png", "/assets/trading-chart-2.png"],
+    themeColor: "amber",
+    bonusLine: "From signal to execution—without delay, without compromise.",
+    hero: {
+      headline: "Horizon Bee Connector Verified Performance",
+      subheadline: "From signal to execution—without delay, without compromise.",
+      stats: [
+        { label: "Execution Delay", value: "< 50ms" },
+        { label: "Terminals", value: "MT4 / MT5" },
+        { label: "Architecture", value: "Middleware" },
+        { label: "Stability", value: "99.99% Uptime" }
+      ]
+    },
+    overview: {
+      title: "Project Overview",
+      content: [
+        "We designed and developed Horizon Bee Connector, a high-performance middleware solution that seamlessly connects TradingView with MetaTrader 4 and MetaTrader 5.",
+        "The system enables real-time trade execution by transforming TradingView alerts into actionable orders on trading terminals—eliminating manual intervention and ensuring precision execution."
+      ],
+      features: [
+        "High-frequency signal processing",
+        "Zero-latency execution engine",
+        "Direct TradingView to MT4/MT5 bridging",
+        "Secure automated ecosystem"
+      ]
+    },
+    challenge: {
+      title: "The Challenge",
+      content: "Traders using TradingView signals face critical limitations when aiming for true automation:",
+      problems: [
+        "No direct execution capability from TradingView",
+        "Significant manual trade delays causing missed opportunities",
+        "High risk of slippage when executing manually"
+      ],
+      image: "/assets/horizon-bee-connector-challenge.png"
+    },
+    solution: {
+      title: "The Solution",
+      content: "We engineered a robust middleware system that handles real-time data flow between TradingView and MetaTrader environments with high speed, accuracy, and reliability.",
+      image: "/assets/trading-chart-2.png"
+    },
+    performance: {
+      title: "System Architecture",
+      content: "A low-latency bridge infrastructure guaranteeing precise order execution without bottlenecks.",
+      bullets: [
+        "Scalable client-server architecture",
+        "Server processes TradingView webhook alerts",
+        "Local client (Expert Advisor) executes trades on MT4/MT5",
+        "Secure communication layer ensures data integrity"
+      ]
+    },
+    featuresList: [
+      {
+        iconName: "Target",
+        title: "Real-Time Webhook Processing",
+        desc: "Instant and reliable receipt of TradingView alerts for immediate action.",
+        points: [
+          "Instant TradingView alert reception",
+          "Handles high-frequency signals with ease"
+        ]
+      },
+      {
+        iconName: "FileJson",
+        title: "Intelligent Trade Parsing",
+        desc: "Advanced logic to decipher incoming JSON payloads into executable market orders.",
+        points: [
+          "Parses complex JSON payloads",
+          "Extracts symbol, entry, SL, TP, volume",
+          "Converts signals into executable trades"
+        ]
+      },
+      {
+        iconName: "Send",
+        title: "Instant Trade Execution",
+        desc: "Zero manual intervention, delivering signals straight into the market.",
+        points: [
+          "Routes signals directly to Expert Advisor",
+          "Executes trades with minimal latency",
+          "Supports dynamic conditions parameters"
+        ]
+      }
+    ],
+    trust: {
+      title: "Reliability & Security",
+      content: "Mission-critical financial infrastructure demands uncompromising stability and security.",
+      points: [
+        "Secure API authentication",
+        "Advanced error handling logic",
+        "Retry mechanisms for failed signals",
+        "Built for real-time stability under market conditions"
+      ]
+    },
+    techStack: ["Python", "TradingView Webhooks", "MetaTrader 4", "MetaTrader 5", "REST API Network"],
+    skills: ["Middleware Architecture", "Real-Time Systems Engineering", "API Integration", "Algorithmic Execution"],
+    cta: {
+      title: "Automate Your Execution",
+      content: "Looking to automate your trading execution without compromising on speed or security?",
+      buttons: [
+        { label: "Request Custom Connector", href: "/contact" },
+        { label: "Book a Consultation", href: "/contact" }
+      ]
+    }
+  },
+  {
+    id: "d2lang-rag-system",
+    tag: "AI Automation / RAG Systems",
+    client: "Internal Product / Automation Tool",
+    title: "AI-Powered RAG System for D2Lang Code Generation",
+    desc: "A fully automated Retrieval-Augmented Generation (RAG) system that generates accurate D2Lang code directly from user queries.",
+    metrics: ["100% Automated", "95% Accuracy", "Real-Time Retrieval"],
+    image: "/assets/rag-system-hero.png",
+    gallery: ["/assets/rag-system-architecture.png"],
+    themeColor: "amber",
+    bonusLine: "From raw documentation to intelligent outputs—instantly.",
+    hero: {
+      headline: "AI-Powered RAG System for D2Lang Code Generation",
+      subheadline: "We designed and implemented a fully automated Retrieval-Augmented Generation (RAG) system that generates accurate D2Lang code directly from user queries.",
+      stats: [
+        { label: "Automation Level", value: "100%" },
+        { label: "Retrieval Tech", value: "Pinecone" },
+        { label: "Workflow logic", value: "n8n Core" },
+        { label: "Input Source", value: "GitHub" }
+      ]
+    },
+    overview: {
+      title: "Project Overview",
+      content: [
+        "We designed and implemented a fully automated Retrieval-Augmented Generation (RAG) system that generates accurate D2Lang code directly from user queries.",
+        "The system combines structured knowledge retrieval with advanced language models to produce context-aware, reliable outputs—serving as an intelligent assistant for diagram creation and architecture design."
+      ],
+      features: [
+        "Intelligent Context Retrieval",
+        "Automated Knowledge Pipeline",
+        "Context-Aware Code Generation",
+        "Conversational Memory"
+      ]
+    },
+    challenge: {
+      title: "The Challenge",
+      content: "Generating accurate D2Lang code requires a deep understanding of documentation and contextual awareness across multiple concepts. Documentation evolves continuously, making manual lookup time-consuming and error-prone.",
+      problems: [
+        "Deep understanding of complex documentation",
+        "Contextual awareness across multiple diagram concepts",
+        "Continuous updates as documentation evolves",
+        "Time-consuming and error-prone manual interpretation"
+      ],
+      image: "/assets/rag-system-architecture.png"
+    },
+    solution: {
+      title: "The Solution",
+      content: "We built a scalable RAG pipeline using n8n, integrating Pinecone for vector search and OpenAI for embeddings and code generation. The system pulls latest documentation directly from GitHub, ensuring outputs are always consistent with current standards.",
+      image: "/assets/rag-system-hero.png"
+    },
+    featuresList: [
+      {
+        iconName: "BrainCircuit",
+        title: "Intelligent Context Retrieval",
+        desc: "Semantic search powered by Pinecone retrieves relevant documentation chunks for grounding.",
+        points: [
+          "Semantic search powered by Pinecone",
+          "Retrieves the most relevant documentation chunks",
+          "Ensures accuracy and contextual grounding"
+        ]
+      },
+      {
+        iconName: "FileJson",
+        title: "Automated Knowledge Pipeline",
+        desc: "Pulls latest D2Lang documentation via GitHub API and automatically chunks/embeds content.",
+        points: [
+          "Pulls latest D2Lang documentation via GitHub API",
+          "Automatically chunks and embeds content",
+          "Keeps the system continuously updated"
+        ]
+      },
+      {
+        iconName: "Target",
+        title: "Context-Aware Code Generation",
+        desc: "Uses OpenAI chat models to generate clean, usable D2Lang code maintained to standards.",
+        points: [
+          "Uses OpenAI chat models for structured output",
+          "Generates clean, usable D2Lang code",
+          "Maintains consistency with documentation standards"
+        ]
+      },
+      {
+        iconName: "Activity",
+        title: "Conversational Memory",
+        desc: "Retains context across interactions, enabling iterative refinement of diagrams.",
+        points: [
+          "Retains context across user interactions",
+          "Enables iterative refinement of diagrams and designs"
+        ]
+      }
+    ],
+    results: {
+      title: "Key Benefits",
+      content: "The system eliminates manual documentation lookup and significantly speeds up architecture design workflow.",
+      bullets: [
+        "Eliminates manual documentation lookup",
+        "Improves accuracy of generated code",
+        "Speeds up architecture and diagram creation",
+        "Easily extendable and maintainable (no-code setup)"
+      ],
+      image: "/assets/rag-system-hero.png"
+    },
+    techStack: ["n8n (Workflow Automation)", "OpenAI API (Embeddings + Chat Models)", "Pinecone (Vector Database)", "GitHub API"],
+    skills: ["RAG System Architecture", "Prompt Engineering & Optimization", "Vector Database Integration", "AI Workflow Automation"],
+    cta: {
+      title: "Request a Custom AI Solution",
+      content: "Looking to build AI-powered assistants or RAG systems? We design intelligent systems that turn your data into actionable insights.",
+      buttons: [
+        { label: "👉 Request a Custom AI Solution", href: "/contact" },
+        { label: "👉 Book a Consultation", href: "/contact" }
+      ]
+    }
+  }
 ];
