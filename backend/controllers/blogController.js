@@ -74,7 +74,7 @@ const createBlog = async (req, res) => {
         console.log('Request Headers:', req.headers['content-type']);
         console.log('Request Body Keys:', Object.keys(req.body));
         
-        const { title, slug, content, excerpt, category, author, status, thumbnail } = req.body;
+        const { title, slug, content, excerpt, category, author, status, heroImage, images } = req.body;
 
         // --- Data Validation ---
         if (!title || !content || !excerpt || !category || !author) {
@@ -86,14 +86,25 @@ const createBlog = async (req, res) => {
         }
 
         // --- Image Handling ---
-        console.log('Handling Image...');
-        const imageUrl = req.file ? req.file.path : thumbnail;
-        if (req.file) {
-            console.log('Image uploaded to Cloudinary:', req.file.path);
-        } else if (thumbnail) {
-            console.log('Using provided thumbnail URL');
-        } else {
-            console.log('No image provided');
+        console.log('Handling Images...');
+        let heroImageUrl = '';
+        if (req.files && req.files['heroImage']) {
+            heroImageUrl = req.files['heroImage'][0].path;
+            console.log('Hero image uploaded:', heroImageUrl);
+        } else if (heroImage) {
+            heroImageUrl = heroImage;
+        }
+
+        let sectionImageUrls = [];
+        if (req.files && req.files['sectionImages']) {
+            sectionImageUrls = req.files['sectionImages'].map(file => file.path);
+            console.log('Section images uploaded:', sectionImageUrls.length);
+        } else if (images) {
+            try {
+                sectionImageUrls = typeof images === 'string' ? JSON.parse(images) : images;
+            } catch (e) {
+                sectionImageUrls = [images];
+            }
         }
 
         // --- Blog Creation ---
@@ -107,7 +118,8 @@ const createBlog = async (req, res) => {
             category,
             author,
             status: status || 'draft',
-            thumbnail: imageUrl || '',
+            heroImage: heroImageUrl,
+            images: sectionImageUrls,
         };
 
         const blog = await Blog.create(blogData);
@@ -141,7 +153,7 @@ const createBlog = async (req, res) => {
 // @access  Private
 const updateBlog = async (req, res) => {
     try {
-        const { title, slug, content, excerpt, category, author, status, thumbnail } = req.body;
+        const { title, slug, content, excerpt, category, author, status, heroImage, images } = req.body;
 
         let blog = await Blog.findById(req.params.id);
 
@@ -149,7 +161,25 @@ const updateBlog = async (req, res) => {
             return res.status(404).json({ success: false, message: 'Blog not found' });
         }
 
-        const imageUrl = req.file ? req.file.path : thumbnail;
+        // Hero Image Handling
+        let heroImageUrl = blog.heroImage;
+        if (req.files && req.files['heroImage']) {
+            heroImageUrl = req.files['heroImage'][0].path;
+        } else if (heroImage !== undefined) {
+            heroImageUrl = heroImage;
+        }
+
+        // Section Images Handling
+        let sectionImageUrls = blog.images;
+        if (req.files && req.files['sectionImages']) {
+            sectionImageUrls = req.files['sectionImages'].map(file => file.path);
+        } else if (images !== undefined) {
+            try {
+                sectionImageUrls = typeof images === 'string' ? JSON.parse(images) : images;
+            } catch (e) {
+                sectionImageUrls = [images];
+            }
+        }
 
         blog = await Blog.findByIdAndUpdate(
             req.params.id,
@@ -161,7 +191,8 @@ const updateBlog = async (req, res) => {
                 category,
                 author,
                 status,
-                thumbnail: imageUrl !== undefined && imageUrl !== null ? imageUrl : blog.thumbnail,
+                heroImage: heroImageUrl,
+                images: sectionImageUrls,
             },
             { new: true, runValidators: true }
         );

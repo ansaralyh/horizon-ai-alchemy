@@ -3,7 +3,9 @@ export interface BlogPost {
   title: string;
   excerpt: string;
   content: string;
-  image: string;
+  image: string; // Keeping for compatibility with other components
+  heroImage?: string;
+  images?: string[];
   author: string;
   date: string;
   category: string;

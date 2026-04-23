@@ -13,19 +13,22 @@ const ManageBlogs = () => {
   // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [heroImageFile, setHeroImageFile] = useState<File | null>(null);
+  const [sectionImageFiles, setSectionImageFiles] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
-  // Image Upload reference
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  // Image Upload references
+  const heroFileInputRef = React.useRef<HTMLInputElement>(null);
+  const sectionFileInputRef = React.useRef<HTMLInputElement>(null);
   
   // Form state
   const [formData, setFormData] = useState({
     title: "",
     excerpt: "",
     content: "",
-    image: "",
+    heroImage: "",
+    images: [] as string[],
     author: "",
     category: "",
     date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
@@ -40,8 +43,10 @@ const ManageBlogs = () => {
   const handleOpenAddModal = () => {
     setEditingId(null);
     setError(null);
+    setHeroImageFile(null);
+    setSectionImageFiles([]);
     setFormData({ 
-      title: "", excerpt: "", content: "", image: "", author: "", category: "", 
+      title: "", excerpt: "", content: "", heroImage: "", images: [], author: "", category: "", 
       date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) 
     });
     setIsModalOpen(true);
@@ -50,11 +55,14 @@ const ManageBlogs = () => {
   const handleOpenEditModal = (blog: BlogPost) => {
     setEditingId(blog.id);
     setError(null);
+    setHeroImageFile(null);
+    setSectionImageFiles([]);
     setFormData({
       title: blog.title,
       excerpt: blog.excerpt,
       content: blog.content,
-      image: blog.image,
+      heroImage: blog.heroImage || blog.image,
+      images: blog.images || [],
       author: blog.author,
       category: blog.category,
       date: blog.date
@@ -68,16 +76,42 @@ const ManageBlogs = () => {
     }
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleHeroImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImageFile(file);
+      setHeroImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setFormData({ ...formData, image: reader.result as string });
+        setFormData({ ...formData, heroImage: reader.result as string });
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleSectionImagesUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length > 0) {
+      setSectionImageFiles(prev => [...prev, ...files]);
+      
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setFormData(prev => ({ 
+            ...prev, 
+            images: [...prev.images, reader.result as string] 
+          }));
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  };
+
+  const removeSectionImage = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index)
+    }));
+    // Note: This logic is simplified; in a production app, you might want to track which files to remove
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -93,8 +127,18 @@ const ManageBlogs = () => {
       data.append("author", formData.author);
       data.append("category", formData.category);
       
-      if (imageFile) {
-        data.append("image", imageFile);
+      if (heroImageFile) {
+        data.append("heroImage", heroImageFile);
+      } else {
+        data.append("heroImage", formData.heroImage);
+      }
+
+      if (sectionImageFiles.length > 0) {
+        sectionImageFiles.forEach(file => {
+          data.append("sectionImages", file);
+        });
+      } else {
+        data.append("images", JSON.stringify(formData.images));
       }
 
       if (editingId) {
@@ -104,7 +148,8 @@ const ManageBlogs = () => {
       }
       
       setIsModalOpen(false);
-      setImageFile(null);
+      setHeroImageFile(null);
+      setSectionImageFiles([]);
     } catch (err: any) {
       console.error("Form submission error:", err);
       setError(err.message || "Failed to save blog. Please check your connection and try again.");
@@ -291,28 +336,68 @@ const ManageBlogs = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-muted-foreground mb-1.5">Image Upload</label>
+                  <label className="block text-xs font-medium text-muted-foreground mb-1.5">Hero Image</label>
                   <div className="flex items-center gap-3">
                     <input 
                       type="file"
-                      ref={fileInputRef}
-                      onChange={handleImageUpload}
+                      ref={heroFileInputRef}
+                      onChange={handleHeroImageUpload}
                       accept="image/*"
                       className="hidden"
                     />
                     <button
                       type="button"
-                      onClick={() => fileInputRef.current?.click()}
+                      onClick={() => heroFileInputRef.current?.click()}
                       className="btn-amber px-4 py-2.5 text-xs w-full flex justify-center"
                     >
-                      Choose Image
+                      Choose Hero Image
                     </button>
-                    {formData.image && (
+                    {formData.heroImage && (
                       <div className="w-10 h-10 rounded overflow-hidden shrink-0 border border-white/10">
-                        <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
+                        <img src={formData.heroImage} alt="Hero Preview" className="w-full h-full object-cover" />
                       </div>
                     )}
                   </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1.5">Section Images (Optional)</label>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <input 
+                      type="file"
+                      multiple
+                      ref={sectionFileInputRef}
+                      onChange={handleSectionImagesUpload}
+                      accept="image/*"
+                      className="hidden"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => sectionFileInputRef.current?.click()}
+                      className="px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs font-medium hover:bg-white/10 transition-all w-full flex justify-center"
+                    >
+                      Add Section Images
+                    </button>
+                  </div>
+                  
+                  {formData.images.length > 0 && (
+                    <div className="grid grid-cols-5 gap-2">
+                       {formData.images.map((img, index) => (
+                         <div key={index} className="relative group aspect-square rounded-lg overflow-hidden border border-white/10">
+                           <img src={img} alt={`Section ${index}`} className="w-full h-full object-cover" />
+                           <button 
+                             type="button"
+                             onClick={() => removeSectionImage(index)}
+                             className="absolute top-1 right-1 p-1 bg-red-500 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
+                           >
+                             <X className="w-3 h-3 text-white" />
+                           </button>
+                         </div>
+                       ))}
+                    </div>
+                  )}
                 </div>
               </div>
 

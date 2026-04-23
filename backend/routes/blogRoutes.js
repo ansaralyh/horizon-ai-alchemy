@@ -15,9 +15,9 @@ router.route('/').get(getBlogs);
 router.route('/:id').get(getBlogById);
 
 // POST, PUT, DELETE routes require admin protection
-router.route('/').post(protect, upload.single('image'), createBlog);
+router.route('/').post(protect, upload.fields([{ name: 'heroImage', maxCount: 1 }, { name: 'sectionImages', maxCount: 10 }]), createBlog);
 router.route('/:id')
-    .put(protect, upload.single('image'), updateBlog)
+    .put(protect, upload.fields([{ name: 'heroImage', maxCount: 1 }, { name: 'sectionImages', maxCount: 10 }]), updateBlog)
     .delete(protect, deleteBlog);
 
 module.exports = router;

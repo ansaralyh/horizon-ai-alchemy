@@ -29,9 +29,13 @@ const blogSchema = new mongoose.Schema(
             type: String,
             required: [true, 'Please add an author'],
         },
-        thumbnail: {
+        heroImage: {
             type: String,
             default: '',
+        },
+        images: {
+            type: [String],
+            default: [],
         },
         status: {
             type: String,

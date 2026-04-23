@@ -138,7 +138,9 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
           title: b.title,
           excerpt: b.excerpt,
           content: b.content,
-          image: b.thumbnail,
+          image: b.heroImage || b.thumbnail || '',
+          heroImage: b.heroImage || b.thumbnail || '',
+          images: b.images || [],
           author: b.author,
           category: b.category,
           date: new Date(b.createdAt).toLocaleDateString('en-US', { 
