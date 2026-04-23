@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, CheckCircle2, TrendingUp, ShieldCheck, Activity, ArrowUpRight, BarChart3, Clock, Target, Globe, Layers, Settings } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { TradingDashboard } from "@/components/TradingDashboard";
 import { caseStudies } from "@/data/case-studies";
 
 const CaseStudyDetail = () => {
@@ -102,27 +103,39 @@ const CaseStudyDetail = () => {
                   </div>
                 </div>
                 
-                {/* Hero Visual Image */}
+                {/* Hero Visual Image / Dashboard */}
                 <div className="relative animate-fade-in-scale delay-300 hidden lg:block">
                   <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[100px] shadow-2xl opacity-20`} />
-                  <div className={`relative rounded-3xl overflow-hidden border border-white/10 bg-navy-card shadow-2xl group hover:${theme.borderStrong}`}>
-                      <img 
-                        src={caseStudy.image || "/assets/placeholder-chart.jpg"} 
-                        alt={caseStudy.title} 
-                        className="w-full h-auto max-h-[70vh] object-contain group-hover:scale-[1.02] transition-transform duration-1000" 
-                      />
-                  </div>
+                  {caseStudy.id === 'mechanical-trading' ? (
+                    <div className="relative z-10 scale-75 xl:scale-85 xxl:scale-100 transform transform-gpu origin-right -mt-20">
+                      <TradingDashboard />
+                    </div>
+                  ) : (
+                    <div className={`relative rounded-3xl overflow-hidden border border-white/10 bg-navy-card shadow-2xl group hover:${theme.borderStrong}`}>
+                        <img 
+                          src={caseStudy.image || "/assets/placeholder-chart.jpg"} 
+                          alt={caseStudy.title} 
+                          className="w-full h-auto max-h-[70vh] object-contain group-hover:scale-[1.02] transition-transform duration-1000" 
+                        />
+                    </div>
+                  )}
                 </div>
 
                 {/* Mobile Image (smaller) */}
                 <div className="lg:hidden relative animate-fade-in-scale delay-300">
-                  <div className={`relative rounded-2xl overflow-hidden border border-white/10 bg-navy-card shadow-xl`}>
-                      <img 
-                        src={caseStudy.image || "/assets/placeholder-chart.jpg"} 
-                        alt={caseStudy.title} 
-                        className="w-full h-auto object-contain" 
-                      />
-                  </div>
+                  {caseStudy.id === 'mechanical-trading' ? (
+                    <div className="scale-[0.85] sm:scale-100 origin-top">
+                      <TradingDashboard />
+                    </div>
+                  ) : (
+                    <div className={`relative rounded-2xl overflow-hidden border border-white/10 bg-navy-card shadow-xl`}>
+                        <img 
+                          src={caseStudy.image || "/assets/placeholder-chart.jpg"} 
+                          alt={caseStudy.title} 
+                          className="w-full h-auto object-contain" 
+                        />
+                    </div>
+                  )}
                 </div>
               </div>
            </div>
