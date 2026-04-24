@@ -166,6 +166,26 @@ const BlogDetails = () => {
               </div>
             </article>
           ))}
+          {/* Article Gallery */}
+          {blog.images && blog.images.length > 0 && (
+            <section className="space-y-12 pb-12">
+              <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                Article Gallery
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {blog.images.map((img, idx) => (
+                  <div key={idx} className="relative group rounded-3xl overflow-hidden border border-white/10 aspect-video">
+                    <img 
+                      src={img} 
+                      alt={`Article content ${idx + 1}`} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* Bottom Navigation */}
           <footer className="pt-20 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-12">

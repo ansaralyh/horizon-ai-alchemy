@@ -86,26 +86,31 @@ const createBlog = async (req, res) => {
         }
 
         // --- Image Handling ---
-        console.log('Handling Images...');
+        console.log('--- Image Handling ---');
         let heroImageUrl = '';
         if (req.files && req.files['heroImage']) {
             heroImageUrl = req.files['heroImage'][0].path;
-            console.log('Hero image uploaded:', heroImageUrl);
+            console.log('✅ Hero image uploaded:', heroImageUrl);
         } else if (heroImage) {
             heroImageUrl = heroImage;
+            console.log('ℹ️ Using existing heroImage string');
         }
 
         let sectionImageUrls = [];
-        if (req.files && req.files['sectionImages']) {
-            sectionImageUrls = req.files['sectionImages'].map(file => file.path);
-            console.log('Section images uploaded:', sectionImageUrls.length);
-        } else if (images) {
+        if (images) {
             try {
                 sectionImageUrls = typeof images === 'string' ? JSON.parse(images) : images;
             } catch (e) {
                 sectionImageUrls = [images];
             }
         }
+        
+        if (req.files && req.files['sectionImages']) {
+            const newUrls = req.files['sectionImages'].map(file => file.path);
+            sectionImageUrls = [...sectionImageUrls, ...newUrls];
+            console.log(`✅ Received ${newUrls.length} new section images. Total: ${sectionImageUrls.length}`);
+        }
+        console.log('--- End Image Handling ---');
 
         // --- Blog Creation ---
         console.log('Creating Blog in Database...');
@@ -162,24 +167,35 @@ const updateBlog = async (req, res) => {
         }
 
         // Hero Image Handling
+        console.log('--- Update: Hero Image Handling ---');
         let heroImageUrl = blog.heroImage;
         if (req.files && req.files['heroImage']) {
             heroImageUrl = req.files['heroImage'][0].path;
+            console.log('✅ New Hero image uploaded:', heroImageUrl);
         } else if (heroImage !== undefined) {
             heroImageUrl = heroImage;
+            console.log('ℹ️ Using provided heroImage string');
         }
 
         // Section Images Handling
-        let sectionImageUrls = blog.images;
-        if (req.files && req.files['sectionImages']) {
-            sectionImageUrls = req.files['sectionImages'].map(file => file.path);
-        } else if (images !== undefined) {
+        console.log('--- Update: Section Images Handling ---');
+        let sectionImageUrls = [];
+        if (images !== undefined) {
             try {
                 sectionImageUrls = typeof images === 'string' ? JSON.parse(images) : images;
             } catch (e) {
                 sectionImageUrls = [images];
             }
+        } else {
+            sectionImageUrls = blog.images || [];
         }
+        
+        if (req.files && req.files['sectionImages']) {
+            const newUrls = req.files['sectionImages'].map(file => file.path);
+            sectionImageUrls = [...sectionImageUrls, ...newUrls];
+            console.log(`✅ Received ${newUrls.length} new section images. Total: ${sectionImageUrls.length}`);
+        }
+        console.log('--- End Update: Image Handling ---');
 
         blog = await Blog.findByIdAndUpdate(
             req.params.id,

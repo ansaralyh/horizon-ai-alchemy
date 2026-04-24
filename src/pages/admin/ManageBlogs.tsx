@@ -93,25 +93,39 @@ const ManageBlogs = () => {
     if (files.length > 0) {
       setSectionImageFiles(prev => [...prev, ...files]);
       
-      files.forEach(file => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setFormData(prev => ({ 
-            ...prev, 
-            images: [...prev.images, reader.result as string] 
-          }));
-        };
-        reader.readAsDataURL(file);
+      const fileReaders: Promise<string>[] = files.map(file => {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(file);
+        });
+      });
+
+      Promise.all(fileReaders).then(previews => {
+        setFormData(prev => ({ 
+          ...prev, 
+          images: [...prev.images, ...previews] 
+        }));
       });
     }
   };
 
   const removeSectionImage = (index: number) => {
+    const imageToRemove = formData.images[index];
+    const isNewFile = imageToRemove.startsWith('data:');
+    
+    if (isNewFile) {
+      // Find the relative index in sectionImageFiles
+      // This is slightly complex because multiple new files might be added at different times
+      // A better way is to track images and files together, but for now:
+      const previewIndex = formData.images.slice(0, index).filter(img => img.startsWith('data:')).length;
+      setSectionImageFiles(prev => prev.filter((_, i) => i !== previewIndex));
+    }
+
     setFormData(prev => ({
       ...prev,
       images: prev.images.filter((_, i) => i !== index)
     }));
-    // Note: This logic is simplified; in a production app, you might want to track which files to remove
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -133,12 +147,14 @@ const ManageBlogs = () => {
         data.append("heroImage", formData.heroImage);
       }
 
+      // Send existing URLs as JSON, exclude base64 previews
+      const existingUrls = formData.images.filter(img => !img.startsWith('data:'));
+      data.append("images", JSON.stringify(existingUrls));
+
       if (sectionImageFiles.length > 0) {
         sectionImageFiles.forEach(file => {
           data.append("sectionImages", file);
         });
-      } else {
-        data.append("images", JSON.stringify(formData.images));
       }
 
       if (editingId) {
