@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, User } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import logo from "@/assets/new-logo.png";
 
 const navLinks = [
@@ -67,12 +67,20 @@ const Navbar = () => {
               <Link
                 key={link.label}
                 to={link.path}
-                className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:text-amber-400"
+                className="group relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:text-amber-400 hover:bg-[hsl(43_96%_56%_/_0.08)]"
                 style={{
                   color: isActive(link.path) ? "hsl(43 96% 56%)" : "hsl(215 20% 65%)",
                 }}
               >
                 {link.label}
+                <span
+                  className={`absolute left-3 right-3 -bottom-0.5 h-[2px] rounded-full transition-transform duration-300 ${
+                    isActive(link.path)
+                      ? "scale-x-100"
+                      : "scale-x-0 group-hover:scale-x-100"
+                  }`}
+                  style={{ background: "hsl(43 96% 56%)" }}
+                />
               </Link>
             ))}
           </div>

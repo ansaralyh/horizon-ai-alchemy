@@ -74,11 +74,15 @@ const BlogDetails = () => {
         {/* --- HERO SECTION (Screenshot 1 Style) --- */}
         <section className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
-            <img 
-              src={blog.image} 
-              alt={blog.title} 
-              className="w-full h-full object-cover"
-            />
+            {blog.image ? (
+              <img
+                src={blog.image}
+                alt={blog.title}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-background via-card to-background" />
+            )}
             {/* Gradient Overlay for Text Readability */}
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-black/30" />
           </div>
@@ -98,94 +102,84 @@ const BlogDetails = () => {
           </div>
         </section>
 
-        {/* --- 2ND SECTION: INTRODUCTION (Text Left, Image Right) --- */}
-        {sections.length > 0 && (
-          <section className="py-24 lg:py-32 bg-background relative overflow-hidden">
-            {/* Ambient Background Glow */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
-            
-            <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-start">
-                <div className="lg:col-span-7 space-y-10">
-                  {sections[0].title && (
-                    <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {sections[0].title}
-                    </h2>
+        {/* --- ARTICLE BODY: Alternating image/text sections --- */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 space-y-24 lg:space-y-32 pb-32">
+          {sections.map((section, index) => {
+            const sectionImage = index === 0 ? blog.image : blog.images?.[index - 1];
+            const hasSectionImage = Boolean(sectionImage);
+            const reverseLayout = index % 2 === 1;
+            const sideContent = hasSectionImage ? section.content.slice(0, 1) : section.content;
+            const fullWidthContent = hasSectionImage ? section.content.slice(1) : [];
+
+            return (
+              <article key={index} className="w-full">
+                <div
+                  className={`blog-section grid grid-cols-1 gap-10 lg:gap-14 items-start ${
+                    hasSectionImage ? "has-image lg:grid-cols-12" : "lg:grid-cols-1"
+                  } ${
+                    hasSectionImage && reverseLayout ? "reverse-layout" : ""
+                  }`}
+                >
+                  <div
+                    className={
+                      hasSectionImage
+                        ? `lg:col-span-7 ${reverseLayout ? "lg:order-2" : "lg:order-1"}`
+                        : "max-w-5xl mx-auto"
+                    }
+                  >
+                    {section.title && (
+                      <h2 className="text-3xl md:text-5xl font-bold text-white mb-10 tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                        {section.title}
+                      </h2>
+                    )}
+                    <div className="space-y-8 md:space-y-10">
+                      {sideContent.map((p, pIdx) => (
+                        <p
+                          key={pIdx}
+                          className={`font-normal leading-relaxed ${
+                            index === 0 && pIdx === 0
+                              ? "text-2xl md:text-3xl text-white border-l-4 border-amber-500 pl-6 md:pl-8"
+                              : "text-lg md:text-xl text-gray-400"
+                          }`}
+                        >
+                          {p}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+
+                  {hasSectionImage && (
+                    <div
+                      className={`lg:col-span-5 relative group ${reverseLayout ? "lg:order-1" : "lg:order-2"}`}
+                    >
+                      <div className="absolute -inset-3 bg-amber-500/10 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                      <div className="relative rounded-3xl overflow-hidden border border-white/10 aspect-[4/3] md:aspect-[5/4]">
+                        <img
+                          src={sectionImage}
+                          alt={`${section.title || blog.title} visual`}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-3xl" />
+                      </div>
+                    </div>
                   )}
-                  <div className="space-y-8">
-                    {sections[0].content.map((p, pIdx) => (
-                      <p 
-                        key={pIdx} 
-                        className={`leading-relaxed ${
-                          pIdx === 0 
-                            ? "text-2xl md:text-3xl font-bold text-white border-l-4 border-amber-500 pl-8" 
-                            : "text-lg md:text-xl text-gray-400"
-                        }`}
+                </div>
+
+                {fullWidthContent.length > 0 && (
+                  <div className="mt-10 md:mt-12 space-y-8 md:space-y-10">
+                    {fullWidthContent.map((p, pIdx) => (
+                      <p
+                        key={`${index}-full-${pIdx}`}
+                        className="text-lg md:text-xl text-gray-400 font-normal leading-relaxed"
                       >
                         {p}
                       </p>
                     ))}
                   </div>
-                </div>
-                
-                {/* Introduction Image on Right */}
-                <div className="lg:col-span-5 relative group mt-12 lg:mt-0">
-                  <div className="absolute -inset-4 bg-amber-500/10 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                  <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 aspect-[4/5] lg:aspect-[3/4]">
-                    <img 
-                      src={blog.image} 
-                      alt="Introduction visual" 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                    />
-                    <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[2.5rem]" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* --- REMAINING CONTENT: FULL WIDTH --- */}
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 space-y-24 lg:space-y-32 pb-32">
-          {sections.slice(1).map((section, index) => (
-            <article key={index} className="w-full">
-              {section.title && (
-                <h2 className="text-3xl md:text-5xl font-bold text-white mb-12 tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {section.title}
-                </h2>
-              )}
-              <div className="space-y-12 max-w-5xl">
-                {section.content.map((p, pIdx) => (
-                  <p 
-                    key={pIdx} 
-                    className="text-lg md:text-2xl text-gray-400 font-normal leading-relaxed"
-                  >
-                    {p}
-                  </p>
-                ))}
-              </div>
-            </article>
-          ))}
-          {/* Article Gallery */}
-          {blog.images && blog.images.length > 0 && (
-            <section className="space-y-12 pb-12">
-              <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                Article Gallery
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {blog.images.map((img, idx) => (
-                  <div key={idx} className="relative group rounded-3xl overflow-hidden border border-white/10 aspect-video">
-                    <img 
-                      src={img} 
-                      alt={`Article content ${idx + 1}`} 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
+                )}
+              </article>
+            );
+          })}
 
           {/* Bottom Navigation */}
           <footer className="pt-20 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-12">
