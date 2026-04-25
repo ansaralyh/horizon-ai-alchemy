@@ -35,6 +35,8 @@ const BlogDetails = () => {
     );
   }
 
+  const sectionImages = (blog.images || []).filter(Boolean);
+
   // Improved splitting logic to handle different newline formats and ensure gaps
   const rawParagraphs = blog.content.split(/\n+/).filter(p => p.trim() !== '');
   
@@ -53,6 +55,30 @@ const BlogDetails = () => {
   });
   if (currentSection.content.length > 0 || currentSection.title) {
     sections.push(currentSection);
+  }
+
+  // Ensure we have renderable sections even for plain text content
+  if (sections.length === 0 && rawParagraphs.length > 0) {
+    sections = [{ content: rawParagraphs }];
+  }
+
+  // If content is a single plain section but multiple section images exist,
+  // split content into balanced sections so uploaded images can render in sequence.
+  if (
+    sectionImages.length > 1 &&
+    sections.length === 1 &&
+    !sections[0].title &&
+    sections[0].content.length > 1
+  ) {
+    const paragraphs = sections[0].content;
+    const targetSections = Math.min(sectionImages.length, paragraphs.length);
+    const perSection = Math.ceil(paragraphs.length / targetSections);
+
+    sections = Array.from({ length: targetSections }, (_, idx) => {
+      const start = idx * perSection;
+      const end = start + perSection;
+      return { content: paragraphs.slice(start, end) };
+    }).filter(section => section.content.length > 0);
   }
 
   // If there's only one section, split it for the intro layout
@@ -74,9 +100,9 @@ const BlogDetails = () => {
         {/* --- HERO SECTION (Screenshot 1 Style) --- */}
         <section className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
-            {blog.image ? (
+            {blog.heroImage || blog.image ? (
               <img
-                src={blog.image}
+                src={blog.heroImage || blog.image}
                 alt={blog.title}
                 className="w-full h-full object-cover"
               />
@@ -105,7 +131,7 @@ const BlogDetails = () => {
         {/* --- ARTICLE BODY: Alternating image/text sections --- */}
         <div className="max-w-7xl mx-auto px-6 lg:px-12 space-y-24 lg:space-y-32 pb-32">
           {sections.map((section, index) => {
-            const sectionImage = index === 0 ? blog.image : blog.images?.[index - 1];
+            const sectionImage = sectionImages[index];
             const hasSectionImage = Boolean(sectionImage);
             const reverseLayout = index % 2 === 1;
             const sideContent = hasSectionImage ? section.content.slice(0, 1) : section.content;
