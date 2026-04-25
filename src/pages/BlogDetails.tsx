@@ -149,7 +149,11 @@ const BlogDetails = () => {
                   <div
                     className={
                       hasSectionImage
-                        ? `lg:col-span-7 ${reverseLayout ? "lg:order-2" : "lg:order-1"}`
+                        ? `lg:col-span-7 w-full max-w-[720px] self-start lg:self-center ${
+                            reverseLayout
+                              ? "lg:order-2 lg:justify-self-end"
+                              : "lg:order-1 lg:justify-self-start"
+                          }`
                         : "max-w-5xl mx-auto"
                     }
                   >
@@ -176,7 +180,11 @@ const BlogDetails = () => {
 
                   {hasSectionImage && (
                     <div
-                      className={`lg:col-span-5 relative group ${reverseLayout ? "lg:order-1" : "lg:order-2"}`}
+                      className={`lg:col-span-5 relative group w-full max-w-[520px] self-start lg:self-center ${
+                        reverseLayout
+                          ? "lg:order-1 lg:justify-self-start"
+                          : "lg:order-2 lg:justify-self-end"
+                      }`}
                     >
                       <div className="absolute -inset-3 bg-amber-500/10 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                       <div className="relative rounded-3xl overflow-hidden border border-white/10 aspect-[4/3] md:aspect-[5/4]">
