@@ -8,13 +8,25 @@ import { useData } from "@/context/DataContext";
 const BlogDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { blogs } = useData();
+  const { blogs, loading } = useData();
   
   const blog = blogs.find(b => b.id === id);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background text-foreground flex flex-col w-full overflow-x-hidden">
+        <Navbar />
+        <main className="flex-1 flex flex-col items-center justify-center pt-28 pb-20 px-6 text-center">
+          <p className="text-muted-foreground">Loading blog post...</p>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!blog) {
     return (
