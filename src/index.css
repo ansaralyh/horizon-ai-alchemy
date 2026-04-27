@@ -247,6 +247,16 @@
     outline: none;
   }
 
+/* Defensive: suppress injected ghost/autocomplete overlays from external templates/scripts */
+.ghost-text,
+.suggestion,
+.autocomplete-text {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
   /* Scroll reveal base */
   .reveal {
     opacity: 0;

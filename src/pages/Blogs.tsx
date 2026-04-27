@@ -30,6 +30,10 @@ const Blogs = () => {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-amber-500 transition-colors" />
               <input 
                 type="text" 
+                autoComplete="off"
+                spellCheck={false}
+                autoCorrect="off"
+                autoCapitalize="none"
                 placeholder="Search articles of any topic" 
                 className="w-full bg-white/5 border border-white/10 rounded-full pl-12 pr-4 py-3 text-sm focus:outline-none focus:border-amber-500/50 transition-all placeholder:text-muted-foreground/50"
               />

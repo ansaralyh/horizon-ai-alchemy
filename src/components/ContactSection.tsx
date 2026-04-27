@@ -146,7 +146,7 @@ const ContactSection = () => {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label
@@ -157,6 +157,10 @@ const ContactSection = () => {
                     </label>
                     <input
                       required
+                      autoComplete="off"
+                      spellCheck={false}
+                      autoCorrect="off"
+                      autoCapitalize="none"
                       placeholder="John Smith"
                       value={form.name}
                       onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
@@ -171,6 +175,10 @@ const ContactSection = () => {
                       Company
                     </label>
                     <input
+                      autoComplete="off"
+                      spellCheck={false}
+                      autoCorrect="off"
+                      autoCapitalize="none"
                       placeholder="Acme Corp"
                       value={form.company}
                       onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))}
@@ -188,6 +196,10 @@ const ContactSection = () => {
                   <input
                     required
                     type="email"
+                    autoComplete="off"
+                    spellCheck={false}
+                    autoCorrect="off"
+                    autoCapitalize="none"
                     placeholder="john@company.com"
                     value={form.email}
                     onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
@@ -204,6 +216,10 @@ const ContactSection = () => {
                   <textarea
                     required
                     rows={4}
+                    autoComplete="off"
+                    spellCheck={false}
+                    autoCorrect="off"
+                    autoCapitalize="none"
                     placeholder="Describe your AI challenge, current stack, and timeline..."
                     value={form.message}
                     onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}

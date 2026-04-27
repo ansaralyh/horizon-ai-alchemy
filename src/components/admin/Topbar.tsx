@@ -22,6 +22,10 @@ const Topbar: React.FC<TopbarProps> = ({ toggleSidebar }) => {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-amber-500 transition-colors" />
           <input 
             type="text" 
+            autoComplete="off"
+            spellCheck={false}
+            autoCorrect="off"
+            autoCapitalize="none"
             placeholder="Search everything..." 
             className="bg-white/5 border border-white/5 rounded-full pl-10 pr-4 py-1.5 text-xs w-64 focus:outline-none focus:border-amber-500/40 focus:bg-white/10 transition-all"
           />

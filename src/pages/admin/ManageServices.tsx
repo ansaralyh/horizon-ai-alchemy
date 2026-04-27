@@ -94,6 +94,10 @@ const ManageServices = () => {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <input 
             type="text" 
+            autoComplete="off"
+            spellCheck={false}
+            autoCorrect="off"
+            autoCapitalize="none"
             placeholder="Search services..." 
             className="input-glow w-full rounded-xl pl-10 pr-4 py-2 text-sm"
             value={searchTerm}
@@ -203,12 +207,16 @@ const ManageServices = () => {
             
             <h2 className="text-xl font-bold mb-6">{editingId ? 'Edit Service' : 'Add New Service'}</h2>
             
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
               <div>
                 <label className="block text-xs font-medium text-muted-foreground mb-1.5">Service Title</label>
                 <input 
                   required
                   type="text" 
+                  autoComplete="off"
+                  spellCheck={false}
+                  autoCorrect="off"
+                  autoCapitalize="none"
                   value={formData.title}
                   onChange={e => setFormData({...formData, title: e.target.value})}
                   className="input-glow w-full rounded-xl px-4 py-2.5 text-sm"
@@ -222,6 +230,10 @@ const ManageServices = () => {
                   <input 
                     required
                     type="text" 
+                    autoComplete="off"
+                    spellCheck={false}
+                    autoCorrect="off"
+                    autoCapitalize="none"
                     value={formData.category}
                     onChange={e => setFormData({...formData, category: e.target.value})}
                     className="input-glow w-full rounded-xl px-4 py-2.5 text-sm"
@@ -231,6 +243,7 @@ const ManageServices = () => {
                 <div>
                   <label className="block text-xs font-medium text-muted-foreground mb-1.5">Status</label>
                   <select 
+                    autoComplete="off"
                     value={formData.status}
                     onChange={e => setFormData({...formData, status: e.target.value as "Active" | "Paused"})}
                     className="input-glow w-full rounded-xl px-4 py-2.5 text-sm bg-background border border-white/10 text-foreground focus:outline-none focus:border-amber-500/50"
@@ -270,6 +283,10 @@ const ManageServices = () => {
                 <label className="block text-xs font-medium text-muted-foreground mb-1.5">Description</label>
                 <textarea 
                   required
+                  autoComplete="off"
+                  spellCheck={false}
+                  autoCorrect="off"
+                  autoCapitalize="none"
                   value={formData.description}
                   onChange={e => setFormData({...formData, description: e.target.value})}
                   className="input-glow w-full rounded-xl px-4 py-2.5 text-sm min-h-[100px] resize-y"

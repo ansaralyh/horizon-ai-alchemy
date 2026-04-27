@@ -52,7 +52,7 @@ const LoginPage = () => {
         </div>
 
         <div className="card-premium p-8 backdrop-blur-xl bg-black/40 border-white/10">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6" autoComplete="off">
             <div>
               <label className="block text-xs font-semibold mb-2 uppercase tracking-widest text-amber-500">
                 Email Address
@@ -62,6 +62,10 @@ const LoginPage = () => {
                 <input
                   type="email"
                   required
+                  autoComplete="off"
+                  spellCheck={false}
+                  autoCorrect="off"
+                  autoCapitalize="none"
                   placeholder="admin@horizonbeetech.com"
                   className="input-glow w-full rounded-xl pl-12 pr-4 py-3.5 text-sm"
                   value={email}
@@ -79,6 +83,10 @@ const LoginPage = () => {
                 <input
                   type="password"
                   required
+                  autoComplete="new-password"
+                  spellCheck={false}
+                  autoCorrect="off"
+                  autoCapitalize="none"
                   placeholder="••••••••"
                   className="input-glow w-full rounded-xl pl-12 pr-4 py-3.5 text-sm"
                   value={password}
