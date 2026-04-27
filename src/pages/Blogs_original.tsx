@@ -20,14 +20,14 @@ const Blogs = () => {
           {/* Header Section */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-amber-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                Most Popular
+              <h1 className="text-3xl md:text-4xl font-bold tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "hsl(210 40% 96%)" }}>
+                Most <span className="text-amber-gradient">Popular</span>
               </h1>
             </div>
             
             {/* Search Bar */}
             <div className="relative w-full md:w-80 group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-amber-500 transition-colors" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[hsl(215_20%_60%)] group-focus-within:text-amber-500 transition-colors" />
               <input 
                 type="text" 
                 autoComplete="off"
@@ -64,8 +64,8 @@ const Blogs = () => {
 
           {/* Recent Blogs Section */}
           <div className="mb-8">
-            <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-amber-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              Recent Blogs
+            <h2 className="text-3xl font-bold tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "hsl(210 40% 96%)" }}>
+              Recent <span className="text-amber-gradient">Blogs</span>
             </h2>
           </div>
 

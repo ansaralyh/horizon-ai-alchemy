@@ -104,6 +104,22 @@ const BlogDetails = () => {
     ];
   }
 
+  const renderHeroTitle = (title: string) => {
+    const words = title.trim().split(/\s+/);
+    const accentWordCount = words.length > 4 ? 2 : 1;
+    const normalText = words.slice(0, words.length - accentWordCount).join(" ");
+    const accentText = words.slice(words.length - accentWordCount).join(" ");
+
+    return (
+      <>
+        {normalText && <span className="text-white">{normalText} </span>}
+        <span className="bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 bg-clip-text text-transparent">
+          {accentText}
+        </span>
+      </>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-amber-500/30 w-full overflow-x-hidden">
       <Navbar />
@@ -129,8 +145,11 @@ const BlogDetails = () => {
             <div className="inline-block px-4 py-1.5 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold text-amber-500 mb-8 animate-fade-in shadow-lg shadow-amber-500/5">
               {blog.category}
             </div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-10 tracking-tighter leading-[1.05] animate-slide-up" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              {blog.title}
+            <h1
+              className="text-5xl md:text-7xl lg:text-8xl font-bold mb-10 tracking-tighter leading-[1.05] animate-slide-up [text-wrap:balance]"
+              style={{ fontFamily: "'Space Grotesk', sans-serif", textShadow: "0 10px 30px rgba(0,0,0,0.45)" }}
+            >
+              {renderHeroTitle(blog.title)}
             </h1>
             <div className="flex items-center justify-center gap-8 text-sm text-gray-400 font-medium">
               <span className="flex items-center gap-2"><User className="w-4 h-4 text-amber-500" /> {blog.author}</span>
