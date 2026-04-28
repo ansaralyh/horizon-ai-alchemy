@@ -49,96 +49,68 @@ const CaseStudyDetail = () => {
 
       <main>
         {/* --- SECTION 1: HERO SECTION --- */}
-        <section className="relative min-h-[90vh] lg:h-[calc(100vh-80px)] lg:max-h-[900px] flex items-center overflow-hidden border-b border-white/5 pt-20 lg:pt-0">
-           {/* Background Accents */}
-           <div className={`absolute top-0 right-0 w-[800px] h-[800px] ${theme.bg} blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2 opacity-30 pointer-events-none`} />
-           
-           <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
-              <Link to="/case-studies" className="inline-flex items-center gap-2 text-white/40 hover:text-white transition-colors mb-8 lg:mb-12 group">
-                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                <span className="text-xs font-bold uppercase tracking-widest">Back to Library</span>
-              </Link>
-              
-              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                <div className="space-y-6 lg:space-y-8 animate-fade-up">
-                  <div className={`inline-flex items-center gap-3 px-4 py-1.5 ${theme.bg} border ${theme.border} rounded-full text-[11px] font-bold ${theme.text} uppercase tracking-[0.2em]`}>
-                    <span className={`w-2 h-2 rounded-full ${theme.text.replace('text-', 'bg-')} ${theme.glow}`} />
-                    {caseStudy.tag}
-                  </div>
-                  <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.1] max-w-2xl" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    {caseStudy.themeColor === 'amber' ? (
-                      <>
-                        {caseStudy.hero.headline.includes("Verified Performance") ? (
-                          <>
-                            {caseStudy.hero.headline.split("Verified Performance")[0]}
-                            <span className="text-amber-gradient block sm:inline">Verified Performance</span>
-                          </>
-                        ) : (
-                          caseStudy.hero.headline
-                        )}
-                      </>
-                    ) : (
-                      caseStudy.hero.headline
-                    )}
-                  </h1>
-                  <p className="text-base md:text-lg text-[#A0AEC0] font-medium leading-relaxed max-w-xl">
-                    {caseStudy.hero.subheadline}
-                  </p>
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden border-b border-white/5 pt-20">
+          {/* Background Image */}
+          <div className="absolute inset-0 z-0">
+             <img 
+               src={caseStudy.id === 'mechanical-trading' ? "/portfilio001.png" : (caseStudy.image || "/assets/placeholder-hero.jpg")} 
+               alt="Background" 
+               className="w-full h-full object-cover opacity-30"
+             />
+             <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F19]/90 via-[#0B0F19]/40 to-[#0B0F19]" />
+          </div>
 
-                  {caseStudy.bonusLine && (
-                    <div className={`py-4 border-l-4 ${theme.text.replace('text-', 'border-')} pl-6 bg-white/5 rounded-r-xl inline-block text-left`}>
-                       <p className={`${theme.text} text-base font-bold italic tracking-wide`}>
-                          "{caseStudy.bonusLine}"
-                       </p>
-                    </div>
-                  )}
-                  
-                  <div className="flex flex-wrap gap-4 pt-4">
-                    <a href="#challenge" className={`${theme.btn} px-8 py-4 text-sm font-bold`}>
-                      Explore Case Study
-                    </a>
-                    <Link to="/contact" className={`${theme.btnOutline} px-8 py-4 text-sm font-bold`}>
-                      Get in Touch
-                    </Link>
-                  </div>
+          <div className="max-w-7xl mx-auto px-6 relative z-10 w-full text-center flex flex-col items-center">
+             <Link to="/case-studies" className="inline-flex items-center gap-2 text-white/40 hover:text-white transition-colors mb-12 group">
+               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+               <span className="text-xs font-bold uppercase tracking-widest">Back to Library</span>
+             </Link>
+
+             <div className="space-y-8 animate-fade-up max-w-5xl">
+                <div className={`inline-flex items-center gap-3 px-4 py-1.5 ${theme.bg} border ${theme.border} rounded-full text-[11px] font-bold ${theme.text} uppercase tracking-[0.2em]`}>
+                  <span className={`w-2 h-2 rounded-full ${theme.text.replace('text-', 'bg-')} ${theme.glow}`} />
+                  {caseStudy.tag}
                 </div>
                 
-                {/* Hero Visual Image / Dashboard */}
-                <div className="relative animate-fade-in-scale delay-300 hidden lg:block">
-                  <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[100px] shadow-2xl opacity-20`} />
-                  {caseStudy.id === 'mechanical-trading' ? (
-                    <div className="relative z-10 scale-75 xl:scale-85 xxl:scale-100 transform transform-gpu origin-right -mt-20">
-                      <TradingDashboard />
-                    </div>
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {caseStudy.themeColor === 'amber' ? (
+                    <>
+                      {caseStudy.hero.headline.includes("Verified Performance") ? (
+                        <>
+                          {caseStudy.hero.headline.split("Verified Performance")[0]}
+                          <span className="text-amber-gradient block sm:inline">Verified Performance</span>
+                        </>
+                      ) : (
+                        caseStudy.hero.headline
+                      )}
+                    </>
                   ) : (
-                    <div className={`relative rounded-3xl overflow-hidden border border-white/10 bg-navy-card shadow-2xl group hover:${theme.borderStrong}`}>
-                        <img 
-                          src={caseStudy.image || "/assets/placeholder-chart.jpg"} 
-                          alt={caseStudy.title} 
-                          className="w-full h-auto max-h-[70vh] object-contain group-hover:scale-[1.02] transition-transform duration-1000" 
-                        />
-                    </div>
+                    caseStudy.hero.headline
                   )}
-                </div>
+                </h1>
 
-                {/* Mobile Image (smaller) */}
-                <div className="lg:hidden relative animate-fade-in-scale delay-300">
-                  {caseStudy.id === 'mechanical-trading' ? (
-                    <div className="scale-[0.85] sm:scale-100 origin-top">
-                      <TradingDashboard />
-                    </div>
-                  ) : (
-                    <div className={`relative rounded-2xl overflow-hidden border border-white/10 bg-navy-card shadow-xl`}>
-                        <img 
-                          src={caseStudy.image || "/assets/placeholder-chart.jpg"} 
-                          alt={caseStudy.title} 
-                          className="w-full h-auto object-contain" 
-                        />
-                    </div>
-                  )}
+                <p className="text-lg md:text-2xl text-white/80 font-medium leading-relaxed max-w-3xl mx-auto">
+                  {caseStudy.hero.subheadline}
+                </p>
+
+                {caseStudy.bonusLine && (
+                  <div className={`py-4 border-l-4 ${theme.text.replace('text-', 'border-')} pl-6 bg-white/5 rounded-r-xl inline-block text-left mx-auto`}>
+                     <p className={`${theme.text} text-lg md:text-xl font-bold italic tracking-wide`}>
+                        "{caseStudy.bonusLine}"
+                     </p>
+                  </div>
+                )}
+
+                <div className="flex flex-wrap justify-center gap-6 pt-8">
+                  <a href="#challenge" className={`${theme.btn} px-10 py-5 text-base font-bold`}>
+                    Explore Case Study
+                  </a>
+                  <Link to="/contact" className={`${theme.btnOutline} px-10 py-5 text-base font-bold`}>
+                    Get in Touch
+                  </Link>
                 </div>
-              </div>
-           </div>
+             </div>
+          </div>
         </section>
 
         {/* --- SECTION 2: KEY METRICS GRID --- */}
@@ -197,11 +169,12 @@ const CaseStudyDetail = () => {
                    {/* Overview Image */}
                    <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-navy-card group">
                       <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/60 z-10" />
-                      <img 
+                      {/* <img 
                         src={caseStudy.gallery?.[0] || "/assets/service-automation.jpg"} 
                         alt="Project Overview" 
                         className="w-full aspect-[4/3] object-cover group-hover:scale-110 transition-transform duration-[2000ms]" 
-                      />
+                      /> */}
+                      <img src="/assets/image2" alt=""   className="w-full aspect-[4/3] object-cover group-hover:scale-110 transition-transform duration-[2000ms]" />
                       <div className="absolute bottom-8 left-8 z-20">
                          <div className={`px-4 py-1 rounded-full ${theme.bg} border ${theme.border} text-[10px] font-bold ${theme.text} uppercase tracking-widest`}>
                             Operational View
@@ -371,15 +344,16 @@ const CaseStudyDetail = () => {
                    <div className="relative">
                       <div className={`absolute -inset-20 ${theme.bg} rounded-full blur-[160px] opacity-20`} />
                       <div className="relative rounded-[3rem] overflow-hidden border border-white/10 bg-navy-card shadow-3xl group">
-                         <img 
+                         {/* <img 
                           src={caseStudy.results?.image || caseStudy.gallery?.[1] || "/assets/placeholder-chart.jpg"} 
                           alt="Results Impact" 
                           className="w-full aspect-square object-cover opacity-80 group-hover:opacity-100 transition-opacity" 
-                        />
+                        /> */}
+                        <img src="/assets/image3" alt="" />
                          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] to-transparent opacity-60" />
                          <div className="absolute bottom-10 left-10 p-8 rounded-3xl bg-black/40 backdrop-blur-xl border border-white/10">
-                            <p className="text-white font-bold text-2xl mb-1">Impact Summary</p>
-                            <p className="text-gray-400">Verified through historical backtesting.</p>
+                            {/* <p className="text-white font-bold text-2xl mb-1">Impact Summary</p>
+                            <p className="text-gray-400">Verified through historical backtesting.</p> */}
                          </div>
                       </div>
                    </div>
