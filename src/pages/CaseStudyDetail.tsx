@@ -167,17 +167,18 @@ const CaseStudyDetail = () => {
                    </div>
 
                    {/* Overview Image */}
-                   <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-navy-card group">
-                      <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/60 z-10" />
-                      {/* <img 
-                        src={caseStudy.gallery?.[0] || "/assets/service-automation.jpg"} 
-                        alt="Project Overview" 
-                        className="w-full aspect-[4/3] object-cover group-hover:scale-110 transition-transform duration-[2000ms]" 
-                      /> */}
-                      <img src="/assets/image2" alt=""   className="w-full aspect-[4/3] object-cover group-hover:scale-110 transition-transform duration-[2000ms]" />
-                      <div className="absolute bottom-8 left-8 z-20">
-                         <div className={`px-4 py-1 rounded-full ${theme.bg} border ${theme.border} text-[10px] font-bold ${theme.text} uppercase tracking-widest`}>
-                            Operational View
+                   <div className="relative group">
+                      <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[120px] opacity-20 group-hover:opacity-30 transition-opacity`} />
+                      <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-navy-card shadow-2xl transition-all duration-700 hover:border-white/20">
+                         <img 
+                           src="/assets/image2" 
+                           alt="Project Overview" 
+                           className="w-full h-auto object-contain transition-transform duration-[2000ms] group-hover:scale-[1.02]" 
+                         />
+                         <div className="absolute bottom-8 left-8 z-20">
+                            <div className={`px-4 py-1.5 rounded-full ${theme.bg} border ${theme.border} text-[10px] font-bold ${theme.text} uppercase tracking-widest backdrop-blur-md`}>
+                               Operational View
+                            </div>
                          </div>
                       </div>
                    </div>
@@ -341,19 +342,17 @@ const CaseStudyDetail = () => {
                       </div>
                    </div>
 
-                   <div className="relative">
-                      <div className={`absolute -inset-20 ${theme.bg} rounded-full blur-[160px] opacity-20`} />
-                      <div className="relative rounded-[3rem] overflow-hidden border border-white/10 bg-navy-card shadow-3xl group">
-                         {/* <img 
-                          src={caseStudy.results?.image || caseStudy.gallery?.[1] || "/assets/placeholder-chart.jpg"} 
-                          alt="Results Impact" 
-                          className="w-full aspect-square object-cover opacity-80 group-hover:opacity-100 transition-opacity" 
-                        /> */}
-                        <img src="/assets/image3" alt="" />
-                         <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] to-transparent opacity-60" />
-                         <div className="absolute bottom-10 left-10 p-8 rounded-3xl bg-black/40 backdrop-blur-xl border border-white/10">
-                            {/* <p className="text-white font-bold text-2xl mb-1">Impact Summary</p>
-                            <p className="text-gray-400">Verified through historical backtesting.</p> */}
+                   <div className="relative group">
+                      <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[120px] opacity-20 group-hover:opacity-30 transition-opacity`} />
+                      <div className="relative rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 bg-navy-card shadow-2xl transition-all duration-500 hover:border-white/20">
+                         <img 
+                           src="/assets/image3" 
+                           alt="Performance Infographic" 
+                           className="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-1000"
+                         />
+                         {/* Premium Glass Badge */}
+                         <div className="absolute bottom-6 right-6 px-4 py-2 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            <p className="text-white text-[10px] font-bold tracking-widest uppercase">Performance Verified</p>
                          </div>
                       </div>
                    </div>
@@ -446,12 +445,7 @@ const CaseStudyDetail = () => {
                    <div className="relative aspect-square hidden lg:flex items-center justify-center">
                       <div className={`absolute inset-0 ${theme.bg} rounded-full blur-[100px] opacity-20`} />
                       <div className={`relative w-full h-full rounded-[2.5rem] overflow-hidden border border-white/10 bg-[#0B0F19] shadow-2xl group transition-all duration-700 hover:${theme.borderStrong}`}>
-                         <img 
-                           src={caseStudy.monthlyVisual || "/assets/placeholder-chart.jpg"} 
-                           alt="Monthly Performance Chart" 
-                           className="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-1000"
-                         />
-                         <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-transparent to-transparent opacity-40" />
+                         <img src="/assets/image4" alt="" className="w-full h-auto rounded-3xl object-cover group-hover:scale-[1.05] transition-transform duration-1000" />
                       </div>
                    </div>
                 </div>
