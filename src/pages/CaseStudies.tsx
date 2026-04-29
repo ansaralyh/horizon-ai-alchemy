@@ -15,7 +15,7 @@ const CaseStudies = () => {
         <div className="max-w-7xl mx-auto px-6 mb-20 text-center">
            <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] font-bold text-amber-500 uppercase tracking-[0.2em] mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-              Impact Portfolio
+              Case Studies
            </div>
            <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
              Real AI. <span className="text-amber-gradient">Real Impact.</span>

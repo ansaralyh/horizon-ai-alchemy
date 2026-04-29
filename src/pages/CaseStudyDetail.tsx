@@ -135,8 +135,8 @@ const CaseStudyDetail = () => {
         {caseStudy.overview && (
           <section className="py-24 relative overflow-hidden">
              <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="grid lg:grid-cols-2 gap-20 items-center">
-                   <div className="space-y-10">
+                <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+                   <div className="lg:col-span-5 space-y-10">
                       <div className="space-y-6">
                         <div className="flex items-center gap-4">
                            <div className={`w-12 h-[2px] ${theme.text.replace('text-', 'bg-')}`} />
@@ -167,19 +167,14 @@ const CaseStudyDetail = () => {
                    </div>
 
                    {/* Overview Image */}
-                   <div className="relative group">
+                   <div className="lg:col-span-7 relative group">
                       <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[120px] opacity-20 group-hover:opacity-30 transition-opacity`} />
                       <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-navy-card shadow-2xl transition-all duration-700 hover:border-white/20">
                          <img 
                            src="/assets/image2" 
                            alt="Project Overview" 
-                           className="w-full h-auto object-contain transition-transform duration-[2000ms] group-hover:scale-[1.02]" 
+                           className="w-full h- object-contain transition-transform duration-700 group-hover:scale-[1.01]" 
                          />
-                         <div className="absolute bottom-8 left-8 z-20">
-                            <div className={`px-4 py-1.5 rounded-full ${theme.bg} border ${theme.border} text-[10px] font-bold ${theme.text} uppercase tracking-widest backdrop-blur-md`}>
-                               Operational View
-                            </div>
-                         </div>
                       </div>
                    </div>
                 </div>
@@ -191,8 +186,8 @@ const CaseStudyDetail = () => {
         {caseStudy.challenge && (
           <section id="challenge" className="py-24 relative overflow-hidden bg-white/[0.01]">
              <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="grid lg:grid-cols-2 gap-20 items-center">
-                   <div className="lg:order-2 space-y-10">
+                <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+                   <div className="lg:col-span-5 lg:order-2 space-y-10">
                       <div className="space-y-6">
                         <div className="flex items-center gap-4">
                            <div className={`w-12 h-[2px] ${theme.text.replace('text-', 'bg-')}`} />
@@ -218,10 +213,10 @@ const CaseStudyDetail = () => {
                       </div>
                    </div>
 
-                   <div className="lg:order-1 relative">
+                   <div className="lg:col-span-7 lg:order-1 relative">
                       <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[100px] opacity-10`} />
                       <div className="relative rounded-[2.5rem] overflow-hidden border border-white/10 bg-navy-card shadow-2xl group">
-                         <img src={caseStudy.challenge.image || "/assets/service-ml.jpg"} alt="Challenge Visualization" className="w-full aspect-[4/5] object-cover group-hover:scale-105 transition-transform duration-1000" />
+                         <img src={caseStudy.challenge.image || "/assets/service-ml.jpg"} alt="Challenge Visualization" className="w-full h-auto object-contain transition-transform duration-1000 group-hover:scale-[1.02]" />
                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-bottom p-10">
                             <p className="text-white/60 font-medium mt-auto">Operational overview and strategic visualization.</p>
                          </div>
@@ -236,8 +231,8 @@ const CaseStudyDetail = () => {
         {caseStudy.solution && (
           <section className="py-24 relative overflow-hidden">
              <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="grid lg:grid-cols-2 gap-20 items-center mb-24">
-                   <div className="space-y-10">
+                <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center mb-24">
+                   <div className="lg:col-span-5 space-y-10">
                       <div className="space-y-6">
                         <div className="flex items-center gap-4">
                            <div className={`w-12 h-[2px] ${theme.text.replace('text-', 'bg-')}`} />
@@ -252,10 +247,10 @@ const CaseStudyDetail = () => {
                       </div>
                    </div>
 
-                   <div className="relative">
+                   <div className="lg:col-span-7 relative">
                       <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[100px] opacity-20`} />
                       <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl group">
-                         <img src={caseStudy.solution.image || "/assets/service-nlp.jpg"} alt="Solution Implementation" className="w-full aspect-video object-cover" />
+                         <img src={caseStudy.solution.image || "/assets/service-nlp.jpg"} alt="Solution Implementation" className="w-full h-auto object-contain transition-transform duration-1000 group-hover:scale-[1.02]" />
                          <div className={`absolute inset-0 ${theme.bg} mix-blend-overlay`} />
                       </div>
                    </div>
@@ -315,8 +310,8 @@ const CaseStudyDetail = () => {
         {(caseStudy.results || caseStudy.performance) && (
           <section id="results" className="py-32 relative overflow-hidden border-t border-white/5">
              <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="grid lg:grid-cols-2 gap-20 items-center">
-                   <div className="space-y-10">
+                <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+                   <div className="lg:col-span-5 space-y-10">
                       <div className="space-y-6">
                         <div className="flex items-center gap-4">
                            <div className={`w-12 h-[2px] ${theme.text.replace('text-', 'bg-')}`} />
@@ -342,13 +337,13 @@ const CaseStudyDetail = () => {
                       </div>
                    </div>
 
-                   <div className="relative group">
+                   <div className="lg:col-span-7 relative group">
                       <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[120px] opacity-20 group-hover:opacity-30 transition-opacity`} />
                       <div className="relative rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 bg-navy-card shadow-2xl transition-all duration-500 hover:border-white/20">
                          <img 
                            src="/assets/image3" 
                            alt="Performance Infographic" 
-                           className="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-1000"
+                           className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-[1.01]" 
                          />
                          {/* Premium Glass Badge */}
                          <div className="absolute bottom-6 right-6 px-4 py-2 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -409,8 +404,8 @@ const CaseStudyDetail = () => {
         {caseStudy.monthly && (
           <section className="py-32 relative">
              <div className="max-w-7xl mx-auto px-6">
-                <div className="grid lg:grid-cols-2 gap-24 items-center">
-                   <div className="space-y-10">
+                <div className="grid lg:grid-cols-12 gap-12 lg:gap-24 items-center">
+                   <div className="lg:col-span-5 space-y-10">
                       <div className="space-y-6">
                         <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                           {caseStudy.monthly.title}
@@ -442,10 +437,14 @@ const CaseStudyDetail = () => {
                    </div>
 
                    {/* Monthly Visual Image */}
-                   <div className="relative aspect-square hidden lg:flex items-center justify-center">
-                      <div className={`absolute inset-0 ${theme.bg} rounded-full blur-[100px] opacity-20`} />
-                      <div className={`relative w-full h-full rounded-[2.5rem] overflow-hidden border border-white/10 bg-[#0B0F19] shadow-2xl group transition-all duration-700 hover:${theme.borderStrong}`}>
-                         <img src="/assets/image4" alt="" className="w-full h-auto rounded-3xl object-cover group-hover:scale-[1.05] transition-transform duration-1000" />
+                   <div className="lg:col-span-7 relative flex items-center justify-center">
+                      <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[100px] opacity-20`} />
+                      <div className={`relative w-full rounded-[2.5rem] overflow-hidden border border-white/10 bg-[#0B0F19] shadow-2xl group transition-all duration-700 hover:${theme.borderStrong}`}>
+                         <img 
+                           src="/assets/image6" 
+                           alt="Monthly Performance Visualization" 
+                           className="w-full h-auto object-contain transition-transform duration-1000 group-hover:scale-[1.01]" 
+                         />
                       </div>
                    </div>
                 </div>
