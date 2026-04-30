@@ -1,101 +1,203 @@
-import React from "react";
-import { ArrowRight, Search } from "lucide-react";
+import React, { useState } from "react";
+import { ArrowRight, Search, Calendar, User, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useData } from "@/context/DataContext";
 
 const Blogs = () => {
   const { blogs } = useData();
-  const popularBlogs = blogs.slice(0, 6);
-  const recentBlogs = blogs.slice(6, 9);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredBlogs = blogs.filter(blog => 
+    blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    blog.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    blog.category?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const popularBlogs = filteredBlogs.slice(0, 6);
+  const recentBlogs = filteredBlogs.slice(6);
 
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-amber-500/30 w-full overflow-x-hidden">
+    <div className="min-h-screen bg-[#0B0F19] text-white selection:bg-amber-500/30 w-full overflow-x-hidden">
       <Navbar />
 
-      <main className="pt-28 pb-20">
+      <main className="pt-32 pb-20 lg:pt-48">
         <div className="max-w-7xl mx-auto px-6">
           
-          {/* Header Section */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-amber-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                Most Popular
-              </h1>
-            </div>
+          {/* --- HERO SECTION --- */}
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <motion.h1 
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="text-4xl md:text-5xl font-semibold mb-6 tracking-tight"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              Latest <span className="text-amber-500">Insights</span>
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+              className="text-base text-gray-400 leading-relaxed mb-10"
+            >
+              Explore our collection of articles, news, and technical deep-dives into the future of AI and machine learning.
+            </motion.p>
             
             {/* Search Bar */}
-            <div className="relative w-full md:w-80 group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-amber-500 transition-colors" />
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+              className="relative max-w-xl mx-auto group"
+            >
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 group-focus-within:text-amber-500 transition-colors" />
               <input 
                 type="text" 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 autoComplete="off"
-                spellCheck={false}
-                autoCorrect="off"
-                autoCapitalize="none"
-                placeholder="Search articles of any topic" 
-                className="w-full bg-white/5 border border-white/10 rounded-full pl-12 pr-4 py-3 text-sm focus:outline-none focus:border-amber-500/50 transition-all placeholder:text-muted-foreground/50"
+                placeholder="Search articles, categories, or keywords..." 
+                className="w-full bg-white/5 border border-white/10 rounded-2xl pl-14 pr-6 py-5 text-lg focus:outline-none focus:border-amber-500/50 transition-all placeholder:text-gray-600 shadow-2xl"
               />
-            </div>
+            </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-            {popularBlogs.map((blog) => (
-              <Link to={`/blogs/${blog.id}`} key={blog.id} className="card-premium flex flex-col group overflow-hidden border-white/10 hover:border-amber-500/30 hover:shadow-[0_0_30px_hsl(43_96%_56%_/_0.15)] transition-all duration-500">
-                <div className="h-48 overflow-hidden rounded-t-xl">
-                  <img 
-                    src={blog.image} 
-                    alt={blog.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+          <AnimatePresence mode="wait">
+            {filteredBlogs.length > 0 ? (
+              <motion.div 
+                key="results"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                {/* Popular Grid */}
+                <div className="flex items-center gap-4 mb-10">
+                  <div className="w-12 h-0.5 bg-amber-500" />
+                  <h2 className="text-2xl font-semibold tracking-widest text-white">Featured Posts</h2>
                 </div>
-                <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="text-2xl font-bold mb-3 text-foreground group-hover:text-amber-400 transition-colors line-clamp-2 leading-snug">
-                    {blog.title}
-                  </h3>
-                  <p className="text-lg text-muted-foreground leading-relaxed line-clamp-3 flex-1 mb-0">
-                    {blog.excerpt}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
 
-          {/* Recent Blogs Section */}
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-amber-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              Recent Blogs
-            </h2>
-          </div>
-
-          <div className="space-y-6">
-            {recentBlogs.map((blog) => (
-              <Link to={`/blogs/${blog.id}`} key={blog.id} className="card-premium flex flex-col md:flex-row overflow-hidden border-white/10 transition-all duration-300 hover:border-amber-500/30 hover:shadow-[0_0_30px_hsl(43_96%_56%_/_0.15)] group">
-                <div className="md:w-1/3 h-56 md:h-auto overflow-hidden">
-                  <img 
-                    src={blog.image} 
-                    alt={blog.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+                  {popularBlogs.map((blog, idx) => (
+                    <motion.div
+                      key={blog.id}
+                      initial={{ opacity: 0, x: idx % 3 === 0 ? -60 : (idx % 3 === 2 ? 60 : 0), y: idx % 3 === 1 ? 20 : 0 }}
+                      whileInView={{ opacity: 1, x: 0, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, ease: "easeOut", delay: (idx % 3) * 0.1 }}
+                    >
+                      <Link 
+                        to={`/blogs/${blog.id}`} 
+                        className="group block h-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden hover:border-amber-500/30 hover:-translate-y-1 transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/5"
+                      >
+                        <div className="aspect-[16/10] overflow-hidden">
+                          <img 
+                            src={blog.image} 
+                            alt={blog.title} 
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                        </div>
+                        <div className="p-8 space-y-4">
+                          <div className="flex items-center gap-4 text-xs font-bold text-amber-500 uppercase tracking-widest">
+                            <span>{blog.category}</span>
+                            <span className="w-1 h-1 rounded-full bg-gray-700" />
+                            <span className="text-gray-500">{blog.date}</span>
+                          </div>
+                          <h3 className="text-2xl font-semibold text-white group-hover:text-amber-500 transition-colors line-clamp-2 leading-tight">
+                            {blog.title}
+                          </h3>
+                          <p className="text-base text-gray-400 leading-relaxed line-clamp-3">
+                            {blog.excerpt}
+                          </p>
+                          <div className="pt-4 flex items-center gap-2 text-sm font-bold text-white group-hover:gap-4 transition-all">
+                            Read Article <ArrowRight className="w-4 h-4 text-amber-500" />
+                          </div>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
                 </div>
-                <div className="md:w-2/3 p-6 md:p-8 flex flex-col justify-center">
-                  <h3 className="text-3xl font-bold mb-3 text-foreground group-hover:text-amber-400 transition-colors leading-snug">
-                    {blog.title}
-                  </h3>
-                  <p className="text-xl text-muted-foreground leading-relaxed mb-6">
-                    {blog.excerpt}
-                  </p>
-                  <div>
-                    <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-amber-500/30 text-amber-500 text-sm font-medium group-hover:bg-amber-500 group-hover:text-black transition-all">
-                      Read More
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </span>
+
+                {/* Recent List */}
+                {recentBlogs.length > 0 && (
+                  <div className="space-y-12">
+                    <div className="flex items-center gap-4 mb-10">
+                      <div className="w-12 h-0.5 bg-amber-500" />
+                      <h2 className="text-2xl font-semibold tracking-widest text-white">More Insights</h2>
+                    </div>
+
+                    <div className="space-y-8">
+                      {recentBlogs.map((blog, idx) => {
+                        const isEven = idx % 2 === 0;
+                        return (
+                          <motion.div
+                            key={blog.id}
+                            initial={{ opacity: 0, x: isEven ? 60 : -60 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, ease: "easeOut" }}
+                          >
+                            <Link 
+                              to={`/blogs/${blog.id}`} 
+                              className={`group flex flex-col ${isEven ? 'md:flex-row-reverse' : 'md:flex-row'} bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden hover:border-amber-500/30 hover:-translate-y-1 transition-all duration-300 shadow-lg shadow-black/20`}
+                            >
+                              <div className="md:w-2/5 aspect-video md:aspect-auto overflow-hidden">
+                                <img 
+                                  src={blog.image} 
+                                  alt={blog.title} 
+                                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                />
+                              </div>
+                              <div className="md:w-3/5 p-8 lg:p-12 flex flex-col justify-center space-y-4">
+                                <div className="flex items-center gap-4 text-xs font-bold text-amber-500 uppercase tracking-widest">
+                                  <span>{blog.category}</span>
+                                  <span className="w-1 h-1 rounded-full bg-gray-700" />
+                                  <span className="text-gray-500">{blog.date}</span>
+                                </div>
+                                <h3 className="text-2xl font-semibold text-white group-hover:text-amber-500 transition-colors leading-tight">
+                                  {blog.title}
+                                </h3>
+                                <p className="text-base text-gray-400 leading-relaxed line-clamp-2">
+                                  {blog.excerpt}
+                                </p>
+                                <div className="pt-2 flex items-center gap-2 text-sm font-bold text-white group-hover:gap-4 transition-all">
+                                  Read Full Story <ArrowRight className="w-4 h-4 text-amber-500" />
+                                </div>
+                              </div>
+                            </Link>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
                   </div>
+                )}
+              </motion.div>
+            ) : (
+              <motion.div 
+                key="no-results"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-center py-32"
+              >
+                <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-8">
+                  <Search className="w-10 h-10 text-gray-600" />
                 </div>
-              </Link>
-            ))}
-          </div>
+                <h3 className="text-2xl font-bold text-white mb-4">No articles found</h3>
+                <p className="text-gray-400">Try adjusting your search terms or filters.</p>
+                <button 
+                  onClick={() => setSearchQuery("")}
+                  className="mt-8 text-amber-500 font-bold hover:underline"
+                >
+                  Clear all search filters
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
         </div>
       </main>
