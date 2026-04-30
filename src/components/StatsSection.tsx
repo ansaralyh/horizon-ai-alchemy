@@ -1,5 +1,5 @@
 import { useCountUp } from "@/hooks/useCountUp";
-import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { motion } from "framer-motion";
 
 const metrics = [
   { value: 50, suffix: "+", label: "AI Projects Delivered", desc: "Across 12 industries worldwide" },
@@ -33,7 +33,24 @@ const StatItem = ({ value, suffix, label, desc }: typeof metrics[0]) => {
 };
 
 const StatsSection = () => {
-  const ref = useScrollReveal();
+  // Animation Variants
+  const slideFromLeft = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.8, ease: "easeOut" }
+    }
+  };
+
+  const slideFromRight = {
+    hidden: { opacity: 0, x: 50 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.8, ease: "easeOut" }
+    }
+  };
 
   return (
     <section className="relative py-12 sm:py-16 md:py-20 overflow-hidden">
@@ -52,16 +69,19 @@ const StatsSection = () => {
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 w-full box-border" ref={ref}>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 w-full box-border">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10">
           {metrics.map((m, i) => (
-            <div
+            <motion.div
               key={m.label}
-              className="reveal"
-              style={{ transitionDelay: `${i * 100}ms` }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={i < 2 ? slideFromLeft : slideFromRight}
+              transition={{ delay: i * 0.15 }}
             >
               <StatItem {...m} />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

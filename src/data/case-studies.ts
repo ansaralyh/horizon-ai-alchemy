@@ -78,8 +78,8 @@ export const caseStudies: CaseStudy[] = [
     id: "mechanical-trading",
     tag: "Algorithmic Trading / FinTech",
     client: "Private Trading Client",
-    title: "Mechanical Trading Strategy – 8 Months Verified Performance",
-    desc: "A fully automated GBPUSD strategy delivering consistent growth with a +320.70% total gain over 8 months of live tracking.",
+    title: "Mechanical Trading Strategy – 6 Months Verified Performance",
+    desc: "A fully automated GBPUSD strategy delivering consistent growth with a +320.70% total gain over 6 months of live tracking.",
     metrics: ["+320.70% Gain", "30.14% Max DD", "$3,334+ Profit"],
     image: "/assets/trading-hero.png", 
     gallery: ["/assets/trading-chart-1.png", "/assets/trading-chart-2.png"],
@@ -87,13 +87,13 @@ export const caseStudies: CaseStudy[] = [
     monthlyVisual: "/assets/monthly-performance.png",
     bonusLine: "No discretion. No emotions. Just rules and results.",
     hero: {
-      headline: "Mechanical Trading Strategy – 8 Months Verified Performance",
+      headline: "Mechanical Trading Strategy – 6 Months Verified Performance",
       subheadline: "Fully automated GBPUSD strategy delivering consistent growth with controlled risk.",
       stats: [
         { label: "Total Gain", value: "+320.70%" },
         { label: "Max Drawdown", value: "30.14%" },
         { label: "Profit Generated", value: "$3,334+" },
-        { label: "Live Track Record", value: "8 Months" }
+        { label: "Live Track Record", value: "6 Months" }
       ]
     },
     overview: {
@@ -101,7 +101,7 @@ export const caseStudies: CaseStudy[] = [
       content: [
         "This is a fully mechanical, rule-based trading strategy designed for consistency, discipline, and scalability.",
         "It eliminates emotional decision-making by relying on predefined entry, exit, and risk management rules.",
-        "The system was deployed on a live account and actively managed over an 8-month period, trading exclusively on GBPUSD."
+        "The system was deployed on a live account and actively managed over an 6-month period, trading exclusively on GBPUSD."
       ],
       features: [
         "100% rule-based execution",
@@ -112,7 +112,7 @@ export const caseStudies: CaseStudy[] = [
     },
     performance: {
       title: "Performance Highlights",
-      content: "Over the course of 8 months, the strategy demonstrated strong growth while maintaining controlled drawdowns.",
+      content: "Over the course of 6 months, the strategy demonstrated strong growth while maintaining controlled drawdowns.",
       bullets: [
         "Consistent equity curve growth",
         "Profitable across multiple months",
