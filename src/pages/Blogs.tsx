@@ -19,54 +19,98 @@ const Blogs = () => {
   const popularBlogs = filteredBlogs.slice(0, 6);
   const recentBlogs = filteredBlogs.slice(6);
 
+  // Animation Variants
+  const fadeUp = {
+    initial: { opacity: 0, y: 30 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.6, ease: "easeOut" as const }
+  };
+
+  const fadeDown = {
+    initial: { opacity: 0, y: -30 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.6, ease: "easeOut" as const }
+  };
+
   return (
     <div className="min-h-screen bg-[#0B0F19] text-white selection:bg-amber-500/30 w-full overflow-x-hidden">
       <Navbar />
 
-      <main className="pt-32 pb-20 lg:pt-48">
-        <div className="max-w-7xl mx-auto px-6">
-          
-          {/* --- HERO SECTION --- */}
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <motion.h1 
-              initial={{ opacity: 0, x: -60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="text-4xl md:text-5xl font-semibold mb-6 tracking-tight"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-            >
-              Latest <span className="text-amber-500">Insights</span>
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, x: 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-              className="text-base text-gray-400 leading-relaxed mb-10"
-            >
-              Explore our collection of articles, news, and technical deep-dives into the future of AI and machine learning.
-            </motion.p>
-            
-            {/* Search Bar */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-              className="relative max-w-xl mx-auto group"
-            >
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 group-focus-within:text-amber-500 transition-colors" />
-              <input 
-                type="text" 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                autoComplete="off"
-                placeholder="Search articles, categories, or keywords..." 
-                className="w-full bg-white/5 border border-white/10 rounded-2xl pl-14 pr-6 py-5 text-lg focus:outline-none focus:border-amber-500/50 transition-all placeholder:text-gray-600 shadow-2xl"
-              />
-            </motion.div>
+      <main>
+        {/* --- HERO SECTION --- */}
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden border-b border-white/5 pt-20">
+          <div className="absolute inset-0 z-0">
+             <img 
+               src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2072" 
+               alt="Background" 
+               className="w-full h-full object-cover opacity-20"
+             />
+             <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F19]/95 via-[#0B0F19]/60 to-[#0B0F19]" />
           </div>
+
+          <div className="max-w-7xl mx-auto px-6 relative z-10 w-full text-center flex flex-col items-center">
+             <motion.div {...fadeDown}>
+                <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-amber-500/10 border border-amber-500/20 rounded-full text-[11px] font-bold text-amber-500 uppercase tracking-[0.2em] mb-12">
+                  <span className="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_20px_#f59e0b]" />
+                  Knowledge Base
+                </div>
+             </motion.div>
+
+             <div className="max-w-5xl space-y-8">
+                <motion.h1 
+                  {...fadeUp}
+                  className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1]" 
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  Latest <span className="text-amber-gradient">Insights & News</span>
+                </motion.h1>
+
+                <motion.p 
+                  {...fadeUp}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  className="text-lg md:text-2xl text-white/60 font-medium leading-relaxed max-w-3xl mx-auto"
+                >
+                  Explore our collection of articles, news, and technical deep-dives into the future of AI and machine learning.
+                </motion.p>
+
+                {/* Search Bar */}
+                <motion.div 
+                  {...fadeUp}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="relative max-w-xl mx-auto group mt-8 w-full"
+                >
+                  <div className="relative w-full">
+                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 group-focus-within:text-amber-500 transition-colors z-10" />
+                    <input 
+                      type="text" 
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      autoComplete="off"
+                      placeholder="Search articles, categories, or keywords..." 
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl pl-14 pr-6 py-5 text-lg focus:outline-none focus:border-amber-500/50 transition-all placeholder:text-gray-600 shadow-2xl"
+                    />
+                  </div>
+                </motion.div>
+
+                <motion.div 
+                  {...fadeUp}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  className="flex flex-wrap justify-center gap-6 pt-8"
+                >
+                  <button onClick={() => document.getElementById('articles')?.scrollIntoView({ behavior: 'smooth' })} className="btn-amber px-10 py-5 text-base font-bold">
+                    Browse All
+                  </button>
+                  <Link to="/contact" className="btn-outline-amber px-10 py-5 text-base font-bold">
+                    Get Support
+                  </Link>
+                </motion.div>
+             </div>
+          </div>
+        </section>
+
+        <div id="articles" className="pt-24 max-w-7xl mx-auto px-6">
 
           <AnimatePresence mode="wait">
             {filteredBlogs.length > 0 ? (

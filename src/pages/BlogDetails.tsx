@@ -63,47 +63,94 @@ const BlogDetails = () => {
     if (group.image) imageIdx++;
   }
 
+  // Animation Variants
+  const fadeUp = {
+    initial: { opacity: 0, y: 30 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.6, ease: "easeOut" as const }
+  };
+
+  const fadeDown = {
+    initial: { opacity: 0, y: -30 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.6, ease: "easeOut" as const }
+  };
+
   return (
     <div className="min-h-screen bg-[#0B0F19] text-white selection:bg-amber-500/30 w-full overflow-x-hidden font-sans">
       <Navbar />
 
       <main>
         {/* --- HERO SECTION --- */}
-        <section 
-          className="relative w-full h-[55vh] flex items-center justify-center bg-cover bg-center bg-no-repeat overflow-hidden"
-          style={{ backgroundImage: `url(${blog.heroImage || blog.image})` }}
-        >
-          <div className="absolute inset-0 bg-black/60 z-0" />
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden border-b border-white/5 pt-20">
+          <div className="absolute inset-0 z-0">
+             <img 
+               src={blog.heroImage || blog.image} 
+               alt="Background" 
+               className="w-full h-full object-cover opacity-30"
+             />
+             <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F19]/90 via-[#0B0F19]/40 to-[#0B0F19]" />
+          </div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center relative z-10">
-            <motion.div 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-block px-3 py-1 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] uppercase tracking-widest font-bold text-amber-500 mb-6"
-            >
-              {blog.category}
-            </motion.div>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-              className="text-4xl md:text-6xl font-semibold mb-6 tracking-tight leading-tight text-white drop-shadow-xl"
-            >
-              {blog.title}
-            </motion.h1>
+          <div className="max-w-7xl mx-auto px-6 relative z-10 w-full text-center flex flex-col items-center">
+             <motion.div {...fadeDown}>
+               <Link to="/blogs" className="inline-flex items-center gap-2 text-white/40 hover:text-white transition-colors mb-12 group">
+                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                 <span className="text-xs font-bold uppercase tracking-widest">Back to Insights</span>
+               </Link>
+             </motion.div>
 
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="flex items-center justify-center gap-6 text-sm text-gray-300 font-medium"
-            >
-              <span className="flex items-center gap-2"><User className="w-4 h-4 text-amber-500" /> {blog.author}</span>
-              <span className="flex items-center gap-2"><Clock className="w-4 h-4 text-amber-500" /> {blog.date}</span>
-            </motion.div>
+             <div className="max-w-5xl space-y-8">
+                <motion.div 
+                  {...fadeUp}
+                  className="inline-flex items-center gap-3 px-4 py-1.5 bg-amber-500/10 border border-amber-500/20 rounded-full text-[11px] font-bold text-amber-500 uppercase tracking-[0.2em]"
+                >
+                  <span className="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_20px_#f59e0b]" />
+                  {blog.category}
+                </motion.div>
+                
+                <motion.h1 
+                  {...fadeUp}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1]" 
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  {blog.title.split(' ').length > 4 ? (
+                    <>
+                      {blog.title.split(' ').slice(0, -2).join(' ')} {' '}
+                      <span className="text-amber-gradient block sm:inline">{blog.title.split(' ').slice(-2).join(' ')}</span>
+                    </>
+                  ) : blog.title}
+                </motion.h1>
+
+                <motion.div 
+                  {...fadeUp}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="flex items-center justify-center gap-6 text-sm text-gray-300 font-medium"
+                >
+                  <span className="flex items-center gap-2"><User className="w-4 h-4 text-amber-500" /> {blog.author}</span>
+                  <span className="flex items-center gap-2"><Clock className="w-4 h-4 text-amber-500" /> {blog.date}</span>
+                </motion.div>
+
+                <motion.div 
+                  {...fadeUp}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="flex flex-wrap justify-center gap-6 pt-8"
+                >
+                  <button onClick={() => document.getElementById('content')?.scrollIntoView({ behavior: 'smooth' })} className="btn-amber px-10 py-5 text-base font-bold">
+                    Read Article
+                  </button>
+                  <Link to="/contact" className="btn-outline-amber px-10 py-5 text-base font-bold">
+                    Join Discussion
+                  </Link>
+                </motion.div>
+             </div>
           </div>
         </section>
+
+        <div id="content" className="pt-24" />
 
         {/* --- ARTICLE BODY --- */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-20 space-y-12 lg:space-y-16 pb-32">
