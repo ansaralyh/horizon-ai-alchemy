@@ -15,11 +15,13 @@ export interface CaseStudy {
     title: string;
     content: string[];
     features: string[];
+    image?: string;
   };
   performance?: {
     title: string;
     content: string;
     bullets: string[];
+    image?: string;
   };
   monthly?: {
     title: string;
@@ -166,7 +168,7 @@ export const caseStudies: CaseStudy[] = [
     title: "AI-Powered Content Automation System",
     desc: "Fully automated AI-driven system for content generation and publishing at scale.",
     metrics: ["100% Automated", "90% Cost Reduction", "Daily Continuity"],
-    image: "/assets/ai-process-visual.png",
+    image: "/assets/image8",
     gallery: ["/assets/service-automation.jpg", "/assets/service-nlp.jpg", "/assets/service-analytics.jpg"],
     themeColor: "amber",
     hero: {
@@ -190,7 +192,8 @@ export const caseStudies: CaseStudy[] = [
         "Multi-LLM integration (GPT-4/Claude)",
         "Automated SEO optimization",
         "Direct CMS publishing"
-      ]
+      ],
+      image: "/assets/image9"
     },
     challenge: {
       title: "The Challenge",
@@ -200,12 +203,12 @@ export const caseStudies: CaseStudy[] = [
         "Inconsistent publishing schedules due to burnout",
         "High operational overhead for content managers"
       ],
-      image: "/assets/service-ml.jpg"
+      image: "/assets/image10"
     },
     solution: {
       title: "The Solution",
       content: "We built an end-to-end automation system using n8n, integrating AI-driven content generation with seamless data handling and direct publishing capabilities via REST APIs.",
-      image: "/assets/service-nlp.jpg"
+      image: "/assets/image7"
     },
     featuresList: [
       {
@@ -249,7 +252,7 @@ export const caseStudies: CaseStudy[] = [
         "Enabled scalable and consistent publishing frequency",
         "Improved overall operational efficiency and ROI"
       ],
-      image: "/assets/monthly-performance.png"
+      image: "/assets/image11"
     },
     techStack: ["n8n", "OpenAI / Anthropic", "Google Docs API", "REST APIs", "Node.js"],
     skills: ["Automation System Design", "AI Workflow Integration", "API Development", "End-to-end Deployment"],

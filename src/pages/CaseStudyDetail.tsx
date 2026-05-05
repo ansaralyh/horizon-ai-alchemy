@@ -225,7 +225,7 @@ const CaseStudyDetail = () => {
                       <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[120px] opacity-20 group-hover:opacity-30 transition-opacity`} />
                       <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-navy-card shadow-2xl transition-all duration-700 hover:border-white/20">
                          <img 
-                           src="/assets/image2" 
+                           src={caseStudy.overview.image || "/assets/image2"} 
                            alt="Project Overview" 
                            className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-[1.01]" 
                          />
@@ -399,7 +399,7 @@ const CaseStudyDetail = () => {
                       <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[120px] opacity-20 group-hover:opacity-30 transition-opacity`} />
                       <div className="relative rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 bg-navy-card shadow-2xl transition-all duration-500 hover:border-white/20">
                          <img 
-                           src="/assets/image3" 
+                           src={caseStudy.results?.image || caseStudy.performance?.image || "/assets/image3"} 
                            alt="Performance Infographic" 
                            className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-[1.01]" 
                          />
