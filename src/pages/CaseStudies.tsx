@@ -93,17 +93,7 @@ const CaseStudies = () => {
                         alt={cs.client}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-40 group-hover:opacity-60"
                       />
-                      <div className="absolute inset-0 flex items-center justify-center z-20">
-                        <div className="p-4 rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 group-hover:border-amber-500/50 transition-colors">
-                            {cs.themeColor === "emerald" ? (
-                              <TrendingUp className="w-8 h-8 text-emerald-500" />
-                            ) : cs.tag.includes("LLM") ? (
-                              <ShieldCheck className="w-8 h-8 text-amber-500" />
-                            ) : (
-                              <BarChart3 className="w-8 h-8 text-amber-500" />
-                            )}
-                        </div>
-                      </div>
+
                       {/* Tag Badge */}
                       <div className="absolute top-4 left-4 z-30">
                         <span className={`px-3 py-1 ${cs.themeColor === 'emerald' ? 'bg-emerald-500 border-emerald-400/50' : 'bg-amber-500 border-amber-400/50'} border rounded-full text-[10px] font-black uppercase tracking-widest text-[#0B0F19]`}>
