@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/new-logo.png";
+
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -51,9 +51,9 @@ const Navbar = () => {
             className="flex items-center gap-2 sm:gap-3 group min-w-0 flex-shrink"
           >
             <img
-              src={logo}
+              src="/assets/image12.png"
               alt="Horizon Bee Tech"
-              className="h-10 sm:h-14 md:h-20 w-auto object-contain object-left transition-all duration-300 group-hover:scale-105 flex-shrink-0"
+              className="h-15 sm:h-14 md:h-15 w-15 object-contain object-left transition-all duration-300 group-hover:scale-105 flex-shrink-0"
             />
             <span className="font-bold text-base sm:text-lg md:text-xl tracking-tight truncate" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               <span style={{ color: "hsl(210 40% 96%)" }}>Horizon</span>
