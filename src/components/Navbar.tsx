@@ -53,7 +53,7 @@ const Navbar = () => {
             <img
               src="/assets/image12.png"
               alt="Horizon Bee Tech"
-              className="h-15 sm:h-14 md:h-15 w-15 object-contain object-left transition-all duration-300 group-hover:scale-105 flex-shrink-0"
+              className="w-16 sm:w-20 md:w-24 h-auto object-contain object-left transition-all duration-300 group-hover:scale-105 flex-shrink-0"
             />
             <span className="font-bold text-base sm:text-lg md:text-xl tracking-tight truncate" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               <span style={{ color: "hsl(210 40% 96%)" }}>Horizon</span>
