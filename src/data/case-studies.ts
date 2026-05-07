@@ -272,7 +272,7 @@ export const caseStudies: CaseStudy[] = [
     title: "NAS100 Algorithmic Trading Strategy (ORB + FVG)",
     desc: "Rule-based trading system combining price action and quantitative logic for consistent performance.",
     metrics: ["60% Win Rate", "NAS100 Focused", "ORB + FVG Logic"],
-    image: "/assets/nas100-trading-hero.png",
+    image: "/assets/image13.png",
     gallery: ["/assets/trading-chart-1.png", "/assets/trading-chart-2.png"],
     themeColor: "amber",
     monthlyVisual: "/assets/monthly-performance.png",
@@ -298,7 +298,8 @@ export const caseStudies: CaseStudy[] = [
         "Fair Value Gaps (FVG) Identification",
         "Multi-timeframe confirmation",
         "Automated risk management"
-      ]
+      ],
+      image: "/assets/image13.png"
     },
     challenge: {
       title: "The Objective",
