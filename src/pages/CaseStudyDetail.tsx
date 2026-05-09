@@ -537,7 +537,7 @@ const CaseStudyDetail = () => {
                       <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[100px] opacity-20`} />
                       <div className={`relative w-full rounded-[2.5rem] overflow-hidden border border-white/10 bg-[#0B0F19]/40 backdrop-blur-xl shadow-2xl group transition-all duration-700 hover:${theme.borderStrong}`}>
                          <img 
-                           src="/assets/image6" 
+                           src={caseStudy.monthlyVisual || "/assets/image6"} 
                            alt="Monthly Performance Visualization" 
                            className="w-full h-auto object-contain transition-transform duration-1000 group-hover:scale-[1.01]" 
                          />

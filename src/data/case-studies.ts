@@ -120,7 +120,8 @@ export const caseStudies: CaseStudy[] = [
         "Profitable across multiple months",
         "Risk-to-reward ratio maintained near 2:1",
         "Balanced long & short exposure"
-      ]
+      ],
+      image: "/assets/image22.png"
     },
     monthly: {
       title: "Monthly Performance",
