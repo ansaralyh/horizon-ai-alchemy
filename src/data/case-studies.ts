@@ -309,12 +309,12 @@ export const caseStudies: CaseStudy[] = [
         "Identifying institutional price imbalances",
         "Executing trades with minimal manual intervention"
       ],
-      image: "/assets/trading-chart-1.png"
+      image: "/assets/image15.png"
     },
     solution: {
       title: "Rule-Based Execution Framework",
       content: "The strategy utilizes a multi-layered approach: identifying the 30-minute opening range, detecting Fair Value Gaps for entry confluences, and applying institutional-grade risk management parameters.",
-      image: "/assets/trading-chart-2.png"
+      image: "/assets/image16.png"
     },
     featuresList: [
       {
