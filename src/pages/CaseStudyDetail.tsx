@@ -319,7 +319,7 @@ const CaseStudyDetail = () => {
           <section className="section-with-bg section-bordered py-32 relative overflow-hidden">
              <div className="max-w-7xl mx-auto px-6 relative z-10">
                 <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center mb-24">
-                   <motion.div {...fadeLeft} className="lg:col-span-5 space-y-10">
+                   <motion.div {...fadeLeft} className="lg:col-span-6 space-y-10">
                       <div className="space-y-6">
                         <div className="flex items-center gap-4">
                            <div className={`w-12 h-[2px] ${theme.text.replace('text-', 'bg-')}`} />
@@ -334,10 +334,14 @@ const CaseStudyDetail = () => {
                       </div>
                    </motion.div>
 
-                   <motion.div {...fadeRight} className="lg:col-span-7 relative">
+                   <motion.div {...fadeRight} className="lg:col-span-6 relative">
                       <div className={`absolute -inset-10 ${theme.bg} rounded-full blur-[100px] opacity-20`} />
                       <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-[#0B0F19]/40 backdrop-blur-xl group">
-                         <img src={caseStudy.solution.image || "/assets/service-nlp.jpg"} alt="Solution Implementation" className="w-full h-auto object-contain transition-transform duration-1000 group-hover:scale-[1.02]" />
+                         <img 
+                           src={caseStudy.solution.image || "/assets/service-nlp.jpg"} 
+                           alt="Solution Implementation" 
+                           className="w-full h-auto max-h-[500px] object-contain transition-transform duration-1000 group-hover:scale-[1.02]" 
+                         />
                          <div className={`absolute inset-0 ${theme.bg} mix-blend-overlay opacity-30`} />
                       </div>
                    </motion.div>

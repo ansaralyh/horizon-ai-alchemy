@@ -414,7 +414,8 @@ export const caseStudies: CaseStudy[] = [
         "Zero-latency execution engine",
         "Direct TradingView to MT4/MT5 bridging",
         "Secure automated ecosystem"
-      ]
+      ],
+      image: "/assets/image18.png"
     },
     challenge: {
       title: "The Challenge",
@@ -424,12 +425,12 @@ export const caseStudies: CaseStudy[] = [
         "Significant manual trade delays causing missed opportunities",
         "High risk of slippage when executing manually"
       ],
-      image: "/assets/horizon-bee-connector-challenge.png"
+      image: "/assets/image17.png"
     },
     solution: {
       title: "The Solution",
       content: "We engineered a robust middleware system that handles real-time data flow between TradingView and MetaTrader environments with high speed, accuracy, and reliability.",
-      image: "/assets/trading-chart-2.png"
+      image: "/assets/image19.png"
     },
     performance: {
       title: "System Architecture",
@@ -439,7 +440,8 @@ export const caseStudies: CaseStudy[] = [
         "Server processes TradingView webhook alerts",
         "Local client (Expert Advisor) executes trades on MT4/MT5",
         "Secure communication layer ensures data integrity"
-      ]
+      ],
+      image: "/assets/image20.png"
     },
     featuresList: [
       {
