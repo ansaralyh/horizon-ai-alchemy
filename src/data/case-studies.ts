@@ -527,7 +527,8 @@ export const caseStudies: CaseStudy[] = [
         "Automated Knowledge Pipeline",
         "Context-Aware Code Generation",
         "Conversational Memory"
-      ]
+      ],
+      image: "/assets/image21.png"
     },
     challenge: {
       title: "The Challenge",
