@@ -18,8 +18,8 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
 }));
-app.use(express.json()); // Parse JSON requests
-app.use(express.urlencoded({ extended: false })); // Parse URL-encoded requests
+app.use(express.json({ limit: '10mb' })); // Parse JSON requests
+app.use(express.urlencoded({ extended: false, limit: '10mb' })); // Parse URL-encoded requests
 app.use(morgan('dev')); // Logging requests (use 'tiny' in production)
 
 // --- Routes ---

@@ -187,9 +187,13 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
       if (response.ok) {
         await fetchBlogs();
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to add blog");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Add blog failed:", error);
+      throw error;
     }
   };
 
@@ -201,9 +205,13 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
       if (response.ok) {
         await fetchBlogs();
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update blog");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Update blog failed:", error);
+      throw error;
     }
   };
 
@@ -214,9 +222,13 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
       if (response.ok) {
         await fetchBlogs();
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to delete blog");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Delete blog failed:", error);
+      throw error;
     }
   };
 

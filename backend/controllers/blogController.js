@@ -158,11 +158,15 @@ const createBlog = async (req, res) => {
 // @access  Private
 const updateBlog = async (req, res) => {
     try {
+        console.log('--- Start Update Blog Process ---');
+        console.log('ID:', req.params.id);
+        
         const { title, slug, content, excerpt, category, author, status, heroImage, images } = req.body;
 
         let blog = await Blog.findById(req.params.id);
 
         if (!blog) {
+            console.warn('Update Failed: Blog not found');
             return res.status(404).json({ success: false, message: 'Blog not found' });
         }
 
@@ -184,7 +188,8 @@ const updateBlog = async (req, res) => {
             try {
                 sectionImageUrls = typeof images === 'string' ? JSON.parse(images) : images;
             } catch (e) {
-                sectionImageUrls = [images];
+                console.warn('ℹ️ Failed to parse images JSON, using raw value');
+                sectionImageUrls = Array.isArray(images) ? images : [images];
             }
         } else {
             sectionImageUrls = blog.images || [];
@@ -197,29 +202,55 @@ const updateBlog = async (req, res) => {
         }
         console.log('--- End Update: Image Handling ---');
 
+        // Build update object - only update fields that are provided
+        const updateData = {};
+        if (title !== undefined) updateData.title = title;
+        if (content !== undefined) updateData.content = content;
+        if (excerpt !== undefined) updateData.excerpt = excerpt;
+        if (category !== undefined) updateData.category = category;
+        if (author !== undefined) updateData.author = author;
+        if (status !== undefined) updateData.status = status;
+        
+        updateData.heroImage = heroImageUrl;
+        updateData.images = sectionImageUrls;
+        
+        // Handle slug
+        if (slug) {
+            updateData.slug = slug;
+        } else if (title) {
+            updateData.slug = title.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        }
+
+        console.log('Updating Blog in Database...');
         blog = await Blog.findByIdAndUpdate(
             req.params.id,
-            {
-                title,
-                slug: slug || (title ? title.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') : undefined),
-                content,
-                excerpt,
-                category,
-                author,
-                status,
-                heroImage: heroImageUrl,
-                images: sectionImageUrls,
-            },
+            updateData,
             { new: true, runValidators: true }
         );
 
+        console.log('✅ Blog updated successfully:', blog._id);
         res.status(200).json({
             success: true,
             message: 'Blog updated successfully',
             data: blog,
         });
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        console.error('❌ Update Blog Error:', error);
+        
+        // Handle MongoDB/Mongoose specific errors
+        if (error.name === 'ValidationError') {
+            const messages = Object.values(error.errors).map(err => err.message);
+            return res.status(400).json({ success: false, message: messages.join(', ') });
+        }
+
+        if (error.code === 11000) {
+            return res.status(400).json({ success: false, message: 'Slug already exists for another blog' });
+        }
+
+        res.status(500).json({ 
+            success: false, 
+            message: error.message || 'Internal Server Error' 
+        });
     }
 };
 
