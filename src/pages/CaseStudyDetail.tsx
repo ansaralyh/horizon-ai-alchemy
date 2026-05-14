@@ -86,7 +86,7 @@ const CaseStudyDetail = () => {
   }
 
   const bgImages = {
-    hero: caseStudy.id === 'mechanical-trading' ? "/assets/image2.png" : (caseStudy.image || "/assets/placeholder-hero.jpg"),
+    hero: caseStudy.id === 'mechanical-trading' ? "/assets/image23.png" : (caseStudy.image || "/assets/placeholder-hero.jpg"),
     content: caseStudy.overview?.image || caseStudy.challenge?.image || "/assets/image9",
     results: caseStudy.results?.image || caseStudy.performance?.image || "/assets/image11"
   };

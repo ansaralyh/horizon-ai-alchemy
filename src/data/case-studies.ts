@@ -83,7 +83,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Mechanical Trading Strategy – 6 Months Verified Performance",
     desc: "A fully automated GBPUSD strategy delivering consistent growth with a +320.70% total gain over 6 months of live tracking.",
     metrics: ["+320.70% Gain", "30.14% Max DD", "$3,334+ Profit"],
-    image: "/portfilio001.png", 
+    image: "/assets/image23.png", 
     gallery: ["/assets/trading-chart-1.png", "/assets/trading-chart-2.png"],
     themeColor: "amber",
     monthlyVisual: "/assets/monthly-performance.png",
